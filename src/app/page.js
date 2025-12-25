@@ -3,7 +3,7 @@ import Hero from "@/components/Hero";
 
 export const metadata = {
   title: "For Us <3",
-  description: "just yassira and abdelrahman page, nothing more nothing less",
+  description: "Just Yassira and Abdelrahman page, nothing more nothing less.",
 };
 
 function LoadingSkeleton() {

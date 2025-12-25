@@ -6,7 +6,7 @@ export const metadata = {
     process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"
   ),
   title: "For Us <3",
-  description: "just yassira and abdelrahman page, nothing more nothing less",
+  description: "Just Yassira and Abdelrahman page, nothing more nothing less.",
   robots: {
     index: true,
     follow: true,

@@ -1,0 +1,41 @@
+{
+  "navigation": [
+    {
+      "name": "Home",
+      "slug": "/",
+      "icon": "home",
+      "description": "Main landing page"
+    },
+    {
+      "name": "Feed",
+      "slug": "/feed",
+      "icon": "rss",
+      "description": "View latest posts and updates"
+    },
+    {
+      "name": "Create Post",
+      "slug": "/new-post",
+      "icon": "plus",
+      "description": "Share your thoughts and ideas"
+    },
+    {
+      "name": "Yassira's Art",
+      "slug": "/yassira's-art",
+      "icon": "palette",
+      "description": "Explore artistic creations"
+    },
+    {
+      "name": "Yassirita",
+      "slug": "/yassirita",
+      "icon": "sparkles",
+      "description": "Creative space and inspiration"
+    },
+    {
+      "name": "Login",
+      "slug": "/login",
+      "icon": "user",
+      "description": "Sign in to your account",
+      "auth": "public"
+    }
+  ]
+}

@@ -4,6 +4,6 @@ export default function robots() {
       userAgent: "*",
       allow: "/",
     },
-    sitemap: "https://for-us.vercel.app/",
+    sitemap: "https://for-us-three.vercel.app/",
   };
 }
