@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 export default function Alert({ open, message, type = "info", onClose }) {
   const color =
     type === "success"
-      ? "bg-emerald-600"
+      ? "bg-main"
       : type === "error"
       ? "bg-red-600"
       : "bg-sky-600";

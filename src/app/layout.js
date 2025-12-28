@@ -5,9 +5,6 @@ import { AuthProvider } from "@/lib/AuthContext";
 import { AlertProvider } from "@/lib/AlertContext";
 
 export const metadata = {
-  metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"
-  ),
   title: "For Us <3",
   description: "Just Yassira and Abdelrahman page, nothing more nothing less.",
   robots: {
