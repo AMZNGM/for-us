@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 import Hero from "@/components/Hero";
+import ProtectedRoute from "@/components/ProtectedRoute";
 
 export const metadata = {
   title: "For Us <3",
@@ -21,8 +22,10 @@ function LoadingSkeleton() {
 
 export default function Home() {
   return (
-    <Suspense fallback={<LoadingSkeleton />}>
-      <Hero />
-    </Suspense>
+    <ProtectedRoute>
+      <Suspense fallback={<LoadingSkeleton />}>
+        <Hero />
+      </Suspense>
+    </ProtectedRoute>
   );
 }

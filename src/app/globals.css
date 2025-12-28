@@ -1,10 +1,14 @@
-@import url("https://fonts.googleapis.com/css2?family=BBH+Bartle&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Mukta+Malar:wght@200;300;400;500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap");
 @import "tailwindcss";
 @theme {
-  --color-main: #500d08;
-  --color-bg: #2d2d39;
-  --color-text: #f9d1d8;
-  --font-main: "BBH Bartle";
+  --color-main: #8e6127;
+  /* --color-main: #faf000; */
+  --color-bg: #222;
+  --color-text: #fff;
+
+  --font-main: "Mukta Malar", sans-serif;
+  --font-sec: "Great Vibes";
 }
 * {
   box-sizing: border-box;

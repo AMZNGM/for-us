@@ -7,7 +7,7 @@ import {
   signUpWithEmail as fbSignUp,
   signOut as fbSignOut,
   onAuthChange,
-} from "./firebaseClient";
+} from "./firebase";
 
 // Simple React context + hooks for client-side auth state
 const AuthContext = createContext({ user: null, loading: true });

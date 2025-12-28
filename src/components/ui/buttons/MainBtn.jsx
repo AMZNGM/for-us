@@ -1,72 +1,110 @@
-import Link from 'next/link'
-import { memo } from 'react'
-import RippleEffect from '@/components/ui/effects/RippleEffect'
+"use client";
+
+import Link from "next/link";
+import { memo } from "react";
+import { motion } from "motion/react";
+import RippleEffect from "@/components/ui/effects/RippleEffect";
+import TextAnimation from "@/components/ui/text/TextAnimation";
 
 export default memo(function MainBtn({
   children,
+  className = "",
 
   to,
   href,
   onClick,
 
-  variant = 'main', // 'main', 'outline', 'ghost'
-  size = 'md', // 'sm', 'md', 'lg'
-  fullWidth = false,
-  disabled = false,
+  variant = "main", // 'main', 'outline', 'ghost'
+  size = "md", // 'sm', 'md', 'lg'
 
-  className = '',
+  type = "button",
+  disabled = false,
+  fullWidth = false,
   ...rest
 }) {
-  const baseStyles =
-    'inline-flex items-center justify-center gap-2 font-medium uppercase border rounded-full transition-colors duration-200 outline-none'
-
   const variants = {
-    main: 'bg-main text-bg border-main hover:bg-main/75',
-    outline: 'bg-transparent text-main border-main hover:bg-main hover:text-white',
-    ghost: 'bg-transparent text-main border-transparent hover:bg-main/10',
-  }
+    main: "bg-main text-text",
+    outline: "text-text border-2 border-main",
+    ghost: "text-text",
+  };
 
   const sizes = {
-    sm: 'px-4 py-2 text-sm',
-    md: 'px-6 py-3 text-base',
-    lg: 'px-8 py-4 text-lg',
-  }
+    sm: "px-3 py-1 text-sm",
+    md: "px-4 py-2 text-base",
+    lg: "px-6 py-3 text-xl",
+  };
 
   const styles = `
-    ${baseStyles}
-    ${variants[variant] || variants.main}
-    ${sizes[size] || sizes.md}
-    ${fullWidth ? 'w-full' : ''}
-    ${disabled ? 'opacity-50 cursor-not-allowed pointer-events-none' : 'cursor-pointer'}
+    group relative w-fit rounded-md overflow-hidden
+    ${variants[variant]}
+    ${sizes[size]}
+    ${fullWidth ? "w-full" : ""}
+    ${
+      disabled
+        ? "opacity-50 cursor-not-allowed pointer-events-none"
+        : "cursor-pointer"
+    }
     ${className}
   `
     .trim()
-    .replace(/\s+/g, ' ')
+    .replace(/\s+/g, " ");
 
   const commonProps = {
     className: styles,
     disabled,
     ...rest,
-  }
+  };
+
+  const buttonContent = (
+    <>
+      <TextAnimation text={children} className="font-bold font-sec z-10" />
+      <motion.div className="absolute inset-0 w-full h-full bg-indigo-500 pointer-events-none z-0 translate-y-full group-hover:translate-y-0 duration-300" />
+    </>
+  );
+
+  const motionProps = {
+    initial: { opacity: 0, y: 10 },
+    animate: { opacity: 1, y: 0 },
+    transition: {
+      duration: 0.3,
+      type: "spring",
+      stiffness: 200,
+    },
+  };
 
   if (to)
     return (
-      <Link href={to} {...commonProps}>
-        {children}
-      </Link>
-    )
+      <motion.div {...motionProps}>
+        <Link href={to} {...commonProps}>
+          {buttonContent}
+        </Link>
+      </motion.div>
+    );
+
   if (href)
     return (
-      <a href={href} {...commonProps}>
-        {children}
-      </a>
-    )
+      <motion.div {...motionProps}>
+        <a href={href} {...commonProps}>
+          {buttonContent}
+        </a>
+      </motion.div>
+    );
 
   return (
-    <RippleEffect className="flex rounded-full">
-      <button type="button" onClick={onClick} disabled={disabled} {...commonProps}>
-        {children}
-      </button>
+    <RippleEffect className="relative w-full">
+      <motion.button
+        {...motionProps}
+        type={type}
+        onClick={onClick}
+        {...commonProps}
+        style={{
+          display: "flex",
+          alignItems: "flex-end",
+          justifyContent: "center",
+        }}
+      >
+        {buttonContent}
+      </motion.button>
     </RippleEffect>
-  )
-})
+  );
+});

@@ -1,5 +1,8 @@
 import "./globals.css";
 import AppWrapper from "@/components/app-components/AppWrapper";
+import Navbar from "@/components/nav-components/Navbar";
+import { AuthProvider } from "@/lib/AuthContext";
+import { AlertProvider } from "@/lib/AlertContext";
 
 export const metadata = {
   metadataBase: new URL(
@@ -26,8 +29,13 @@ export default function RootLayout({ children }) {
       <body
         className={`relative w-screen min-h-screen overflow-x-hidden! bg-bg text-text font-main selection:bg-main/50 selection:text-text scroll-smooth antialiased`}
       >
-        {children}
-        <AppWrapper></AppWrapper>
+        <AlertProvider>
+          <AuthProvider>
+            {/* <Navbar /> */}
+            {children}
+          </AuthProvider>
+        </AlertProvider>
+        {/* <AppWrapper></AppWrapper> */}
       </body>
     </html>
   );

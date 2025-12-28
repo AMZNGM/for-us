@@ -1,54 +1,126 @@
+"use client";
+
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "@/lib/firebase";
+import { motion } from "motion/react";
+import { useAlert } from "@/lib/AlertContext";
+import GradientCursor from "@/components/ui/cursors/GradientCursor";
+import TextAnimation from "@/components/ui/text/TextAnimation";
+import RippleEffect from "@/components/ui/effects/RippleEffect";
+import MainBtn from "@/components/ui/buttons/MainBtn";
+
 export default function LoginPage() {
+  const router = useRouter();
+  const alert = useAlert();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const login = async () => {
+    try {
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email.trim(),
+        password
+      );
+      router.replace("/");
+      alert.show("Logged in ✅", "success");
+    } catch (err) {
+      alert.show(`Login failed ❌`, "error");
+    }
+  };
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
-      <div className="max-w-md w-full space-y-8">
-        <div>
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            Sign in to your account
-          </h2>
-        </div>
-        <form className="mt-8 space-y-6">
-          <div className="rounded-md shadow-sm -space-y-px">
-            <div>
-              <label htmlFor="email" className="sr-only">
-                Email address
-              </label>
-              <input
-                id="email"
-                name="email"
-                type="email"
-                autoComplete="email"
-                required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                placeholder="Email address"
-              />
-            </div>
-            <div>
-              <label htmlFor="password" className="sr-only">
-                Password
-              </label>
-              <input
-                id="password"
-                name="password"
-                type="password"
-                autoComplete="current-password"
-                required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                placeholder="Password"
-              />
-            </div>
+    <main className="relative w-screen h-screen overflow-hidden bg-bg text-main">
+      <div className="absolute inset-0 w-full h-full border-18 pointer-events-none z-10" />
+
+      <GradientCursor />
+
+      <Image
+        src="/images/art/art-61.webp"
+        alt="background"
+        fill
+        className="absolute inset-0 w-full h-full object-cover pointer-events-none blur-sm opacity-50"
+      />
+
+      <div className="w-full h-full flex flex-col items-center justify-center gap-8">
+        <TextAnimation
+          text="Sign in Bea <3"
+          className="text-5xl text-center font-semibold font-sec tracking-widest p-4"
+        />
+
+        <motion.form
+          initial={{ opacity: 0, filter: "blur(10px)" }}
+          animate={{ opacity: 1, filter: "blur(0px)" }}
+          transition={{ duration: 0.75 }}
+          className="w-full max-w-sm space-y-4"
+          onSubmit={(e) => {
+            e.preventDefault();
+            login();
+          }}
+        >
+          <div className="rounded-md shadow-sm space-y-2">
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              whileHover={{ scale: 1.01 }}
+              transition={{
+                type: "spring",
+                stiffness: 200,
+              }}
+            >
+              <RippleEffect className="w-full">
+                <label htmlFor="email" className="sr-only">
+                  Email address
+                </label>
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  autoComplete="email"
+                  required
+                  className="appearance-none rounded-none relative block w-full px-3 py-2 border-2 border-main placeholder-main text-text rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm duration-300"
+                  placeholder="Email address"
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </RippleEffect>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              whileHover={{ scale: 1.01 }}
+              transition={{
+                delay: 0.1,
+                type: "spring",
+                stiffness: 200,
+              }}
+            >
+              <RippleEffect className="w-full">
+                <label htmlFor="password" className="sr-only">
+                  Password
+                </label>
+                <input
+                  id="password"
+                  name="password"
+                  type="password"
+                  autoComplete="current-password"
+                  required
+                  className="appearance-none rounded-none relative block w-full px-3 py-2 border-2 border-main placeholder-main text-text rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm duration-300"
+                  placeholder="Password"
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </RippleEffect>
+            </motion.div>
           </div>
 
-          <div>
-            <button
-              type="submit"
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            >
-              Sign in
-            </button>
-          </div>
-        </form>
+          <MainBtn onClick={login} fullWidth>
+            Sign in
+          </MainBtn>
+        </motion.form>
       </div>
-    </div>
+    </main>
   );
 }
