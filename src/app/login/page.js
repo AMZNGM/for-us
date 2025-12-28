@@ -45,7 +45,7 @@ export default function LoginPage() {
         className="absolute inset-0 w-full h-full object-cover pointer-events-none blur-sm opacity-50"
       />
 
-      <div className="w-full h-full flex flex-col items-center justify-center gap-8">
+      <div className="w-full h-full flex flex-col items-center justify-center gap-8 px-8">
         <TextAnimation
           text="Sign in Bea <3"
           className="text-5xl text-center font-semibold font-sec tracking-widest p-4"
