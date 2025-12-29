@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import { motion } from "motion/react";
 
 const containerVariants = {
@@ -12,7 +11,7 @@ const containerVariants = {
   },
 };
 
-const generateVariants = (direction) => {
+const generateVariants = (direction, duration = 0.5) => {
   const axis = direction === "left" || direction === "right" ? "X" : "Y";
   const value = direction === "right" || direction === "down" ? 100 : -100;
   return {
@@ -26,7 +25,7 @@ const generateVariants = (direction) => {
       opacity: 1,
       [`translate${axis}`]: 0,
       transition: {
-        duration: 0.4,
+        duration,
         ease: "easeOut",
       },
     },
@@ -44,12 +43,18 @@ export default function TextAnimation({
   direction = "up", // up down left right
   letterAnime = false,
   lineAnime = false,
+  duration = 0.5,
+  delay = 0,
 }) {
-  const baseVariants = variants || generateVariants(direction);
+  const baseVariants = variants || generateVariants(direction, duration);
   const modifiedVariants = {
     hidden: baseVariants.hidden,
     visible: {
       ...baseVariants.visible,
+      transition: {
+        delay,
+        ...(variants?.visible?.transition || baseVariants.visible.transition),
+      },
     },
   };
   const MotionComponent = motion[as];

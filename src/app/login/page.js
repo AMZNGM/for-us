@@ -7,6 +7,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "@/lib/firebase";
 import { motion } from "motion/react";
 import { useAlert } from "@/lib/AlertContext";
+import LoadingScreen from "@/components/app-components/LoadingScreen";
 import GradientCursor from "@/components/ui/cursors/GradientCursor";
 import TextAnimation from "@/components/ui/text/TextAnimation";
 import RippleEffect from "@/components/ui/effects/RippleEffect";
@@ -34,7 +35,8 @@ export default function LoginPage() {
 
   return (
     <main className="relative w-screen h-screen overflow-hidden bg-bg text-main">
-      <div className="absolute inset-0 w-full h-full border-18 pointer-events-none z-10" />
+      <div className="absolute inset-0 w-full h-full border-12 pointer-events-none z-10" />
+      <LoadingScreen />
 
       <GradientCursor />
 
@@ -81,7 +83,7 @@ export default function LoginPage() {
                   type="email"
                   autoComplete="email"
                   required
-                  className="appearance-none rounded-none relative block w-full px-3 py-2 border-2 border-main placeholder-main text-text rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm duration-300"
+                  className="appearance-none rounded-none relative block w-full px-3 py-2 border-2 border-main placeholder-main text-main rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm duration-300"
                   placeholder="Email address"
                   onChange={(e) => setEmail(e.target.value)}
                 />
@@ -108,7 +110,7 @@ export default function LoginPage() {
                   type="password"
                   autoComplete="current-password"
                   required
-                  className="appearance-none rounded-none relative block w-full px-3 py-2 border-2 border-main placeholder-main text-text rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm duration-300"
+                  className="appearance-none rounded-none relative block w-full px-3 py-2 border-2 border-main placeholder-main text-main rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm duration-300"
                   placeholder="Password"
                   onChange={(e) => setPassword(e.target.value)}
                 />
