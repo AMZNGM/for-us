@@ -1,14 +1,16 @@
 @import url("https://fonts.googleapis.com/css2?family=Mukta+Malar:wght@200;300;400;500;600;700;800&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lugrasimo&display=swap");
 @import "tailwindcss";
 @theme {
-  /* --color-main: #8e6127; */
+  /* --color-main: #fabf06; */
   --color-main: #faf000;
-  --color-bg: #222;
+  --color-bg: #11140f;
   --color-text: #000;
 
   --font-main: "Mukta Malar", sans-serif;
   --font-sec: "Great Vibes";
+  --font-ter: "Lugrasimo";
 }
 * {
   box-sizing: border-box;

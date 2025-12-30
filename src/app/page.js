@@ -4,8 +4,8 @@ import ProtectedRoute from "@/components/ProtectedRoute";
 import LoadingSkeleton from "@/components/ui/LoadingSkeleton";
 import GradientCursor from "@/components/ui/cursors/GradientCursor";
 import TextAnimation from "@/components/ui/text/TextAnimation";
-import FlowersNav from "@/components/ui/FlowersNav";
 import Logo from "@/components/ui/Logo";
+import FlowersNav from "@/components/ui/FlowersNav";
 
 export const metadata = {
   title: "For Us <3",

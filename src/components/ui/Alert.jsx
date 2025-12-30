@@ -35,7 +35,7 @@ export default function Alert({ open, message, type = "info", onClose }) {
               whileTap={{ scale: 0.9 }}
               aria-label="Close alert"
               onClick={onClose}
-              className="opacity-90 hover:opacity-100 text-white/90 w-5 h-5 flex items-center justify-center"
+              className="opacity-90 hover:opacity-100 text-text/90 w-5 h-5 flex items-center justify-center cursor-pointer"
             >
               ✕
             </motion.button>
