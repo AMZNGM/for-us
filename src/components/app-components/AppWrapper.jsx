@@ -3,9 +3,8 @@ import { AlertProvider } from "@/lib/AlertContext";
 // import ErrorBoundary from "@/components/app-components/ErrorBoundary";
 import Banner from "@/components/app-components/banner";
 import LocomotiveScrollSetup from "@/components/app-components/LocomotiveScrollSetup";
-// import ScrollToTop from "@/components/app-components/ScrollToTop";
 // import Navbar from "@/components/nav-components/Navbar";
-// import ScrollToTopBtn from "@/components/app-components/ScrollToTopBtn";
+import ScrollToTopBtn from "@/components/app-components/ScrollToTopBtn";
 // import FooterWrapper from '@/components/footer-components/FooterWrapper'
 
 export default function AppWrapper({ children }) {
@@ -17,7 +16,7 @@ export default function AppWrapper({ children }) {
         <LocomotiveScrollSetup />
         {/* <Navbar /> */}
         {children}
-        {/* <ScrollToTopBtn /> */}
+        <ScrollToTopBtn />
         {/* <FooterWrapper /> */}
         {/* </ErrorBoundary> */}
       </AuthProvider>
