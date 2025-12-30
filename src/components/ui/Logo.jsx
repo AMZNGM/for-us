@@ -24,14 +24,20 @@ export default function Logo() {
         className="relative text-8xl max-md:text-6xl text-center font-sec p-4 z-10"
       />
 
-      <Image
-        src="/images/yassirita-drink-mate-no-bg.webp"
-        alt="background"
-        fill
-        loading="eager"
-        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-        className="relative object-contain pointer-events-none -translate-x-6 -translate-y-8 scale-125"
-      />
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1.5, delay: 1.5 }}
+      >
+        <Image
+          src="/images/yassirita-drink-mate-no-bg.webp"
+          alt="background"
+          fill
+          loading="eager"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          className="relative object-contain pointer-events-none -translate-x-6 -translate-y-8 scale-125"
+        />
+      </motion.div>
     </motion.section>
   );
 }
