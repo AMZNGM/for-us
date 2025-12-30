@@ -1,22 +1,22 @@
-'use client'
+"use client";
 
-import { useEffect } from 'react'
+import { useEffect } from "react";
 
 const banner = `
-      ▌    ▌
-▛▛▌▀▌▛▌█▌  ▛▌▌▌
-▌▌▌█▌▙▌▙▖  ▙▌▙▌
-             ▄▌
+      ▌              ▌
+▛▛▌▀▌▛▌█▌ with love  ▛▌▌▌
+▌▌▌█▌▙▌▙▖ with love  ▙▌▙▌
+                       ▄▌
 
 ███  ██  ▄████  ██▄  ▄██
 ██ ▀▄██ ██  ▄▄▄ ██ ▀▀ ██
 ██   ██  ▀███▀  ██    ██
-`
+`;
 
 export default function Banner() {
   useEffect(() => {
-    console.log(`%c${banner}`, 'color:#00eaff')
-  }, [])
+    console.log(`%c${banner}`, "color:#00eaff");
+  }, []);
 
-  return null
+  return null;
 }

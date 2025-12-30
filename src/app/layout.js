@@ -1,6 +1,4 @@
 import "./globals.css";
-import { AuthProvider } from "@/lib/AuthContext";
-import { AlertProvider } from "@/lib/AlertContext";
 import AppWrapper from "@/components/app-components/AppWrapper";
 
 export const metadata = {
@@ -25,11 +23,7 @@ export default function RootLayout({ children }) {
       <body
         className={`relative w-screen min-h-screen overflow-x-hidden! bg-bg text-text font-main selection:bg-main/50 selection:text-text scroll-smooth antialiased`}
       >
-        <AlertProvider>
-          <AuthProvider>
-            <AppWrapper>{children}</AppWrapper>
-          </AuthProvider>
-        </AlertProvider>
+        <AppWrapper>{children}</AppWrapper>
       </body>
     </html>
   );
