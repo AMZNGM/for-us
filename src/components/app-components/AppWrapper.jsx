@@ -2,7 +2,7 @@ import { AuthProvider } from "@/lib/AuthContext";
 import { AlertProvider } from "@/lib/AlertContext";
 // import ErrorBoundary from "@/components/app-components/ErrorBoundary";
 import Banner from "@/components/app-components/banner";
-// import LocomotiveScrollSetup from "@/components/app-components/LocomotiveScrollSetup";
+import LocomotiveScrollSetup from "@/components/app-components/LocomotiveScrollSetup";
 // import ScrollToTop from "@/components/app-components/ScrollToTop";
 // import Navbar from "@/components/nav-components/Navbar";
 // import ScrollToTopBtn from "@/components/app-components/ScrollToTopBtn";
@@ -14,7 +14,7 @@ export default function AppWrapper({ children }) {
       <AuthProvider>
         {/* <ErrorBoundary> */}
         <Banner />
-        {/* <LocomotiveScrollSetup /> */}
+        <LocomotiveScrollSetup />
         {/* <Navbar /> */}
         {children}
         {/* <ScrollToTopBtn /> */}
