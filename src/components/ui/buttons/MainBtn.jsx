@@ -94,14 +94,10 @@ export default memo(function MainBtn({
     <RippleEffect className="relative w-full">
       <motion.button
         {...motionProps}
+        {...commonProps}
         type={type}
         onClick={onClick}
-        {...commonProps}
-        style={{
-          display: "flex",
-          alignItems: "flex-end",
-          justifyContent: "center",
-        }}
+        className="relative flex justify-center items-end"
       >
         {buttonContent}
       </motion.button>
