@@ -183,7 +183,7 @@ export default function PostPage({ params }) {
 
   const handleReplyAdded = () => {
     // Comments will automatically refresh due to the onSnapshot listener
-    console.log("Reply added");
+    // console.log("Reply added");
   };
 
   return (

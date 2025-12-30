@@ -16,7 +16,7 @@ export default function Home() {
   return (
     <ProtectedRoute>
       <Suspense fallback={<LoadingSkeleton />}>
-        <main className="relative w-screen h-screen overflow-hidden bg-bg text-main py-12 px-4">
+        <main className="relative w-screen h-screen overflow-hidden bg-bg text-main">
           <div className="absolute inset-0 w-full h-full border-8 max-md:border-4 pointer-events-none z-10" />
 
           <GradientCursor />
@@ -28,7 +28,7 @@ export default function Home() {
             className="absolute inset-0 w-full h-full object-cover pointer-events-none blur-sm opacity-50"
           />
 
-          <div className="w-full h-full flex flex-col items-center justify-center gap-8">
+          <div className="w-full h-full flex flex-col justify-center items-center gap-8 max-md:gap-0">
             <TextAnimation
               text="Welcome To"
               duration={1}
@@ -38,22 +38,6 @@ export default function Home() {
             <Logo />
 
             <FlowersNav />
-
-            {/* <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 1.5, delay: 1.5 }}
-              className="fixed size-full"
-            >
-              <Image
-                src="/images/yassirita-drink-mate-no-bg.webp"
-                alt="background"
-                fill
-                loading="eager"
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                className="relative object-contain pointer-events-none -translate-x-6 -translate-y-8 scale-125"
-              />
-            </motion.div> */}
           </div>
         </main>
       </Suspense>

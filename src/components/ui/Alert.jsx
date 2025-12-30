@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function Alert({ open, message, type = "info", onClose }) {
@@ -14,32 +15,38 @@ export default function Alert({ open, message, type = "info", onClose }) {
     <AnimatePresence>
       {open && (
         <motion.div
-          initial={{ opacity: 0, y: "100%" }}
+          initial={{ opacity: 1, y: "400%" }}
           animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: "100%" }}
+          exit={{ opacity: 0, y: "400%" }}
           transition={{
             type: "spring",
-            damping: 30,
-            stiffness: 500,
-            mass: 5,
+            stiffness: 100,
+            opacity: { delay: 1 },
           }}
           className="fixed bottom-8 left-1/2 -translate-x-1/2 w-full max-w-md flex justify-center items-center z-50"
         >
-          <motion.div
+          <div
             role="alert"
-            className={`${color} flex justify-center items-center text-text rounded-md shadow-lg px-4 py-2 gap-4`}
+            className={`${color} flex justify-center items-center text-text rounded-md shadow-lg gap-2 py-2 px-4 -translate-x-8`}
           >
             <div className="flex-1 text-sm">{message}</div>
-            <motion.button
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
+            <button
               aria-label="Close alert"
               onClick={onClose}
-              className="opacity-90 hover:opacity-100 text-text/90 w-5 h-5 flex items-center justify-center cursor-pointer"
+              className="w-6 h-6 flex justify-center items-center cursor-pointer"
             >
               ✕
-            </motion.button>
-          </motion.div>
+            </button>
+
+            <Image
+              src="/images/yassirita-drink-mate-no-bg.webp"
+              alt="background"
+              fill
+              loading="eager"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              className="object-contain pointer-events-none scale-1000 translate-x-18"
+            />
+          </div>
         </motion.div>
       )}
     </AnimatePresence>

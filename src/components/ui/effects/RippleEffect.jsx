@@ -40,8 +40,6 @@ export default memo(function RippleEffect({
         mix-blend-mode: screen;
       `;
 
-      console.log("Creating ripple with color:", hue, saturation, lightness);
-
       if (!document.querySelector("#ripple-keyframes")) {
         const style = document.createElement("style");
         style.id = "ripple-keyframes";

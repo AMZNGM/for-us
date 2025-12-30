@@ -23,7 +23,7 @@ export default memo(function MainBtn({
   ...rest
 }) {
   const variants = {
-    main: "bg-main text-text",
+    main: "bg-main text-text hover:text-white duration-300",
     outline: "text-text border-2 border-main",
     ghost: "text-text",
   };
