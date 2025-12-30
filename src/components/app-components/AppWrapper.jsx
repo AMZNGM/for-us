@@ -6,6 +6,7 @@
 // // import LoadingScreen from '@/components/app-components/LoadingScreen'
 // import ScrollToTop from '@/components/app-components/ScrollToTop'
 // import Navbar from '@/components/nav-components/Navbar'
+// import Navbar from "@/components/nav-components/Navbar";
 // import CustomCursor from '@/components/app-components/CustomCursor'
 // import CookieBanner from '@/components/app-components/CookieBanner'
 // import CookieSidebar from '@/components/app-components/CookieSidebar'
@@ -34,6 +35,6 @@
 //   )
 // }
 
-export default function AppWrapper() {
-  return <div></div>;
+export default function AppWrapper({ children }) {
+  return <div>{children}</div>;
 }

@@ -1,8 +1,7 @@
 import "./globals.css";
-import AppWrapper from "@/components/app-components/AppWrapper";
-import Navbar from "@/components/nav-components/Navbar";
 import { AuthProvider } from "@/lib/AuthContext";
 import { AlertProvider } from "@/lib/AlertContext";
+import AppWrapper from "@/components/app-components/AppWrapper";
 
 export const metadata = {
   title: "For Us <3",
@@ -28,11 +27,9 @@ export default function RootLayout({ children }) {
       >
         <AlertProvider>
           <AuthProvider>
-            {/* <Navbar /> */}
-            {children}
+            <AppWrapper>{children}</AppWrapper>
           </AuthProvider>
         </AlertProvider>
-        {/* <AppWrapper></AppWrapper> */}
       </body>
     </html>
   );
