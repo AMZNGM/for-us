@@ -35,7 +35,7 @@ export default function LoginPage() {
 
   return (
     <main className="relative w-screen h-screen overflow-hidden bg-bg text-main">
-      <div className="absolute inset-0 w-full h-full border-12 pointer-events-none z-10" />
+      <div className="absolute inset-0 w-full h-full border-8 max-md:border-4 pointer-events-none z-10" />
       <LoadingScreen />
 
       <GradientCursor />

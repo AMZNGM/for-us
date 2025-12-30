@@ -16,8 +16,8 @@ export default function Home() {
   return (
     <ProtectedRoute>
       <Suspense fallback={<LoadingSkeleton />}>
-        <main className="relative w-screen h-screen overflow-hidden bg-bg text-main">
-          <div className="absolute inset-0 w-full h-full border-12 pointer-events-none z-10" />
+        <main className="relative w-screen h-screen overflow-hidden bg-bg text-main py-12 px-4">
+          <div className="absolute inset-0 w-full h-full border-8 max-md:border-4 pointer-events-none z-10" />
 
           <GradientCursor />
 
@@ -28,7 +28,7 @@ export default function Home() {
             className="absolute inset-0 w-full h-full object-cover pointer-events-none blur-sm opacity-50"
           />
 
-          <div className="w-full h-full flex flex-col items-center justify-center gap-8 px-8">
+          <div className="w-full h-full flex flex-col items-center justify-center gap-8">
             <TextAnimation
               text="Welcome To"
               duration={1}

@@ -5,7 +5,7 @@ import { motion } from "motion/react";
 
 export default function FlowersNav() {
   return (
-    <section className="relative w-full mt-43 max-md:mt-14 duration-300">
+    <section className="relative w-full pt-43 max-md:pt-14 duration-300">
       <div className="w-full h-full flex max-md:flex-col justify-center items-center gap-24 max-lg:gap-8 max-md:gap-12 duration-300">
         <Link
           href="/yassirita"
@@ -15,7 +15,7 @@ export default function FlowersNav() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 1.5 }}
-            className="font-ter text-xl max-md:text-base font-bold leading-3 group-hover:text-indigo-400 transition-colors duration-300"
+            className="font-ter text-xl max-md:text-sm font-bold leading-3 group-hover:text-indigo-400 transition-colors duration-300"
           >
             Yassirita
           </motion.span>
@@ -38,7 +38,7 @@ export default function FlowersNav() {
                 repeatType: "reverse",
               },
             }}
-            className="relative w-34 h-34 max-md:w-24 max-md:h-24"
+            className="relative w-34 h-34 max-md:w-14 max-md:h-14"
           >
             <svg
               viewBox="0 -13.11 222.83 222.83"
@@ -78,7 +78,7 @@ export default function FlowersNav() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 1.7 }}
-            className="font-ter text-xl max-md:text-base font-bold leading-3 tracking-wider group-hover:text-indigo-400 transition-colors duration-300"
+            className="font-ter text-xl max-md:text-sm font-bold leading-3 tracking-wider group-hover:text-indigo-400 transition-colors duration-300"
           >
             Yassira's Art
           </motion.span>
@@ -101,7 +101,7 @@ export default function FlowersNav() {
                 repeatType: "reverse",
               },
             }}
-            className="relative w-34 h-34 max-md:w-24 max-md:h-24"
+            className="relative w-34 h-34 max-md:w-14 max-md:h-14"
           >
             <svg
               viewBox="0 -0.19 241.35 241.35"
@@ -141,7 +141,7 @@ export default function FlowersNav() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 2 }}
-            className="font-ter text-xl max-md:text-base font-bold leading-3 tracking-wider group-hover:text-indigo-400 transition-colors duration-300"
+            className="font-ter text-xl max-md:text-sm font-bold leading-3 tracking-wider group-hover:text-indigo-400 transition-colors duration-300"
           >
             Fact Of The Day
           </motion.span>
@@ -164,7 +164,7 @@ export default function FlowersNav() {
                 repeatType: "reverse",
               },
             }}
-            className="relative w-34 h-34 max-md:w-24 max-md:h-24"
+            className="relative w-34 h-34 max-md:w-14 max-md:h-14"
           >
             <svg
               viewBox="-8.11 0 195.31 195.31"
@@ -203,8 +203,8 @@ export default function FlowersNav() {
           <motion.span
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 2 }}
-            className="font-ter text-xl max-md:text-base font-bold leading-3 tracking-wider group-hover:text-indigo-400 transition-colors duration-300"
+            transition={{ duration: 1, delay: 2.2 }}
+            className="font-ter text-xl max-md:text-sm font-bold leading-3 tracking-wider group-hover:text-indigo-400 transition-colors duration-300"
           >
             Profile
           </motion.span>
@@ -227,7 +227,7 @@ export default function FlowersNav() {
                 repeatType: "reverse",
               },
             }}
-            className="relative w-34 h-34 max-md:w-24 max-md:h-24"
+            className="relative w-34 h-34 max-md:w-14 max-md:h-14"
           >
             <svg
               viewBox="-11.55 0 177.16 177.16"
