@@ -23,9 +23,9 @@ export default function LoadingScreen() {
           animate={{ y: 0 }}
           exit={{ y: "100%" }}
           transition={{ duration: 0.75, ease: "easeInOut" }}
-          className="fixed inset-0 w-screen h-screen overflow-hidden bg-main flex justify-center items-center z-[9999]"
+          className="fixed inset-0 w-screen h-full overflow-hidden bg-main flex justify-center items-center pointer-events-none z-9999"
         >
-          <div className="relative w-54 h-54 max-md:w-34 max-md:h-34 flex flex-col justify-center items-center">
+          <div className="relative w-54 h-54 max-md:w-34 max-md:h-34">
             <svg
               viewBox="0 -13.11 222.83 222.83"
               fill="none"
