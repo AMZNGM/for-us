@@ -23,9 +23,9 @@ export default memo(function MainBtn({
   ...rest
 }) {
   const variants = {
-    main: "bg-main text-text hover:text-white duration-300",
-    outline: "text-text border-2 border-main",
-    ghost: "text-text",
+    main: "bg-main text-bg hover:text-text duration-300",
+    outline: "text-main border-2 border-main",
+    ghost: "text-main",
   };
 
   const sizes = {
@@ -57,7 +57,10 @@ export default memo(function MainBtn({
 
   const buttonContent = (
     <>
-      <TextAnimation text={children} className="font-bold font-sec z-10" />
+      <TextAnimation
+        text={children}
+        className="relative font-bold font-sec z-10"
+      />
       <motion.div className="absolute inset-0 w-full h-full bg-indigo-500 pointer-events-none z-0 translate-y-full group-hover:translate-y-0 duration-300" />
     </>
   );
@@ -97,7 +100,6 @@ export default memo(function MainBtn({
         {...commonProps}
         type={type}
         onClick={onClick}
-        className="relative flex justify-center items-end"
       >
         {buttonContent}
       </motion.button>

@@ -84,7 +84,7 @@ export default function ProfilePopup({ onClose }) {
   }
 
   return (
-    <div className="profile-popup p-4 bg-white shadow rounded w-80">
+    <div className="absolute bottom-18 right-0 bg-bg text-text shadow-2xl rounded-2xl w-80 p-4">
       <h3 className="text-lg font-semibold">Edit profile</h3>
       <Link href="/profile">Profile</Link>
 

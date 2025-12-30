@@ -49,6 +49,7 @@ export default function LoginPage() {
 
       <div className="w-full h-full flex flex-col items-center justify-center gap-8 px-8">
         <TextAnimation
+          delay={4.5}
           text="Sign in Bea <3"
           className="text-5xl text-center font-semibold font-sec tracking-widest p-4"
         />
@@ -56,7 +57,7 @@ export default function LoginPage() {
         <motion.form
           initial={{ opacity: 0, filter: "blur(10px)" }}
           animate={{ opacity: 1, filter: "blur(0px)" }}
-          transition={{ duration: 0.75 }}
+          transition={{ duration: 0.75, delay: 4.5 }}
           className="w-full max-w-sm space-y-4"
           onSubmit={(e) => {
             e.preventDefault();
@@ -71,6 +72,7 @@ export default function LoginPage() {
               transition={{
                 type: "spring",
                 stiffness: 200,
+                delay: 4.5,
               }}
             >
               <RippleEffect className="w-full">
@@ -95,9 +97,9 @@ export default function LoginPage() {
               animate={{ opacity: 1, y: 0 }}
               whileHover={{ scale: 1.01 }}
               transition={{
-                delay: 0.1,
                 type: "spring",
                 stiffness: 200,
+                delay: 4.7,
               }}
             >
               <RippleEffect className="w-full">

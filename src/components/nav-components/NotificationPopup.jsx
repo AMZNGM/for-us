@@ -67,14 +67,14 @@ export default function NotificationPopup({ onClose }) {
 
   if (loading) {
     return (
-      <div className="absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-lg border border-gray-200 p-4 z-50">
+      <div className="absolute bottom-18 right-0 mt-2 w-80 bg-white rounded-lg shadow-lg border border-gray-200 p-4 z-50">
         <div className="text-center text-gray-500">Loading...</div>
       </div>
     );
   }
 
   return (
-    <div className="absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-lg border border-gray-200 z-50">
+    <div className="absolute bottom-18 right-0 mt-2 w-80 bg-white rounded-lg shadow-lg border border-gray-200 z-50">
       <div className="p-4 border-b border-gray-200">
         <div className="flex justify-between items-center">
           <h3 className="font-semibold text-gray-900">Notifications</h3>
