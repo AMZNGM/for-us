@@ -1,76 +1,65 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { auth, db, updateUserProfile } from "@/lib/firebase";
-import { doc, getDoc } from "firebase/firestore";
-import Link from "next/link";
-import { useAlert } from "@/lib/AlertContext";
+import { motion } from "motion/react";
 
-export default function ProfilePopup({ onClose }) {
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import { auth, db } from "@/lib/firebase";
+import {
+  doc,
+  getDoc,
+  query,
+  collection,
+  where,
+  getDocs,
+} from "firebase/firestore";
+import CloseBtn from "@/components/ui/buttons/CloseBtn";
+import LoadingSkeleton from "@/components/ui/LoadingSkeleton";
+
+export default function ProfilePopup({ onClose, dockSettings, isVisible }) {
   const user = auth.currentUser;
   const [loading, setLoading] = useState(true);
   const [profile, setProfile] = useState({ displayName: "", bio: "" });
-  const [avatarFile, setAvatarFile] = useState(null);
-  const [preview, setPreview] = useState(null);
+  const [postsCount, setPostsCount] = useState(0);
+  const [avatarUrl, setAvatarUrl] = useState(null);
 
   useEffect(() => {
     let mounted = true;
     async function load() {
       if (!user) return setLoading(false);
+
       const ref = doc(db, "users", user.uid);
       const snap = await getDoc(ref);
+
+      const q = query(
+        collection(db, "posts"),
+        where("authorId", "==", user.uid)
+      );
+      const snapPosts = await getDocs(q);
+
       if (mounted) {
         if (snap.exists()) {
           const data = snap.data();
-          setProfile({ ...profile, ...data });
-          if (data.avatarUrl) setPreview(data.avatarUrl);
+          setProfile({
+            displayName: data.displayName || "",
+            bio: data.bio || "",
+          });
+          setAvatarUrl(data.avatarUrl || user.photoURL);
         } else {
           setProfile({ displayName: user.displayName || "", bio: "" });
-          if (user.photoURL) setPreview(user.photoURL);
+          setAvatarUrl(user.photoURL);
         }
+        setPostsCount(snapPosts.size);
         setLoading(false);
       }
     }
     load();
     return () => (mounted = false);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
-
-  const alertHook = useAlert();
-
-  async function save(e) {
-    e && e.preventDefault();
-    if (!user)
-      return (
-        alertHook?.show &&
-        alertHook.show("You must be logged in to update profile", "info")
-      );
-    setLoading(true);
-    try {
-      await updateUserProfile({
-        user: user,
-        displayName: profile.displayName,
-        bio: profile.bio,
-        avatarFile: avatarFile,
-      });
-      alertHook?.show && alertHook.show("Profile saved", "success");
-      onClose && onClose();
-    } catch (err) {
-      console.error("save profile error:", err);
-      console.error("Error details:", err.code, err.message);
-      alertHook?.show &&
-        alertHook.show(
-          `Failed to save profile: ${err.message || err}`,
-          "error"
-        );
-    } finally {
-      setLoading(false);
-    }
-  }
 
   if (!user) {
     return (
-      <div className="profile-popup p-4 bg-white shadow rounded">
+      <div className="bg-text rounded-2xl shadow-2xl p-4">
         <p>
           Please <a href="/login">login</a> to edit your profile.
         </p>
@@ -84,83 +73,76 @@ export default function ProfilePopup({ onClose }) {
   }
 
   return (
-    <div className="absolute bottom-18 right-0 bg-bg text-text shadow-2xl rounded-2xl w-80 p-4">
-      <h3 className="text-lg font-semibold">Edit profile</h3>
-      <Link href="/profile">Profile</Link>
-
+    <motion.div
+      initial={{ opacity: 0, scale: 0.9, y: 20 }}
+      animate={{
+        opacity: 1,
+        scale: 1,
+        y:
+          dockSettings.position === "bottom"
+            ? isVisible
+              ? 0
+              : 100
+            : isVisible
+            ? 0
+            : -100,
+      }}
+      exit={{ opacity: 0, scale: 0.9, y: 20 }}
+      transition={{ type: "spring", stiffness: 300, damping: 30 }}
+      className={`absolute right-1/2 w-80 bg-bg/95 rounded-2xl shadow-2xl border border-main/10 z-50 ${
+        dockSettings.position === "bottom" ? "bottom-18" : "top-18"
+      }`}
+    >
       {loading ? (
-        <p>Loading…</p>
+        <div className="bg-main rounded-2xl shadow-2xl z-50 p-4">
+          <div className="text-center text-gray-500">Loading...</div>
+          <LoadingSkeleton className="w-full! h-full! z-50" />
+        </div>
       ) : (
-        <form onSubmit={save} className="space-y-3 mt-3">
-          <div className="flex items-center gap-3">
-            <div>
-              <label className="block text-sm">Avatar</label>
-              <div className="mt-2">
-                {preview ? (
-                  <img
-                    src={preview}
-                    alt="avatar"
-                    className="w-16 h-16 rounded-full object-cover border"
-                  />
+        <>
+          <div className="space-y-4 p-4">
+            <h3 className="text-xl font-bold text-text">Profile</h3>
+
+            <CloseBtn onClick={onClose} />
+
+            <div className="flex items-center gap-4">
+              <div>
+                {avatarUrl ? (
+                  <Link
+                    href="/profile"
+                    className="flex justify-center items-center"
+                  >
+                    <img
+                      src={avatarUrl}
+                      alt="avatar"
+                      className="w-16 h-16 border rounded-full object-cover"
+                    />
+                  </Link>
                 ) : (
-                  <div className="w-16 h-16 rounded-full bg-gray-200 flex items-center justify-center">
-                    ?
+                  <div className="w-16 h-16 bg-main rounded-full flex items-center justify-center">
+                    <span className="text-bg/75 text-4xl">?</span>
                   </div>
                 )}
               </div>
-            </div>
-            <div>
-              <input
-                type="file"
-                accept="image/*"
-                onChange={(e) => {
-                  const f = e.target.files && e.target.files[0];
-                  setAvatarFile(f || null);
-                  if (f) setPreview(URL.createObjectURL(f));
-                }}
-              />
-            </div>
-          </div>
 
-          <div>
-            <label className="block text-sm">Display name</label>
-            <input
-              value={profile.displayName}
-              onChange={(e) =>
-                setProfile((p) => ({ ...p, displayName: e.target.value }))
-              }
-              className="w-full px-2 py-1 border rounded"
-            />
+              <div className="flex-1">
+                <h4 className="font-semibold text-text">
+                  {profile.displayName}
+                </h4>
+                <p className="text-sm text-text/50">{postsCount} posts</p>
+              </div>
+            </div>
+
+            {profile.bio && (
+              <div>
+                <p className="text-sm text-text/75 line-clamp-3">
+                  {profile.bio}
+                </p>
+              </div>
+            )}
           </div>
-          <div>
-            <label className="block text-sm">Bio</label>
-            <textarea
-              value={profile.bio}
-              onChange={(e) =>
-                setProfile((p) => ({ ...p, bio: e.target.value }))
-              }
-              className="w-full px-2 py-1 border rounded"
-              rows={3}
-            />
-          </div>
-          <div className="flex justify-end gap-2">
-            <button
-              type="button"
-              onClick={onClose}
-              className="px-3 py-1 border rounded"
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              disabled={loading}
-              className="px-3 py-1 bg-indigo-600 text-white rounded"
-            >
-              Save
-            </button>
-          </div>
-        </form>
+        </>
       )}
-    </div>
+    </motion.div>
   );
 }

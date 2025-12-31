@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { auth } from "@/lib/firebase";
+import { useState, useEffect } from "react";
+import { motion } from "motion/react";
 import {
   collection,
   query,
@@ -10,13 +10,18 @@ import {
   orderBy,
   onSnapshot,
 } from "firebase/firestore";
-import { db } from "@/lib/firebase";
+import { auth, db } from "@/lib/firebase";
 import { markNotificationRead } from "@/lib/notifications";
+import LoadingSkeleton from "@/components/ui/LoadingSkeleton";
 
-export default function NotificationPopup({ onClose }) {
-  const [items, setItems] = useState([]);
-  const [loading, setLoading] = useState(true);
+export default function NotificationPopup({
+  onClose,
+  dockSettings,
+  isVisible,
+}) {
   const router = useRouter();
+  const [loading, setLoading] = useState(true);
+  const [items, setItems] = useState([]);
 
   useEffect(() => {
     if (!auth.currentUser) return;
@@ -25,8 +30,6 @@ export default function NotificationPopup({ onClose }) {
       collection(db, "notifications"),
       where("toUserId", "==", auth.currentUser.uid),
       orderBy("createdAt", "desc")
-      // Limit to latest 5 notifications for popup
-      // Note: We'll handle limiting in the client for now
     );
 
     const unsubscribe = onSnapshot(
@@ -37,7 +40,7 @@ export default function NotificationPopup({ onClose }) {
             id: doc.id,
             ...doc.data(),
           }))
-          .slice(0, 5); // Limit to 5 most recent
+          .slice(0, 5);
         setItems(notificationsData);
         setLoading(false);
       },
@@ -65,81 +68,99 @@ export default function NotificationPopup({ onClose }) {
     );
   };
 
-  if (loading) {
-    return (
-      <div className="absolute bottom-18 right-0 mt-2 w-80 bg-white rounded-lg shadow-lg border border-gray-200 p-4 z-50">
-        <div className="text-center text-gray-500">Loading...</div>
-      </div>
-    );
-  }
-
   return (
-    <div className="absolute bottom-18 right-0 mt-2 w-80 bg-white rounded-lg shadow-lg border border-gray-200 z-50">
-      <div className="p-4 border-b border-gray-200">
-        <div className="flex justify-between items-center">
-          <h3 className="font-semibold text-gray-900">Notifications</h3>
+    <motion.div
+      initial={{ opacity: 0, scale: 0.9, y: 20 }}
+      animate={{
+        opacity: 1,
+        scale: 1,
+        y:
+          dockSettings.position === "bottom"
+            ? isVisible
+              ? 0
+              : 100
+            : isVisible
+            ? 0
+            : -100,
+      }}
+      exit={{ opacity: 0, scale: 0.9, y: 20 }}
+      transition={{ type: "spring", stiffness: 300, damping: 30 }}
+      className={`absolute right-1/2 w-80 bg-text/95 rounded-2xl shadow-2xl border border-main/10 z-50 p-4 ${
+        dockSettings.position === "bottom" ? "bottom-18" : "top-18"
+      }`}
+    >
+      {loading ? (
+        <div className="bg-main rounded-2xl shadow-2xl z-50 p-4">
+          <div className="text-center text-gray-500">Loading...</div>
+          <LoadingSkeleton className="w-full! h-full! z-50" />
+        </div>
+      ) : (
+        <div>
+          <div className="flex justify-between items-center">
+            <h3 className="text-bg font-semibold font-ter">Notifications</h3>
+            {items.length > 0 && (
+              <button
+                onClick={handleMarkAllRead}
+                className="text-xs text-blue-600 hover:text-blue-800 cursor-pointer"
+              >
+                Mark all read
+              </button>
+            )}
+          </div>
+
+          <div className="max-h-96 rounded-xl overflow-y-auto my-2">
+            {items.length === 0 ? (
+              <div className="text-bg text-center p-4">No notifications</div>
+            ) : (
+              items.map((notification) => (
+                <div
+                  key={notification.id}
+                  className={`border-b border-amber-100 transition-colors cursor-pointer p-3 ${
+                    notification.read ? "bg-white" : "bg-blue-50"
+                  } hover:bg-gray-50`}
+                  onClick={() => handleNotificationClick(notification)}
+                >
+                  <div className="flex items-start space-x-3">
+                    <div className="flex-1">
+                      <p
+                        className={`text-sm ${
+                          !notification.read
+                            ? "font-medium text-blue-900"
+                            : "text-gray-900"
+                        }`}
+                      >
+                        {notification.message}
+                      </p>
+                      <p className="text-xs text-gray-500 mt-1">
+                        {notification.createdAt?.toDate()
+                          ? notification.createdAt.toDate().toLocaleString()
+                          : ""}
+                      </p>
+                    </div>
+                    {!notification.read && (
+                      <div className="w-2 h-2 bg-blue-500 rounded-full mt-1"></div>
+                    )}
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
+
           {items.length > 0 && (
-            <button
-              onClick={handleMarkAllRead}
-              className="text-xs text-blue-600 hover:text-blue-800"
-            >
-              Mark all read
-            </button>
+            <div className="border-t border-gray-200 p-2">
+              <button
+                onClick={() => {
+                  onClose();
+                  router.push("/notifications");
+                }}
+                className="w-full text-sm text-center font-medium text-blue-600 hover:text-blue-800 cursor-pointer"
+              >
+                View all notifications
+              </button>
+            </div>
           )}
         </div>
-      </div>
-
-      <div className="max-h-96 overflow-y-auto">
-        {items.length === 0 ? (
-          <div className="p-4 text-center text-gray-500">No notifications</div>
-        ) : (
-          items.map((notification) => (
-            <div
-              key={notification.id}
-              className={`p-3 border-b border-gray-100 cursor-pointer transition-colors ${
-                notification.read ? "bg-white" : "bg-blue-50"
-              } hover:bg-gray-50`}
-              onClick={() => handleNotificationClick(notification)}
-            >
-              <div className="flex items-start space-x-3">
-                <div className="flex-1">
-                  <p
-                    className={`text-sm ${
-                      !notification.read
-                        ? "font-medium text-blue-900"
-                        : "text-gray-900"
-                    }`}
-                  >
-                    {notification.message}
-                  </p>
-                  <p className="text-xs text-gray-500 mt-1">
-                    {notification.createdAt?.toDate
-                      ? notification.createdAt.toDate().toLocaleString()
-                      : ""}
-                  </p>
-                </div>
-                {!notification.read && (
-                  <div className="w-2 h-2 bg-blue-500 rounded-full mt-1"></div>
-                )}
-              </div>
-            </div>
-          ))
-        )}
-      </div>
-
-      {items.length > 0 && (
-        <div className="p-3 border-t border-gray-200">
-          <button
-            onClick={() => {
-              onClose();
-              router.push("/notifications");
-            }}
-            className="w-full text-center text-sm text-blue-600 hover:text-blue-800 font-medium"
-          >
-            View all notifications
-          </button>
-        </div>
       )}
-    </div>
+    </motion.div>
   );
 }

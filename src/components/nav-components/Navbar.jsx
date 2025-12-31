@@ -30,8 +30,7 @@ export default function Navbar() {
   const [profile, setProfile] = useState(null);
   const [showSettings, setshowSettings] = useState(false);
   const [dockSettings, setDockSettings] = useState({
-    magnification: 60,
-    distance: 140,
+    scale: 1,
     position: "bottom",
     theme: "glass",
     autoHide: false,
@@ -57,20 +56,6 @@ export default function Navbar() {
     { href: "/yassirasart", icon: Palette, label: "Yassira's Art" },
     { href: "/yassirita", icon: Sparkles, label: "Yassirita" },
   ];
-
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (
-        showNotificationPopup &&
-        !event.target.closest(".notification-container")
-      ) {
-        setShowNotificationPopup(false);
-      }
-    };
-
-    document.addEventListener("click", handleClickOutside);
-    return () => document.removeEventListener("click", handleClickOutside);
-  }, [showNotificationPopup]);
 
   useEffect(() => {
     const unsub = onAuthChange((u) => setUserState(u));
@@ -116,7 +101,21 @@ export default function Navbar() {
     };
   }, [dockSettings.autoHide, dockSettings.position]);
 
-  if (pathname === "/" || pathname === "/login") {
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        showNotificationPopup &&
+        !event.target.closest(".notification-container")
+      ) {
+        setShowNotificationPopup(false);
+      }
+    };
+
+    document.addEventListener("click", handleClickOutside);
+    return () => document.removeEventListener("click", handleClickOutside);
+  }, [showNotificationPopup]);
+
+  if (pathname === "/1" || pathname === "/login") {
     return null;
   }
 
@@ -132,10 +131,11 @@ export default function Navbar() {
             : isVisible
             ? 0
             : -100,
+        scale: dockSettings.scale,
       }}
       transition={{ type: "spring", stiffness: 300, damping: 30 }}
-      onMouseMove={(e) => mouseX.set(e.clientX)}
-      onMouseLeave={() => mouseX.set(null)}
+      // onMouseMove={(e) => mouseX.set(e.clientX)}
+      // onMouseLeave={() => mouseX.set(null)}
       className={`fixed left-1/2 -translate-x-1/2 z-50 max-md:scale-80 ${
         dockSettings.position === "bottom" ? "bottom-4" : "top-4"
       }`}
@@ -153,8 +153,7 @@ export default function Navbar() {
                 href={link.href}
                 mouseX={mouseX}
                 isActive={isActive}
-                distance={dockSettings.distance}
-                magnification={dockSettings.magnification}
+                scale={dockSettings.scale}
               >
                 <Icon
                   strokeWidth={1.5}
@@ -162,7 +161,7 @@ export default function Navbar() {
                     getThemeClasses("name") === "dark"
                       ? "text-main"
                       : getThemeClasses("name") === "colorful"
-                      ? "text-bg"
+                      ? "text-main"
                       : "text-text"
                   }`}
                 />
@@ -192,11 +191,10 @@ export default function Navbar() {
             <div className="group relative">
               <DockIcon
                 mouseX={mouseX}
-                distance={dockSettings.distance}
-                magnification={dockSettings.magnification}
+                scale={dockSettings.scale}
                 onClick={() => setShowNotificationPopup(!showNotificationPopup)}
               >
-                <NotificationIcon />
+                <NotificationIcon getThemeClasses={getThemeClasses} />
               </DockIcon>
 
               <div
@@ -212,6 +210,8 @@ export default function Navbar() {
               {showNotificationPopup && (
                 <NotificationPopup
                   onClose={() => setShowNotificationPopup(false)}
+                  dockSettings={dockSettings}
+                  isVisible={isVisible}
                 />
               )}
             </div>
@@ -219,8 +219,7 @@ export default function Navbar() {
             <div className="group relative">
               <DockIcon
                 mouseX={mouseX}
-                distance={dockSettings.distance}
-                magnification={dockSettings.magnification}
+                scale={dockSettings.scale}
                 onClick={() => setshowProfilePopup(!showProfilePopup)}
               >
                 {profile?.avatarUrl || userState.photoURL ? (
@@ -247,7 +246,11 @@ export default function Navbar() {
               {showProfilePopup && (
                 <div onClick={() => setshowProfilePopup(false)}>
                   <div onClick={(e) => e.stopPropagation()}>
-                    <ProfilePopup onClose={() => setshowProfilePopup(false)} />
+                    <ProfilePopup
+                      onClose={() => setshowProfilePopup(false)}
+                      dockSettings={dockSettings}
+                      isVisible={isVisible}
+                    />
                   </div>
                 </div>
               )}
@@ -259,11 +262,19 @@ export default function Navbar() {
           <DockIcon
             mouseX={mouseX}
             isActive={showSettings}
-            distance={dockSettings.distance}
-            magnification={dockSettings.magnification}
+            scale={dockSettings.scale}
             onClick={() => setshowSettings(!showSettings)}
           >
-            <Settings strokeWidth={1.5} className="w-5 h-5 text-white" />
+            <Settings
+              strokeWidth={1.5}
+              className={`w-5 h-5 ${
+                getThemeClasses("name") === "dark"
+                  ? "text-main"
+                  : getThemeClasses("name") === "colorful"
+                  ? "text-main"
+                  : "text-text"
+              }`}
+            />
           </DockIcon>
 
           <div

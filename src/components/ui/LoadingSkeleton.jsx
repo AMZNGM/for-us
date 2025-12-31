@@ -1,6 +1,8 @@
-export default function LoadingSkeleton() {
+export default function LoadingSkeleton({ className = "" }) {
   return (
-    <div className="relative w-screen h-screen overflow-hidden bg-main flex justify-center items-center z-9999">
+    <div
+      className={`relative w-screen h-screen overflow-hidden bg-main flex justify-center items-center z-9999 ${className}`}
+    >
       <svg
         viewBox="0 0 400 400"
         fill="none"
