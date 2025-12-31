@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { motion, useMotionValue, useTransform, useSpring } from "framer-motion";
 import { useEffect, useRef } from "react";
+import { motion, useMotionValue, useTransform, useSpring } from "framer-motion";
 
 export default function DockIcon({
   children,
@@ -40,8 +40,8 @@ export default function DockIcon({
     <motion.div
       ref={ref}
       style={{ width }}
-      className={`relative flex items-center justify-center aspect-square cursor-pointer transition-colors ${
-        isActive ? "bg-white/20" : "bg-white/10 hover:bg-white/15"
+      className={`relative flex justify-center items-center aspect-square transition-colors cursor-pointer ${
+        isActive ? "bg-text/20" : "bg-text/10 hover:bg-text/15"
       } backdrop-blur-sm rounded-2xl`}
     >
       {children}

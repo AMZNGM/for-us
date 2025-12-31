@@ -3,7 +3,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Lugrasimo&display=swap");
 @import "tailwindcss";
 @theme {
-  /* --color-main: #fabf06; */
   --color-main: #faf000;
   --color-bg: #11140f;
   --color-text: #fdf6e9;
