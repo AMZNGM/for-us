@@ -20,7 +20,7 @@ export function ParallaxImageGrid() {
 
   return (
     <>
-      <h2 className="font-ter text-7xl text-main text-center">
+      <h2 className="relative font-ter text-7xl text-main text-center z-20">
         Pequeña Yassirita
       </h2>
 
@@ -61,7 +61,7 @@ export function ParallaxChampImageGrid() {
 
   return (
     <>
-      <h2 className="font-ter text-7xl text-main text-center">
+      <h2 className="relative font-ter text-7xl text-main text-center z-20">
         Campeona Yassirita
       </h2>
 

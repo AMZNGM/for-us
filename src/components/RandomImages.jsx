@@ -1,18 +1,17 @@
 "use client";
 
 import Image from "next/image";
-import { motion } from "framer-motion";
 import { useMemo, useState } from "react";
+import { motion } from "framer-motion";
 
 const images = Array.from(
   { length: 55 },
   (_, i) => `/images/yassirita/yassirita-${i + 1}.webp`
 );
 
-// random أقرب للمنتصف
-const centerRandom = () => {
+const randomPos = () => {
   const r = Math.random();
-  return 45 + (r - 0.5) * 70; // 30% → 70%
+  return 37 + (r - 0.5) * 60;
 };
 
 export default function RandomImages() {
@@ -20,15 +19,15 @@ export default function RandomImages() {
 
   const positions = useMemo(() => {
     return images.map(() => ({
-      x: centerRandom(),
-      y: centerRandom(),
-      rotate: Math.random() * 20 - 10,
+      x: randomPos(),
+      y: randomPos(),
+      rotate: Math.random() * 40 - 10,
       z: 1,
     }));
   }, []);
 
   return (
-    <section className="relative w-screen h-screen overflow-hidden">
+    <section className="relative w-screen h-screen max-md:translate-y-12 md:translate-x-24">
       {images.map((image, index) => (
         <motion.div
           key={index}
@@ -54,7 +53,7 @@ export default function RandomImages() {
             rotate: positions[index].rotate,
             zIndex: positions[index].z,
           }}
-          className="w-32 sm:w-28 md:w-32 lg:w-36 cursor-grab"
+          className="w-1/7 max-md:w-32 cursor-grab"
         >
           <Image
             src={image}

@@ -21,10 +21,10 @@ export default function YassiritaPage() {
       <Suspense fallback={<LoadingSkeleton />}>
         <main className="relative w-screen min-h-screen overflow-hidden bg-bg text-main">
           <Image
-            src="/images/yassirita/yassirita-12.webp"
+            src="/images/yassirita/yassirita-13.webp"
             alt="background"
             fill
-            className="absolute inset-0 w-full h-full object-cover pointer-events-none opacity-15 blur-xl"
+            className="absolute inset-0 w-full h-full object-cover pointer-events-none opacity-25 blur-xl z-0"
           />
 
           <TextAnimation
