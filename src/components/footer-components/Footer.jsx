@@ -16,7 +16,7 @@ export default function Footer() {
         text={
           "- Every time you Smile when you Remember me, a Flower blooms in Jannah -"
         }
-        className="text-7xl font-sec text-center"
+        className="text-7xl max-md:text-4xl font-sec text-center"
       />
     </footer>
   );
