@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 
 export default function SettingsPanel({
   isOpen,
+  isVisible,
   onClose,
   dockSettings,
   setDockSettings,
@@ -12,10 +13,24 @@ export default function SettingsPanel({
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20, scale: 0.9 }}
-      animate={{ opacity: 1, y: 0, scale: 1 }}
-      exit={{ opacity: 0, y: 20, scale: 0.9 }}
-      className="absolute bottom-24 right-4 w-80 bg-gradient-to-br from-slate-900/95 to-slate-800/95 backdrop-blur-xl rounded-3xl p-6 shadow-2xl border border-white/10"
+      initial={{ opacity: 0, scale: 0.9, y: 20 }}
+      animate={{
+        opacity: 1,
+        scale: 1,
+        y:
+          dockSettings.position === "bottom"
+            ? isVisible
+              ? 0
+              : 100
+            : isVisible
+            ? 0
+            : -100,
+      }}
+      exit={{ opacity: 0, scale: 0.9, y: 20 }}
+      transition={{ type: "spring", stiffness: 300, damping: 30 }}
+      className={`absolute left-1/2 -translate-x-1/2 w-80 bg-gradient-to-br from-slate-900/95 to-slate-800/95 backdrop-blur-xl rounded-3xl p-6 shadow-2xl border border-white/10 z-50 ${
+        dockSettings.position === "bottom" ? "bottom-4" : "top-4"
+      }`}
     >
       <div className="flex justify-between items-center mb-6">
         <h3 className="text-xl font-bold text-white">Dock Settings</h3>

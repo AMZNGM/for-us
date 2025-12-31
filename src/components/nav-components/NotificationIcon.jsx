@@ -4,12 +4,10 @@ import React, { useState, useEffect } from "react";
 import { auth } from "@/lib/firebase";
 import { collection, query, where, onSnapshot } from "firebase/firestore";
 import { db } from "@/lib/firebase";
-import NotificationPopup from "./NotificationPopup";
 import { Bell } from "lucide-react";
 
 export default function NotificationIcon() {
   const [unreadCount, setUnreadCount] = useState(0);
-  const [showPopup, setShowPopup] = useState(false);
 
   useEffect(() => {
     if (!auth.currentUser) return;
@@ -33,21 +31,9 @@ export default function NotificationIcon() {
     return unsubscribe;
   }, []);
 
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (showPopup && !event.target.closest(".notification-container")) {
-        setShowPopup(false);
-      }
-    };
-
-    document.addEventListener("click", handleClickOutside);
-    return () => document.removeEventListener("click", handleClickOutside);
-  }, [showPopup]);
-
   return (
     <div className="notification-container relative">
       <div
-        onClick={() => setShowPopup(!showPopup)}
         className="relative p-2 text-gray-600 hover:text-gray-900 transition-colors"
         title="Notifications"
       >
@@ -59,8 +45,6 @@ export default function NotificationIcon() {
           </span>
         )}
       </div>
-
-      {showPopup && <NotificationPopup onClose={() => setShowPopup(false)} />}
     </div>
   );
 }
