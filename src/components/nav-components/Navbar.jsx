@@ -115,7 +115,7 @@ export default function Navbar() {
     return () => document.removeEventListener("click", handleClickOutside);
   }, [showNotificationPopup]);
 
-  if (pathname === "/1" || pathname === "/login") {
+  if (pathname === "/" || pathname === "/login") {
     return null;
   }
 

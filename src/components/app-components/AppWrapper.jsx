@@ -5,7 +5,7 @@ import Banner from "@/components/app-components/banner";
 import LocomotiveScrollSetup from "@/components/app-components/LocomotiveScrollSetup";
 import Navbar from "@/components/nav-components/Navbar";
 import ScrollToTopBtn from "@/components/app-components/ScrollToTopBtn";
-// import FooterWrapper from '@/components/footer-components/FooterWrapper'
+import Footer from "../footer-components/Footer";
 
 export default function AppWrapper({ children }) {
   return (
@@ -17,7 +17,7 @@ export default function AppWrapper({ children }) {
         <Navbar />
         {children}
         <ScrollToTopBtn />
-        {/* <FooterWrapper /> */}
+        <Footer />
         {/* </ErrorBoundary> */}
       </AuthProvider>
     </AlertProvider>

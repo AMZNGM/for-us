@@ -85,7 +85,7 @@ export default function NotificationPopup({
       }}
       exit={{ opacity: 0, scale: 0.9, y: 20 }}
       transition={{ type: "spring", stiffness: 300, damping: 30 }}
-      className={`absolute right-1/2 w-80 bg-text/95 rounded-2xl shadow-2xl border border-main/10 z-50 p-4 ${
+      className={`absolute right-1/2 translate-x-18 w-80 bg-text/95 rounded-2xl shadow-2xl border border-main/10 z-50 p-4 ${
         dockSettings.position === "bottom" ? "bottom-18" : "top-18"
       }`}
     >
