@@ -4,6 +4,7 @@
 @import "tailwindcss";
 @theme {
   --color-main: #faf000;
+  --color-gold: #c9a159;
   --color-bg: #11140f;
   --color-text: #fdf6e9;
 

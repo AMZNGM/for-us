@@ -14,6 +14,7 @@ import {
   Palette,
   Plus,
 } from "lucide-react";
+import { useIsMobile } from "@/hooks/useIsMobile";
 import DockIcon from "@/components/nav-components/DockIcon";
 import NotificationIcon from "@/components/nav-components/NotificationIcon";
 import NotificationPopup from "@/components/nav-components/NotificationPopup";
@@ -23,6 +24,7 @@ import SettingsPanel from "@/components/nav-components/SettingsPanel";
 export default function Navbar() {
   const pathname = usePathname();
   const mouseX = useMotionValue(null);
+  const isMobile = useIsMobile(768);
   const [isVisible, setIsVisible] = useState(true);
   const [userState, setUserState] = useState(null);
   const [showNotificationPopup, setShowNotificationPopup] = useState(false);
@@ -35,6 +37,15 @@ export default function Navbar() {
     theme: "glass",
     autoHide: false,
   });
+
+  useEffect(() => {
+    const newPosition = isMobile ? "top" : "bottom";
+    setDockSettings((prev) => ({
+      ...prev,
+      position: newPosition,
+    }));
+  }, [isMobile]);
+
   const getThemeClasses = (returnType = "classes") => {
     const theme = dockSettings.theme;
     const themeClasses = {
@@ -49,6 +60,7 @@ export default function Navbar() {
     }
     return themeClasses[theme] || themeClasses.glass;
   };
+
   const navLinks = [
     { href: "/", icon: Home, label: "Home" },
     { href: "/feed", icon: Rss, label: "Feed" },
