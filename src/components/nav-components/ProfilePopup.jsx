@@ -14,7 +14,6 @@ import {
   getDocs,
 } from "firebase/firestore";
 import CloseBtn from "@/components/ui/buttons/CloseBtn";
-import LoadingSkeleton from "@/components/ui/LoadingSkeleton";
 
 export default function ProfilePopup({ onClose, dockSettings, isVisible }) {
   const user = auth.currentUser;
@@ -89,14 +88,13 @@ export default function ProfilePopup({ onClose, dockSettings, isVisible }) {
       }}
       exit={{ opacity: 0, scale: 0.9, y: 20 }}
       transition={{ type: "spring", stiffness: 300, damping: 30 }}
-      className={`absolute right-1/2 w-80 bg-bg/95 rounded-2xl shadow-2xl border border-main/10 z-50 ${
+      className={`absolute right-1/2 w-80 bg-bg/95 rounded-2xl shadow-2xl border border-gold/10 z-50 ${
         dockSettings.position === "bottom" ? "bottom-18" : "top-18"
       }`}
     >
       {loading ? (
-        <div className="bg-main rounded-2xl shadow-2xl z-50 p-4">
+        <div className="bg-gold rounded-2xl shadow-2xl z-50 p-4">
           <div className="text-center text-gray-500">Loading...</div>
-          <LoadingSkeleton className="w-full! h-full! z-50" />
         </div>
       ) : (
         <>
@@ -119,7 +117,7 @@ export default function ProfilePopup({ onClose, dockSettings, isVisible }) {
                     />
                   </Link>
                 ) : (
-                  <div className="w-16 h-16 bg-main rounded-full flex items-center justify-center">
+                  <div className="w-16 h-16 bg-gold rounded-full flex items-center justify-center">
                     <span className="text-bg/75 text-4xl">?</span>
                   </div>
                 )}

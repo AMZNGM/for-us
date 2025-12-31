@@ -23,9 +23,9 @@ export default memo(function MainBtn({
   ...rest
 }) {
   const variants = {
-    main: "bg-main text-bg hover:text-text duration-300",
-    outline: "text-main border-2 border-main",
-    ghost: "text-main",
+    main: "bg-gold text-bg hover:text-text duration-300",
+    outline: "text-gold border-2 border-gold",
+    ghost: "text-gold",
   };
 
   const sizes = {
@@ -35,10 +35,10 @@ export default memo(function MainBtn({
   };
 
   const styles = `
-    group relative w-fit rounded-md overflow-hidden
+    group relative rounded-md overflow-hidden
     ${variants[variant]}
     ${sizes[size]}
-    ${fullWidth ? "w-full" : ""}
+    ${fullWidth ? "w-full" : "w-fit"}
     ${
       disabled
         ? "opacity-50 cursor-not-allowed pointer-events-none"
@@ -57,10 +57,7 @@ export default memo(function MainBtn({
 
   const buttonContent = (
     <>
-      <TextAnimation
-        text={children}
-        className="relative font-bold font-sec z-10"
-      />
+      <TextAnimation text={children} className="relative font-bold z-10" />
       <motion.div className="absolute inset-0 w-full h-full bg-indigo-500 pointer-events-none z-0 translate-y-full group-hover:translate-y-0 duration-300" />
     </>
   );
@@ -94,7 +91,7 @@ export default memo(function MainBtn({
     );
 
   return (
-    <RippleEffect className="relative w-full">
+    <RippleEffect className={`relatiove font-sec ${className}`}>
       <motion.button
         {...motionProps}
         {...commonProps}

@@ -1,30 +1,20 @@
 "use client";
 
-import React, { useState } from "react";
-import PostLikeButton from "@/components/PostLikeButton";
-import usePost from "@/lib/usePost";
+import { useState } from "react";
 import { auth } from "@/lib/firebase";
 import { useAlert } from "@/lib/AlertContext";
+import usePost from "@/lib/usePost";
+import MainBtn from "@/components/ui/buttons/MainBtn";
+import RippleEffect from "@/components/ui/effects/RippleEffect";
 
-export default function PostCard({ post: initialPost, onOpen }) {
-  const { post, like, canEdit, edit, remove, notifyOwner, setPost } =
-    usePost(initialPost);
+export default function PostCard({ post: initialPost, index }) {
+  const alert = useAlert();
+  const { post, edit, remove, notifyOwner } = usePost(initialPost);
   const [editing, setEditing] = useState(false);
   const [draftTitle, setDraftTitle] = useState(post?.title || "");
   const [draftText, setDraftText] = useState(post?.text || "");
-  const [liked, setLiked] = useState(false);
-  const alertHook = useAlert();
 
   if (!post) return null;
-
-  const handleLike = async (next) => {
-    try {
-      await like(next);
-      setLiked(next);
-    } catch (err) {
-      console.error("Like failed", err);
-    }
-  };
 
   const handleSave = async () => {
     try {
@@ -32,7 +22,7 @@ export default function PostCard({ post: initialPost, onOpen }) {
       setEditing(false);
     } catch (err) {
       console.error("Edit failed", err);
-      const { show } = alertHook;
+      const { show } = alert;
       show && show(`Edit failed: ${err.message || err}`, "error");
     }
   };
@@ -44,105 +34,87 @@ export default function PostCard({ post: initialPost, onOpen }) {
           auth.currentUser?.displayName || auth.currentUser?.email
         } sent a notification about your post`
       );
-      const { show } = alertHook;
-      show && show("Notified post owner", "success");
+      const { show } = alert;
+      show && show("notified him dw sir 🚨", "success");
     } catch (err) {
       console.error("Notify failed", err);
-      const { show } = alertHook;
+      const { show } = alert;
       show && show("Notify failed", "error");
     }
   };
 
   return (
-    <article
-      className="post-card"
-      style={{ cursor: onOpen ? "pointer" : "default" }}
-    >
-      {post.imageUrl && (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
-          src={post.imageUrl}
-          alt={post.title || "post image"}
-          className="post-card__image"
-        />
-      )}
-
-      <div className="post-card__body">
-        {editing ? (
-          <div>
+    <article>
+      {editing ? (
+        <div className="space-y-4 mt-12">
+          <RippleEffect className="w-full">
             <input
               value={draftTitle}
               onChange={(e) => setDraftTitle(e.target.value)}
-              className="mb-2 w-full"
+              className="w-full px-3 py-2 bg-text/10 border border-text/20 rounded-lg text-text placeholder-text/50 outline-0"
             />
+          </RippleEffect>
+
+          <RippleEffect className="w-full">
             <textarea
               value={draftText}
               onChange={(e) => setDraftText(e.target.value)}
               rows={4}
-              className="w-full"
+              className="w-full px-3 py-2 bg-text/10 border border-text/20 rounded-lg text-text placeholder-text/50 outline-0"
             />
-            <div className="flex gap-2 mt-2">
-              <button
-                onClick={handleSave}
-                className="px-3 py-1 bg-green-600 text-white rounded"
-              >
-                Save
-              </button>
-              <button
-                onClick={() => setEditing(false)}
-                className="px-3 py-1 border rounded"
-              >
-                Cancel
-              </button>
-            </div>
-          </div>
-        ) : (
-          <>
-            <h3 className="post-card__title">{post.title}</h3>
-            {post.text && <p className="post-card__excerpt">{post.text}</p>}
-          </>
-        )}
+          </RippleEffect>
 
-        <div
-          className="post-card__meta mt-3"
-          style={{ display: "flex", gap: 12, alignItems: "center" }}
-        >
-          {/* <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
-            <PostPostLikeButton
-              postId={post.id}
-              initialCount={post.likes || 0}
-            />
-          </div> */}
-
-          <div style={{ marginLeft: "auto", display: "flex", gap: 8 }}>
-            {canEdit && (
-              <>
-                <button
-                  onClick={() => setEditing((s) => !s)}
-                  className="px-2 py-1 border rounded"
-                >
-                  {editing ? "Editing" : "Edit"}
-                </button>
-                <button
-                  onClick={async () => {
-                    if (confirm("Delete this post?")) {
-                      await remove();
-                    }
-                  }}
-                  className="px-2 py-1 border rounded text-red-600"
-                >
-                  Delete
-                </button>
-              </>
-            )}
-
-            {/* removed share button; replaced with notify button */}
-            <button onClick={handleNotify} className="px-2 py-1 border rounded">
-              Notify
-            </button>
+          <div className="flex items-center gap-2 mt-2">
+            <MainBtn onClick={handleSave}>Save</MainBtn>
+            <MainBtn onClick={() => setEditing(false)}>Cancel</MainBtn>
           </div>
         </div>
-      </div>
+      ) : (
+        <>
+          <RippleEffect
+            onClick={() => setEditing((s) => !s)}
+            className="group relative w-full flex flex-col items-center space-y-4 px-3 py-2 bg-text/10 border border-text/20 rounded-2xl text-text placeholder-text/50 outline-0 cursor-pointer"
+          >
+            {post.imageUrl && (
+              <img
+                src={post.imageUrl}
+                alt={post.title || "post image"}
+                className="w-1/4 rounded-2xl mt-2 -mb-6"
+              />
+            )}
+
+            <div className="w-full h-full bg-gold/20 rounded-2xl mt-12 py-4 px-5">
+              <h3 className="text-2xl">{post.title}</h3>
+              {post.text && <p className="text-sm">{post.text}</p>}
+            </div>
+
+            <span className="absolute top-4 right-4 bg-gold text-bg text-sm font-bold rounded-2xl py-1 px-3 opacity-0 group-hover:opacity-100 translate-x-10 group-hover:translate-x-0 transition-all">
+              Click To Edit
+            </span>
+
+            <span className="absolute top-4 left-4 bg-gold/50 text-bg text-sm font-bold rounded-2xl py-1 px-3">
+              {`${index + 1}`}
+            </span>
+          </RippleEffect>
+
+          <div className="flex justify-end items-center gap-4">
+            <MainBtn onClick={handleNotify} className="font-main! mt-2">
+              Notify
+            </MainBtn>
+
+            <MainBtn
+              onClick={async () => {
+                if (confirm("Delete this post?")) {
+                  await remove();
+                }
+              }}
+              className="font-main! text-red-600 mt-2"
+            >
+              Delete
+            </MainBtn>
+          </div>
+        </>
+      )}
     </article>
   );
 }

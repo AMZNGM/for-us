@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 export default function Alert({ open, message, type = "info", onClose }) {
   const color =
     type === "success"
-      ? "bg-main"
+      ? "bg-gold"
       : type === "error"
       ? "bg-red-600"
       : "bg-sky-600";
@@ -27,7 +27,7 @@ export default function Alert({ open, message, type = "info", onClose }) {
         >
           <div
             role="alert"
-            className={`${color} flex justify-center items-center text-text rounded-md shadow-lg gap-2 py-2 px-4 -translate-x-8`}
+            className={`${color} flex justify-center items-center text-bg rounded-md shadow-lg gap-2 py-2 px-4 -translate-x-8`}
           >
             <div className="flex-1 text-sm">{message}</div>
             <button

@@ -64,7 +64,7 @@ export default function LoginPage() {
             login();
           }}
         >
-          <div className="rounded-md shadow-sm space-y-2">
+          <div className="rounded-2xl shadow-sm space-y-2">
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
@@ -120,7 +120,7 @@ export default function LoginPage() {
             </motion.div>
           </div>
 
-          <MainBtn onClick={login} fullWidth>
+          <MainBtn onClick={login} className="w-full bg-main! rounded-md">
             Sign in
           </MainBtn>
         </motion.form>

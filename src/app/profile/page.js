@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { auth, db, onAuthChange, updateUserProfile } from "@/lib/firebase";
+import { useEffect, useState } from "react";
+import { db, onAuthChange, updateUserProfile } from "@/lib/firebase";
 import {
   doc,
   getDoc,
@@ -11,8 +11,9 @@ import {
   getDocs,
   orderBy,
 } from "firebase/firestore";
-import PostCard from "@/components/PostCard";
 import { useAlert } from "@/lib/AlertContext";
+import PostCard from "@/components/PostCard";
+import MainBtn from "@/components/ui/buttons/MainBtn";
 
 export default function ProfilePage() {
   const [userState, setUserState] = useState(null);
@@ -46,7 +47,6 @@ export default function ProfilePage() {
         setPreview(userState.photoURL);
       }
 
-      // load user posts
       const q = query(
         collection(db, "posts"),
         where("authorId", "==", userState.uid),
@@ -86,92 +86,81 @@ export default function ProfilePage() {
 
   if (!userState)
     return (
-      <div className="p-8">
-        Please <a href="/login">login</a> to view your profile.
+      <div className="fixed top-0 w-screen min-h-screen flex justify-center items-center bg-bg text-gold py-32 px-4 z-40">
+        Loading...
       </div>
     );
 
   return (
-    <div className="bg-bg text-bg min-h-screen p-8">
-      <div className="max-w-3xl mx-auto">
-        <h1 className="text-2xl font-bold">
-          {profile?.displayName || "Profile"}
-        </h1>
-        <div className="mb-6">
-          <div className="flex items-center gap-6">
-            <div>
-              <label className="block text-sm font-medium mb-2">Avatar</label>
-              <div className="mt-2">
-                {preview ? (
-                  <img
-                    src={preview}
-                    alt="avatar"
-                    className="w-24 h-24 rounded-full object-cover border-2 border-white/20"
-                  />
-                ) : (
-                  <div className="w-24 h-24 rounded-full bg-white/20 flex items-center justify-center">
-                    <span className="text-2xl">?</span>
-                  </div>
-                )}
-              </div>
+    <div className="relative w-screen min-h-screen max-w-3xl mx-auto bg-bg text-gold py-32 px-4">
+      <h1 className="text-2xl mb-4">{profile?.displayName || "Profile"}</h1>
+
+      <div className="flex items-center gap-6 mb-6">
+        <div className="mt-2">
+          {preview ? (
+            <img
+              src={preview}
+              alt="avatar"
+              className="w-24 h-24 rounded-full object-cover border-2 border-text/20"
+            />
+          ) : (
+            <div className="w-24 h-24 rounded-full bg-text/20 flex items-center justify-center">
+              <span className="text-2xl">?</span>
             </div>
-            <div className="flex-1">
-              <input
-                type="file"
-                accept="image/*"
-                onChange={(e) => {
-                  const f = e.target.files && e.target.files[0];
-                  setAvatarFile(f || null);
-                  if (f) setPreview(URL.createObjectURL(f));
-                }}
-                className="block w-full text-sm text-white/70 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-white/20 file:text-white hover:file:bg-white/30"
-              />
-            </div>
-          </div>
+          )}
         </div>
 
-        <div className="mb-6">
-          <label className="block text-sm font-medium mb-2">Display name</label>
+        <div className="flex-1">
           <input
-            value={profile?.displayName || ""}
-            onChange={(e) =>
-              setProfile((p) => ({ ...p, displayName: e.target.value }))
-            }
-            className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50"
+            type="file"
+            accept="image/*"
+            onChange={(e) => {
+              const f = e.target.files && e.target.files[0];
+              setAvatarFile(f || null);
+              if (f) setPreview(URL.createObjectURL(f));
+            }}
+            className="block text-sm text-text/70 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-text/20 file:text-text hover:file:bg-gold cursor-pointer"
           />
         </div>
-
-        <div className="mb-6">
-          <label className="block text-sm font-medium mb-2">Bio</label>
-          <textarea
-            value={profile?.bio || ""}
-            onChange={(e) => setProfile((p) => ({ ...p, bio: e.target.value }))}
-            className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50"
-            rows={3}
-          />
-        </div>
-
-        <div className="mb-8">
-          <button
-            onClick={saveProfile}
-            disabled={loading}
-            className="px-6 py-2 bg-white text-gray-900 rounded-lg font-semibold hover:bg-white/90 disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {loading ? "Saving..." : "Save Profile"}
-          </button>
-        </div>
-
-        <p className="text-sm text-gray-300">{profile?.bio}</p>
-
-        <section className="mt-6">
-          <h2 className="text-xl font-semibold">Your posts</h2>
-          <div className="mt-4 space-y-4">
-            {posts.map((p) => (
-              <PostCard key={p.id} post={p} />
-            ))}
-          </div>
-        </section>
       </div>
+
+      <div className="mb-6">
+        <label className="block text-sm font-medium mb-2">Name</label>
+        <input
+          value={profile?.displayName || ""}
+          onChange={(e) =>
+            setProfile((p) => ({ ...p, displayName: e.target.value }))
+          }
+          className="w-full px-3 py-2 bg-text/10 border border-text/20 rounded-lg text-text placeholder-text/50 outline-0"
+        />
+      </div>
+
+      <div className="mb-6">
+        <label className="block text-sm font-medium mb-2">Bio</label>
+        <textarea
+          value={profile?.bio || ""}
+          onChange={(e) => setProfile((p) => ({ ...p, bio: e.target.value }))}
+          className="w-full px-3 py-2 bg-text/10 border border-text/20 rounded-lg text-text placeholder-text/50 outline-0"
+          rows={3}
+        />
+      </div>
+
+      <div className="mb-8">
+        <MainBtn onClick={saveProfile} disabled={loading}>
+          {loading ? "Saving..." : "Save Profile"}
+        </MainBtn>
+      </div>
+
+      <section className="my-32">
+        <h2 className="text-xl font-semibold mb-8">
+          Your have ({posts.length}) Posts
+        </h2>
+        <div className="space-y-12">
+          {posts.map((p, index) => (
+            <PostCard key={p.id} post={p} index={index} />
+          ))}
+        </div>
+      </section>
     </div>
   );
 }

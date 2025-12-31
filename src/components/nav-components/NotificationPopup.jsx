@@ -12,7 +12,6 @@ import {
 } from "firebase/firestore";
 import { auth, db } from "@/lib/firebase";
 import { markNotificationRead } from "@/lib/notifications";
-import LoadingSkeleton from "@/components/ui/LoadingSkeleton";
 
 export default function NotificationPopup({
   onClose,
@@ -92,7 +91,6 @@ export default function NotificationPopup({
       {loading ? (
         <div className="bg-main rounded-2xl shadow-2xl z-50 p-4">
           <div className="text-center text-gray-500">Loading...</div>
-          <LoadingSkeleton className="w-full! h-full! z-50" />
         </div>
       ) : (
         <div>
