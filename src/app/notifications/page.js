@@ -12,6 +12,7 @@ import {
 import { db, onAuthChange } from "@/lib/firebase";
 import { markNotificationRead } from "@/lib/notifications";
 import ProtectedRoute from "@/components/ProtectedRoute";
+import GradientCursor from "@/components/ui/cursors/GradientCursor";
 import LoadingSkeleton from "@/components/LoadingSkeleton";
 import MainBtn from "@/components/ui/buttons/MainBtn";
 
@@ -95,6 +96,8 @@ export default function NotificationsPage() {
 
   return (
     <ProtectedRoute>
+      <GradientCursor />
+
       <div className="relative w-screen min-h-screen overflow-hidden bg-text text-bg">
         <div className="absolute inset-0 w-full h-full border-8 border-gold max-md:border-4 pointer-events-none z-10" />
 

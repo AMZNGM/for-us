@@ -1,29 +1,33 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { auth, createPost } from "@/lib/firebase";
+import { auth } from "@/lib/firebase";
+import { createPost } from "@/lib/firebase";
 import { useAlert } from "@/lib/AlertContext";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import MainBtn from "@/components/ui/buttons/MainBtn";
 
 export default function NewPostPage() {
   const alert = useAlert();
+  const router = useRouter();
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
   const [date, setDate] = useState("");
   const [image, setImage] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const submit = async (e) => {
     e && e.preventDefault();
 
     if (!auth.currentUser) {
-      alert?.show &&
-        alert.show("You must be logged in to publish a post.", "info");
+      alert.show("You must be logged in to publish a post.", "info");
       return;
     }
 
     try {
-      await createPost({
+      setLoading(true);
+      const postId = await createPost({
         title,
         text,
         date,
@@ -40,10 +44,14 @@ export default function NewPostPage() {
       setDate("");
       setImage(null);
       alert?.show && alert.show("Post created ❤️", "success");
+
+      router.push(`/post/${postId}`);
     } catch (err) {
       console.error("createPost error", err);
       alert?.show &&
         alert.show(`Failed to create post: ${err.message || err}`, "error");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -136,14 +144,25 @@ export default function NewPostPage() {
                     setDate("");
                     setImage(null);
                   }}
-                  className="font-main"
+                  className="font-main shadow"
                 >
                   Cancel
                 </MainBtn>
 
-                <MainBtn type="submit" className="font-main">
-                  Publish Post
-                </MainBtn>
+                <button
+                  type="submit"
+                  className="bg-gold hover:bg-indigo-500 hover:text-text font-bold rounded-lg shadow transition-colors cursor-pointer py-2 px-4"
+                  disabled={loading}
+                >
+                  {loading ? (
+                    <span className="flex items-center gap-2">
+                      <span className="animate-spin">⏳</span>
+                      Publishing...
+                    </span>
+                  ) : (
+                    "Publish"
+                  )}
+                </button>
               </div>
             </form>
           </div>

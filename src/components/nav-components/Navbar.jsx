@@ -64,7 +64,7 @@ export default function Navbar() {
 
   const navLinks = [
     { href: "/", icon: Home, label: "Home" },
-    { href: "/feed", icon: Rss, label: "Fact of the day" },
+    { href: "/factoftheday", icon: Rss, label: "Fact of the day" },
     { href: "/new-post", icon: Plus, label: "Add New fact" },
     { href: "/yassirasart", icon: Palette, label: "Yassira's Art" },
     { href: "/yassirita", icon: Sparkles, label: "Yassirita" },

@@ -134,7 +134,7 @@ export default function FlowersNav() {
         </Link>
 
         <Link
-          href="/feed"
+          href="/factoftheday"
           className="group relative flex flex-col justify-center"
         >
           <motion.span

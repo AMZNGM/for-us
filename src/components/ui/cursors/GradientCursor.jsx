@@ -79,7 +79,7 @@ export default function GradientCursor() {
               left: particle.x,
               top: particle.y,
             }}
-            className="fixed -translate-1/2 pointer-events-none mix-blend-screen"
+            className="fixed -translate-1/2 pointer-events-none mix-blend-screen z-5"
           >
             <div
               style={{
