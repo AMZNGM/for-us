@@ -13,6 +13,7 @@ import { db, onAuthChange } from "@/lib/firebase";
 import { markNotificationRead } from "@/lib/notifications";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import LoadingSkeleton from "@/components/LoadingSkeleton";
+import MainBtn from "@/components/ui/buttons/MainBtn";
 
 export default function NotificationsPage() {
   const router = useRouter();
@@ -99,27 +100,27 @@ export default function NotificationsPage() {
 
         <div className="max-w-4xl mx-auto py-8 px-4 max-md:py-22">
           <div className="flex justify-between items-center mb-4">
-            <h1 className="text-2xl font-bold">Notifications</h1>
-            {items.some((item) => !item.read) && (
-              <button
-                onClick={markAllRead}
-                className="bg-gold/15 text-gold rounded-2xl cursor-pointer py-2 px-4 hover:bg-gold/50 transition-colors"
-              >
-                Mark All Read
-              </button>
-            )}
+            <h1 className="text-2xl font-bold text-shadow-lg">Notifications</h1>
+            <MainBtn
+              onClick={markAllRead}
+              className="bg-gold/15 text-blue-500 font-main rounded-2xl"
+            >
+              Mark All Read
+            </MainBtn>
           </div>
-          <div className="mt-4 space-y-3">
+
+          <div className="space-y-3 mt-4">
             {items.length === 0 && (
-              <div className="text-sm text-gray-600">No notifications</div>
+              <h2 className="text-sm text-bg">No notifications</h2>
             )}
+
             {items.map((it) => (
               <div
                 key={it.id}
-                className={`p-3 shadow rounded flex justify-between items-center cursor-pointer transition-colors ${
-                  it.read ? "bg-white" : "bg-blue-50 border border-blue-200"
-                } hover:bg-gray-50`}
                 onClick={() => handleNotificationClick(it)}
+                className={`flex justify-between items-center shadow rounded hover:bg-gray-50 transition-colors cursor-pointer p-3 ${
+                  it.read ? "bg-white" : "bg-blue-50 border border-blue-200"
+                }`}
               >
                 <div className="flex-1">
                   <div
