@@ -75,7 +75,7 @@ export default function GlobalModal({ activeImage, setActiveImage }) {
                   currentIndex > 0 ? currentIndex - 1 : images.length - 1;
                 setActiveImage(images[prevIndex]);
               }}
-              className="absolute bottom-1/2 -left-4 max-md:-bottom-18 max-md:left-0 md:-translate-x-1/2 w-12 h-12 bg-gold/80 text-bg rounded-full flex justify-center items-center shadow-xl hover:bg-text transition-colors cursor-pointer"
+              className="absolute bottom-1/2 -left-4 max-md:-bottom-18 max-md:left-0 md:-translate-x-1/2 w-12 h-12 bg-main/80 text-bg rounded-full flex justify-center items-center shadow-xl hover:bg-text transition-colors cursor-pointer"
             >
               <ChevronLeft />
             </button>
@@ -87,19 +87,19 @@ export default function GlobalModal({ activeImage, setActiveImage }) {
                   currentIndex < images.length - 1 ? currentIndex + 1 : 0;
                 setActiveImage(images[nextIndex]);
               }}
-              className="absolute bottom-1/2 -right-4 max-md:-bottom-18 max-md:right-0 md:translate-x-1/2 w-12 h-12 bg-gold/80 text-bg rounded-full flex justify-center items-center shadow-xl hover:bg-text transition-colors cursor-pointer"
+              className="absolute bottom-1/2 -right-4 max-md:-bottom-18 max-md:right-0 md:translate-x-1/2 w-12 h-12 bg-main/80 text-bg rounded-full flex justify-center items-center shadow-xl hover:bg-text transition-colors cursor-pointer"
             >
               <ChevronRight />
             </button>
 
-            <div className="absolute -bottom-10 max-md:-bottom-16 left-1/2 -translate-x-1/2 bg-bg/60 text-gold px-3 py-1 rounded-full text-sm">
+            <div className="absolute -bottom-10 max-md:-bottom-16 left-1/2 -translate-x-1/2 bg-bg/60 text-main px-3 py-1 rounded-full text-sm">
               {images.indexOf(activeImage) + 1} / {images.length}
             </div>
           </motion.div>
 
           <button
             onClick={() => setActiveImage(null)}
-            className="absolute top-4 right-4 w-10 h-10 bg-gold text-bg rounded-full flex justify-center items-center shadow-xl hover:bg-text transition-colors cursor-pointer"
+            className="absolute top-4 right-4 w-10 h-10 bg-main text-bg rounded-full flex justify-center items-center shadow-xl hover:bg-text transition-colors cursor-pointer"
           >
             <XIcon />
           </button>

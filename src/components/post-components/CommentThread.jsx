@@ -28,7 +28,7 @@ export default function CommentThread({
       />
 
       {replyingTo === comment.id && (
-        <div className="mt-4 bg-gold/10 rounded-2xl p-4">
+        <div className="mt-4 bg-main/10 rounded-2xl p-4">
           <form
             onSubmit={(e) => handleReplySubmit(e, comment.id)}
             className="space-y-2"
@@ -39,7 +39,7 @@ export default function CommentThread({
               rows={3}
               value={replyText}
               placeholder="bebbeeebe, add a reply..."
-              className="w-full bg-gold/15 border-3 border-bg/10 rounded-md focus:outline-none focus:border-gold transition-colors px-3 py-2"
+              className="w-full bg-main/15 border-3 border-bg/10 rounded-md focus:outline-none focus:border-main transition-colors px-3 py-2"
             />
 
             <div className="flex gap-2">
@@ -56,7 +56,7 @@ export default function CommentThread({
               <button
                 type="button"
                 onClick={() => setReplyingTo(null)}
-                className="flex justify-center items-center bg-gold/25 text-red-500 hover:text-blue-700 rounded-2xl cursor-pointer hover:bg-gold/50 transition-colors p-2"
+                className="flex justify-center items-center bg-main/25 text-red-500 hover:text-blue-700 rounded-2xl cursor-pointer hover:bg-main/50 transition-colors p-2"
               >
                 Cancel
               </button>

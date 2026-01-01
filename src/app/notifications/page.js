@@ -99,14 +99,14 @@ export default function NotificationsPage() {
       <GradientCursor />
 
       <div className="relative w-screen min-h-screen overflow-hidden bg-text text-bg">
-        <div className="absolute inset-0 w-full h-full border-8 border-gold max-md:border-4 pointer-events-none z-10" />
+        <div className="absolute inset-0 w-full h-full border-8 border-main max-md:border-4 pointer-events-none z-10" />
 
         <div className="max-w-4xl mx-auto py-8 px-4 max-md:py-22">
           <div className="flex justify-between items-center mb-4">
             <h1 className="text-2xl font-bold text-shadow-lg">Notifications</h1>
             <MainBtn
               onClick={markAllRead}
-              className="bg-gold/15 text-blue-500 font-main rounded-2xl"
+              className="bg-main/15 text-blue-500 font-main rounded-2xl"
             >
               Mark All Read
             </MainBtn>

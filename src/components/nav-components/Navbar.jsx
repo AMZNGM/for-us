@@ -36,7 +36,6 @@ export default function Navbar() {
     position: "bottom",
     theme: "glass",
     autoHide: false,
-    color: "yellow",
   });
 
   useEffect(() => {
@@ -173,12 +172,7 @@ export default function Navbar() {
                 isActive={isActive}
                 scale={dockSettings.scale}
               >
-                <Icon
-                  strokeWidth={1.5}
-                  className={`w-5 h-5 ${
-                    dockSettings.color === "gold" ? "text-gold" : "text-main"
-                  }`}
-                />
+                <Icon strokeWidth={1.5} className="w-5 h-5 text-main" />
 
                 <div
                   className={`absolute left-1/2 -translate-x-1/2 bg-bg text-xs rounded-lg whitespace-nowrap pointer-events-none opacity-0 group-hover:opacity-100 px-3 py-1 ${
@@ -194,11 +188,7 @@ export default function Navbar() {
           );
         })}
 
-        <div
-          className={`w-px h-8 mx-1 ${
-            dockSettings.color === "gold" ? "bg-gold/25" : "bg-text/25"
-          }`}
-        />
+        <div className="w-px h-8 mx-1 bg-text/25" />
 
         {userState && (
           <>
@@ -279,12 +269,7 @@ export default function Navbar() {
             scale={dockSettings.scale}
             onClick={() => setshowSettings(!showSettings)}
           >
-            <Settings
-              strokeWidth={1.5}
-              className={`w-5 h-5 ${
-                dockSettings.color === "gold" ? "text-gold" : "text-main"
-              }`}
-            />
+            <Settings strokeWidth={1.5} className="w-5 h-5 text-main" />
           </DockIcon>
 
           <div

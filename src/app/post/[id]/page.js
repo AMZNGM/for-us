@@ -178,9 +178,9 @@ export default function PostPage({ params }) {
     return (
       <ProtectedRoute>
         <div className="relative w-screen h-screen overflow-hidden bg-text flex justify-center items-center">
-          <div className="absolute inset-0 w-full h-full border-8 border-gold max-md:border-4 pointer-events-none z-10" />
+          <div className="absolute inset-0 w-full h-full border-8 border-main max-md:border-4 pointer-events-none z-10" />
 
-          <p className="text-red-600 text-2xl bg-gold rounded-2xl p-4 animate-bounce">
+          <p className="text-red-600 text-2xl bg-main rounded-2xl p-4 animate-bounce">
             {error || "Post not found"}
           </p>
         </div>
@@ -191,7 +191,7 @@ export default function PostPage({ params }) {
   return (
     <ProtectedRoute>
       <div className="relative w-screen min-h-screen overflow-hidden bg-text text-bg">
-        <div className="absolute inset-0 w-full h-full border-8 border-gold max-md:border-4 pointer-events-none z-10" />
+        <div className="absolute inset-0 w-full h-full border-8 border-main max-md:border-4 pointer-events-none z-10" />
 
         <div className="max-w-4xl mx-auto py-8 px-4 max-md:py-22">
           <PostSection

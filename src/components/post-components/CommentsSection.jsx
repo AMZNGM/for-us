@@ -115,7 +115,7 @@ export default function CommentsSection({
             required
             value={newComment}
             placeholder="bebbeeebe, Añadir un comentario..."
-            className="w-full bg-gold/15 border-3 border-bg/10 rounded-2xl focus:outline-none focus:border-gold transition-colors px-3 py-2"
+            className="w-full bg-main/15 border-3 border-bg/10 rounded-2xl focus:outline-none focus:border-main transition-colors px-3 py-2"
           />
 
           <MainBtn

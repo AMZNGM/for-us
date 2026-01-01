@@ -34,7 +34,7 @@ export default function PostSection({
           </h2>
 
           {post.date ? (
-            <div className="font-medium text-bg/75 bg-gold/10 px-3 py-1 rounded-full inline-block">
+            <div className="font-medium text-bg/75 bg-main/10 px-3 py-1 rounded-full inline-block">
               {new Date(post.date).toLocaleDateString("en-US", {
                 year: "numeric",
                 month: "long",
@@ -42,7 +42,7 @@ export default function PostSection({
               })}
             </div>
           ) : (
-            <div className="text-sm font-medium text-bg/75 bg-gold/10 px-3 py-1 rounded-full inline-block">
+            <div className="text-sm font-medium text-bg/75 bg-main/10 px-3 py-1 rounded-full inline-block">
               No Date
             </div>
           )}
@@ -54,7 +54,7 @@ export default function PostSection({
           onChange={(e) => setDraftTitle(e.target.value)}
           value={draftTitle}
           placeholder="Post title"
-          className="w-full bg-gold/25 text-bg/75 text-3xl font-bold border border-text/20 underline underline-offset-8 rounded-lg shadow-2xs placeholder-gold/50 outline-none mb-4 px-3 py-2"
+          className="w-full bg-main/25 text-bg/75 text-3xl font-bold border border-text/20 underline underline-offset-8 rounded-lg shadow-2xs placeholder-main/50 outline-none mb-4 px-3 py-2"
         />
       ) : (
         <h1 className="text-3xl font-bold text-bg capitalize mb-4">
@@ -67,7 +67,7 @@ export default function PostSection({
           type="date"
           onChange={(e) => setDraftDate(e.target.value)}
           value={draftDate}
-          className="w-full bg-gold/25 text-bg/75 border border-text/20 rounded-lg shadow-2xs placeholder-gold/50 outline-none mb-4 px-3 py-2"
+          className="w-full bg-main/25 text-bg/75 border border-text/20 rounded-lg shadow-2xs placeholder-main/50 outline-none mb-4 px-3 py-2"
         />
       )}
 
@@ -88,10 +88,10 @@ export default function PostSection({
           value={draftText}
           rows={6}
           placeholder="Post content"
-          className="w-full bg-gold/25 text-bg/75 font-bold border border-text/20 rounded-lg shadow-2xs placeholder-gold/50 outline-none mb-4 px-3 py-2"
+          className="w-full bg-main/25 text-bg/75 font-bold border border-text/20 rounded-lg shadow-2xs placeholder-main/50 outline-none mb-4 px-3 py-2"
         />
       ) : (
-        <p className="text-bg leading-relaxed bg-gold/15 rounded-2xl p-3 wrap-break-word overflow-wrap-anywhere">
+        <p className="text-bg leading-relaxed bg-main/15 rounded-2xl p-3 wrap-break-word overflow-wrap-anywhere">
           {post.text}
         </p>
       )}
@@ -113,14 +113,14 @@ export default function PostSection({
                 }
                 setEditing(!editing);
               }}
-              className="bg-gold/15 text-blue-500 rounded-2xl cursor-pointer py-2 px-3 hover:bg-gold/50 transition-colors"
+              className="bg-main/15 text-blue-500 rounded-2xl cursor-pointer py-2 px-3 hover:bg-main/50 transition-colors"
             >
               {editing ? "Cancel" : "Edit"}
             </button>
 
             <button
               onClick={handleDelete}
-              className="bg-gold/15 text-red-500 rounded-2xl cursor-pointer py-2 px-3 hover:bg-gold/50 transition-colors"
+              className="bg-main/15 text-red-500 rounded-2xl cursor-pointer py-2 px-3 hover:bg-main/50 transition-colors"
             >
               Delete
             </button>

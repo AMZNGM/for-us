@@ -23,9 +23,9 @@ export default memo(function MainBtn({
   ...rest
 }) {
   const variants = {
-    main: "bg-gold text-bg hover:text-text duration-300",
-    outline: "text-gold border-2 border-gold",
-    ghost: "text-gold",
+    main: "bg-main text-bg hover:text-text duration-300",
+    outline: "text-main border-2 border-main",
+    ghost: "text-main",
   };
 
   const sizes = {

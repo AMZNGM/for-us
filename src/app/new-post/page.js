@@ -58,7 +58,7 @@ export default function NewPostPage() {
   return (
     <ProtectedRoute>
       <div className="relative w-screen min-h-screen overflow-hidden bg-text text-bg">
-        <div className="absolute inset-0 w-full h-full border-8 border-gold max-md:border-4 pointer-events-none z-10" />
+        <div className="absolute inset-0 w-full h-full border-8 border-main max-md:border-4 pointer-events-none z-10" />
 
         <div className="max-w-4xl mx-auto py-24 px-4 max-md:py-22">
           <h1 className="text-3xl font-bold text-bg text-shadow-lg mb-8">
@@ -78,7 +78,7 @@ export default function NewPostPage() {
                   type="text"
                   id="title"
                   name="title"
-                  className="w-full bg-gold/15 border border-bg/50 rounded-lg focus:outline-none focus:border-gold focus:ring-2 focus:ring-gold transition-colors px-3 py-2"
+                  className="w-full bg-main/15 border border-bg/50 rounded-lg focus:outline-none focus:border-main focus:ring-2 focus:ring-main transition-colors px-3 py-2"
                   placeholder="Enter your post title"
                   onChange={(e) => setTitle(e.target.value)}
                 />
@@ -95,7 +95,7 @@ export default function NewPostPage() {
                   type="date"
                   id="date"
                   name="date"
-                  className="w-full bg-gold/15 border border-bg/50 rounded-lg focus:outline-none focus:border-gold focus:ring-2 focus:ring-gold transition-colors px-3 py-2"
+                  className="w-full bg-main/15 border border-bg/50 rounded-lg focus:outline-none focus:border-main focus:ring-2 focus:ring-main transition-colors px-3 py-2"
                   onChange={(e) => setDate(e.target.value)}
                 />
               </div>
@@ -111,7 +111,7 @@ export default function NewPostPage() {
                   id="content"
                   name="content"
                   rows={8}
-                  className="w-full bg-gold/15 border border-bg/50 rounded-lg focus:outline-none focus:border-gold focus:ring-2 focus:ring-gold transition-colors px-3 py-2"
+                  className="w-full bg-main/15 border border-bg/50 rounded-lg focus:outline-none focus:border-main focus:ring-2 focus:ring-main transition-colors px-3 py-2"
                   placeholder="Write your post content here..."
                   onChange={(e) => setText(e.target.value)}
                 />
@@ -129,7 +129,7 @@ export default function NewPostPage() {
                   id="image"
                   name="image"
                   accept="image/*"
-                  className="w-full bg-gold/15 border border-bg/50 rounded-lg focus:outline-none focus:border-gold focus:ring-2 focus:ring-gold hover:bg-gold/50 transition-colors px-3 py-2 cursor-pointer"
+                  className="w-full bg-main/15 border border-bg/50 rounded-lg focus:outline-none focus:border-main focus:ring-2 focus:ring-main hover:bg-main/50 transition-colors px-3 py-2 cursor-pointer"
                   onChange={(e) =>
                     setImage(e.target.files && e.target.files[0])
                   }
@@ -151,7 +151,7 @@ export default function NewPostPage() {
 
                 <button
                   type="submit"
-                  className="bg-gold hover:bg-indigo-500 hover:text-text font-bold rounded-lg shadow transition-colors cursor-pointer py-2 px-4"
+                  className="bg-main hover:bg-indigo-500 hover:text-text font-bold rounded-lg shadow transition-colors cursor-pointer py-2 px-4"
                   disabled={loading}
                 >
                   {loading ? (

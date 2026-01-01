@@ -42,7 +42,7 @@ export default function CommentItem({ postId, comment, onReplyClick }) {
   }
 
   return (
-    <div className="relative bg-gold/25 rounded-2xl shadow-2xs p-4">
+    <div className="relative bg-main/25 rounded-2xl shadow-2xs p-4">
       <div className="flex items-center gap-2">
         {comment.authorAvatar ? (
           <img
@@ -55,7 +55,7 @@ export default function CommentItem({ postId, comment, onReplyClick }) {
             }}
           />
         ) : (
-          <div className="w-8 h-8 bg-gold rounded-full flex items-center justify-center">
+          <div className="w-8 h-8 bg-main rounded-full flex items-center justify-center">
             <span className="text-white text-sm font-bold">
               {comment.authorName?.charAt(0)?.toUpperCase() || "A"}
             </span>
@@ -75,10 +75,10 @@ export default function CommentItem({ postId, comment, onReplyClick }) {
               onChange={(e) => setText(e.target.value)}
               rows={2}
               placeholder="bebbeeebe, add a comment..."
-              className="w-full bg-gold/15 border-3 border-bg/10 rounded-md focus:outline-none focus:border-gold transition-colors px-3 py-2"
+              className="w-full bg-main/15 border-3 border-bg/10 rounded-md focus:outline-none focus:border-main transition-colors px-3 py-2"
             />
           ) : (
-            <p className="text-bg bg-gold/15 rounded-2xl p-3">{comment.text}</p>
+            <p className="text-bg bg-main/15 rounded-2xl p-3">{comment.text}</p>
           )}
 
           <div className="flex justify-between gap-4">
@@ -91,7 +91,7 @@ export default function CommentItem({ postId, comment, onReplyClick }) {
 
               <button
                 onClick={() => onReplyClick && onReplyClick(comment.id)}
-                className="flex justify-center items-center bg-gold/25 text-blue-500 hover:text-blue-700 rounded-2xl cursor-pointer hover:bg-gold/50 transition-colors p-2"
+                className="flex justify-center items-center bg-main/25 text-blue-500 hover:text-blue-700 rounded-2xl cursor-pointer hover:bg-main/50 transition-colors p-2"
               >
                 Reply
               </button>
@@ -103,7 +103,7 @@ export default function CommentItem({ postId, comment, onReplyClick }) {
                   <button
                     onClick={handleSave}
                     disabled={loading}
-                    className={`flex justify-center items-center bg-gold/25 text-green-500 text-sm hover:text-blue-700 rounded-2xl cursor-pointer hover:bg-gold/50 transition-colors p-2 ${
+                    className={`flex justify-center items-center bg-main/25 text-green-500 text-sm hover:text-blue-700 rounded-2xl cursor-pointer hover:bg-main/50 transition-colors p-2 ${
                       loading ? "opacity-50 cursor-not-allowed" : ""
                     }`}
                   >
@@ -116,7 +116,7 @@ export default function CommentItem({ postId, comment, onReplyClick }) {
                 ) : (
                   <button
                     onClick={() => setEditing(true)}
-                    className="flex justify-center items-center bg-gold/25 text-blue-500 text-sm hover:text-blue-700 rounded-2xl cursor-pointer hover:bg-gold/50 transition-colors p-2"
+                    className="flex justify-center items-center bg-main/25 text-blue-500 text-sm hover:text-blue-700 rounded-2xl cursor-pointer hover:bg-main/50 transition-colors p-2"
                   >
                     Edit
                   </button>
@@ -124,7 +124,7 @@ export default function CommentItem({ postId, comment, onReplyClick }) {
 
                 <button
                   onClick={handleDelete}
-                  className="flex justify-center items-center bg-gold/25 text-red-500 text-sm hover:text-blue-700 rounded-2xl cursor-pointer hover:bg-gold/50 transition-colors p-2"
+                  className="flex justify-center items-center bg-main/25 text-red-500 text-sm hover:text-blue-700 rounded-2xl cursor-pointer hover:bg-main/50 transition-colors p-2"
                 >
                   Delete
                 </button>

@@ -86,7 +86,7 @@ export default function PostLikeButton({ postId, postAuthorId }) {
     <button
       onClick={toggle}
       disabled={loading}
-      className="bg-gold/15 rounded-2xl text-red-500 cursor-pointer py-2 px-3 hover:bg-gold/50 transition-colors"
+      className="bg-main/15 rounded-2xl text-red-500 cursor-pointer py-2 px-3 hover:bg-main/50 transition-colors"
     >
       <span className="me-2">{liked ? "♥" : "♡"}</span>
       <span className="text-sm text-bg">{label}</span>

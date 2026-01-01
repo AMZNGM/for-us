@@ -47,7 +47,7 @@ export default function FactOfTheDayPage() {
           className="absolute inset-0 w-full h-full object-cover pointer-events-none opacity-15 blur-xl z-0"
         />
 
-        <div className="absolute inset-0 w-full h-full border-8 border-gold max-md:border-4 pointer-events-none z-10" />
+        <div className="absolute inset-0 w-full h-full border-8 border-main max-md:border-4 pointer-events-none z-10" />
 
         <div
           className={`mx-auto py-24 px-4
@@ -55,12 +55,12 @@ export default function FactOfTheDayPage() {
             `}
         >
           <div className="flex justify-between items-center mb-8">
-            <h1 className="text-5xl text-gold font-sec">Fact of the day</h1>
+            <h1 className="text-5xl text-main font-sec">Fact of the day</h1>
 
             <div className="flex items-center gap-4">
               <button
                 onClick={() => setIsGridView(!isGridView)}
-                className="text-gold bg-gold/15 rounded-full px-4 py-2 hover:bg-gold/25 transition-colors flex items-center gap-2 cursor-pointer"
+                className="text-main bg-main/15 rounded-full px-4 py-2 hover:bg-main/25 transition-colors flex items-center gap-2 cursor-pointer"
               >
                 {isGridView ? (
                   <>
@@ -74,7 +74,7 @@ export default function FactOfTheDayPage() {
                   </>
                 )}
               </button>
-              <div className="text-gold bg-gold/15 rounded-full px-4 py-2">
+              <div className="text-main bg-main/15 rounded-full px-4 py-2">
                 {posts.length} {posts.length === 1 ? "Post" : "Posts"}
               </div>
             </div>
@@ -99,13 +99,13 @@ export default function FactOfTheDayPage() {
                   className="bg-text flex flex-col justify-between shadow rounded-2xl hover:shadow-xl transition-shadow overflow-hidden cursor-pointer"
                 >
                   <div>
-                    <div className="border-b border-gold p-4">
+                    <div className="border-b border-main p-4">
                       <div className="flex justify-between items-center space-x-3">
                         <div className="flex justify-center items-center gap-2">
                           <img
                             src={post.authorAvatar}
                             alt="Author avatar"
-                            className="w-10 h-10 bg-gold object-cover rounded-full"
+                            className="w-10 h-10 bg-main object-cover rounded-full"
                           />
 
                           <p className="text-bg font-medium">
@@ -116,7 +116,7 @@ export default function FactOfTheDayPage() {
                         </div>
 
                         {post.date ? (
-                          <div className="inline-block text-bg bg-gold/10 text-sm rounded-full px-2 py-1">
+                          <div className="inline-block text-bg bg-main/10 text-sm rounded-full px-2 py-1">
                             {new Date(post.date).toLocaleDateString("en-US", {
                               year: "numeric",
                               month: "short",
@@ -143,7 +143,7 @@ export default function FactOfTheDayPage() {
                       </div>
                     ) : (
                       <div
-                        className={`bg-gold text-bg flex justify-center items-center
+                        className={`bg-main text-bg flex justify-center items-center
                       ${isGridView ? "h-72" : "h-120"}
                     `}
                       >
@@ -170,7 +170,7 @@ export default function FactOfTheDayPage() {
                     </div>
                   </div>
 
-                  <div className="flex justify-between items-center p-4 border-t border-gold">
+                  <div className="flex justify-between items-center p-4 border-t border-main">
                     <div className="flex items-center space-x-3">
                       <div onClick={(e) => e.stopPropagation()}>
                         <PostLikeButton

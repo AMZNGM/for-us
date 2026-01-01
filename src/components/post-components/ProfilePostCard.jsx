@@ -85,16 +85,16 @@ export default function ProfilePostCard({ post: initialPost, index }) {
               />
             )}
 
-            <div className="w-full h-full bg-gold/20 rounded-2xl mt-12 py-4 px-5">
+            <div className="w-full h-full bg-main/20 rounded-2xl mt-12 py-4 px-5">
               <h3 className="text-2xl">{post.title}</h3>
               {post.text && <p className="text-sm">{post.text}</p>}
             </div>
 
-            <span className="absolute top-4 right-4 bg-gold text-bg text-sm font-bold rounded-2xl py-1 px-3 opacity-0 group-hover:opacity-100 translate-x-10 group-hover:translate-x-0 transition-all">
+            <span className="absolute top-4 right-4 bg-main text-bg text-sm font-bold rounded-2xl py-1 px-3 opacity-0 group-hover:opacity-100 translate-x-10 group-hover:translate-x-0 transition-all">
               Click To Edit
             </span>
 
-            <span className="absolute top-4 left-4 bg-gold/50 text-bg text-sm font-bold rounded-2xl py-1 px-3">
+            <span className="absolute top-4 left-4 bg-main/50 text-bg text-sm font-bold rounded-2xl py-1 px-3">
               {`${index + 1}`}
             </span>
           </RippleEffect>

@@ -103,10 +103,10 @@ export function ArtistaImageGrid() {
 
   return (
     <div className="relative w-full min-h-screen overflow-hidden bg-text text-bg py-24 px-4">
-      <div className="absolute inset-0 w-full h-full border-8 border-gold max-md:border-4 pointer-events-none z-10" />
+      <div className="absolute inset-0 w-full h-full border-8 border-main max-md:border-4 pointer-events-none z-10" />
 
       <div className="relative md:w-fit md:mx-auto">
-        <h2 className="relative font-sec text-8xl max-md:text-7xl text-center rounded-2xl border border-gold bg-gold z-20 py-8 px-4">
+        <h2 className="relative font-sec text-8xl max-md:text-7xl text-center rounded-2xl border border-main bg-main z-20 py-8 px-4">
           Artista Yassirita
         </h2>
 

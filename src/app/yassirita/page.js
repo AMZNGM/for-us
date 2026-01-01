@@ -19,7 +19,7 @@ export default function YassiritaPage() {
   return (
     <ProtectedRoute>
       <Suspense fallback={<LoadingSkeleton />}>
-        <main className="relative w-screen min-h-screen overflow-hidden bg-bg text-gold">
+        <main className="relative w-screen min-h-screen overflow-hidden bg-bg text-main">
           <Image
             src="/images/yassirita/yassirita-12.webp"
             alt="background"

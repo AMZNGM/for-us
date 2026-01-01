@@ -12,6 +12,17 @@ export default function SettingsPanel({
 }) {
   if (!isOpen) return null;
 
+  const toggleColor = () => {
+    const currentColor = getComputedStyle(document.documentElement)
+      .getPropertyValue("--color-main")
+      .trim();
+    if (currentColor === "#faf000") {
+      document.documentElement.style.setProperty("--color-main", "#c9a159");
+    } else {
+      document.documentElement.style.setProperty("--color-main", "#faf000");
+    }
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.9, y: 20 }}
@@ -29,8 +40,7 @@ export default function SettingsPanel({
       }}
       exit={{ opacity: 0, scale: 0.9, y: 20 }}
       transition={{ type: "spring", stiffness: 300, damping: 30 }}
-      className={`absolute right-1/2 w-80 bg-bg/95 rounded-2xl shadow-2xl border z-50 p-4
-        ${dockSettings.color === "gold" ? "border-gold/10" : "border-main/10"}
+      className={`absolute right-1/2 w-80 bg-bg/95 rounded-2xl shadow-2xl border border-main/10 z-50 p-4
         ${dockSettings.position === "bottom" ? "bottom-18" : "top-18"}`}
     >
       <div className="flex justify-between items-center mb-6">
@@ -55,8 +65,7 @@ export default function SettingsPanel({
                 scale: parseInt(e.target.value) / 100,
               }))
             }
-            className={`w-full h-2 bg-main/20 rounded-lg appearance-none cursor-grab active:cursor-grabbing
-              ${dockSettings.color === "gold" ? "accent-gold" : "accent-main"}
+            className={`w-full h-2 bg-main/20 accent-main rounded-lg appearance-none cursor-grab active:cursor-grabbing
               `}
           />
         </div>
@@ -72,13 +81,12 @@ export default function SettingsPanel({
                 onClick={() =>
                   setDockSettings((s) => ({ ...s, position: pos }))
                 }
-                className={`flex-1 rounded-xl transition-all cursor-pointer py-2 px-4
+                className={`flex-1 bg rounded-xl transition-all cursor-pointer py-2 px-4
                   ${
                     dockSettings.position === pos
                       ? "text-bg"
                       : "bg-text/10 text-text/70 hover:bg-text/20"
                   }
-                  ${dockSettings.color === "gold" ? "bg-gold" : "bg-main"}
                 `}
               >
                 {pos.charAt(0).toUpperCase() + pos.slice(1)}
@@ -94,14 +102,12 @@ export default function SettingsPanel({
               <button
                 key={theme}
                 onClick={() => setDockSettings((s) => ({ ...s, theme }))}
-                className={`flex-1 text-sm rounded-xl transition-all cursor-pointer py-2 px-4
+                className={`flex-1 bg-main text-sm rounded-xl transition-all cursor-pointer py-2 px-4
                    ${
                      dockSettings.theme === theme
                        ? "text-bg"
                        : "bg-text/10 text-text/70 hover:bg-text/20"
                    }
-                     ${dockSettings.color === "gold" ? "bg-gold" : "bg-main"}
-
                 `}
               >
                 {theme.charAt(0).toUpperCase() + theme.slice(1)}
@@ -116,13 +122,15 @@ export default function SettingsPanel({
             {["yellow", "gold"].map((color) => (
               <button
                 key={color}
-                onClick={() => setDockSettings((s) => ({ ...s, color }))}
-                className={`flex-1 text-sm rounded-xl transition-all cursor-pointer py-2 px-4 ${
+                onClick={() => {
+                  toggleColor();
+                  setDockSettings((s) => ({ ...s, color }));
+                }}
+                className={`flex-1 bg-main text-sm rounded-xl transition-all cursor-pointer py-2 px-4 ${
                   dockSettings.color === color
                     ? "text-bg"
                     : "bg-text/10 text-text/70 hover:bg-text/20"
                 }
-                ${dockSettings.color === "gold" ? "bg-gold" : "bg-main"}
                 `}
               >
                 {color.charAt(0).toUpperCase() + color.slice(1)}
@@ -137,10 +145,9 @@ export default function SettingsPanel({
             onClick={() =>
               setDockSettings((s) => ({ ...s, autoHide: !s.autoHide }))
             }
-            className={`w-12 h-6 rounded-full transition-colors relative ${
+            className={`w-12 h-6 bg-main rounded-full transition-colors relative ${
               dockSettings.autoHide ? "" : "bg-text/20"
             }
-            ${dockSettings.color === "gold" ? "bg-gold" : "bg-main"}
             `}
           >
             <motion.div

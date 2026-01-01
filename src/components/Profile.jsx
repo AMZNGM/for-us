@@ -90,7 +90,7 @@ export default function Profile() {
 
   return (
     <ProtectedRoute>
-      <div className="relative w-screen min-h-screen max-w-3xl mx-auto bg-bg text-gold py-32 px-4">
+      <div className="relative w-screen min-h-screen max-w-3xl mx-auto bg-bg text-main py-32 px-4">
         <LoadingScreen />
 
         <h1 className="text-2xl mb-4">{profile?.displayName || "Profile"}</h1>
@@ -119,7 +119,7 @@ export default function Profile() {
                 setAvatarFile(f || null);
                 if (f) setPreview(URL.createObjectURL(f));
               }}
-              className="block text-sm text-text/70 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-text/20 file:text-text hover:file:bg-gold cursor-pointer"
+              className="block text-sm text-text/70 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-text/20 file:text-text hover:file:bg-main cursor-pointer"
             />
           </div>
         </div>
