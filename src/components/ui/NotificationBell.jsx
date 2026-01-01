@@ -6,12 +6,15 @@ import {
   fetchNotificationsForUser,
   markNotificationRead,
 } from "@/lib/notifications";
+import { useAlert } from "@/lib/AlertContext";
 import Link from "next/link";
 
 export default function NotificationBell() {
   const [count, setCount] = useState(0);
   const [open, setOpen] = useState(false);
   const [items, setItems] = useState([]);
+  const [previousItems, setPreviousItems] = useState([]);
+  const alert = useAlert();
 
   useEffect(() => {
     const user = auth.currentUser;
@@ -22,9 +25,21 @@ export default function NotificationBell() {
       if (!mounted) return;
       setItems(notes);
       setCount(notes.filter((n) => !n.read).length);
+
+      // Find new notifications and show alerts for each
+      const newNotifications = notes.filter(
+        (newNote) => !previousItems.find((oldNote) => oldNote.id === newNote.id)
+      );
+
+      // Show alert for each new notification
+      newNotifications.forEach((notification) => {
+        alert?.show && alert.show(notification.message, "success");
+      });
+
+      setPreviousItems(notes);
     })();
     return () => (mounted = false);
-  }, []);
+  }, [previousItems, alert]);
 
   async function openAndMark(id) {
     await markNotificationRead(id);

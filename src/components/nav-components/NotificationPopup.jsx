@@ -84,12 +84,18 @@ export default function NotificationPopup({
       }}
       exit={{ opacity: 0, scale: 0.9, y: 20 }}
       transition={{ type: "spring", stiffness: 300, damping: 30 }}
-      className={`absolute right-1/2 translate-x-18 w-80 bg-text/95 rounded-2xl shadow-2xl border border-main/10 z-50 p-4 ${
+      className={`absolute right-1/2 translate-x-18 w-80 bg-text/95 rounded-2xl shadow-2xl border ${
+        dockSettings.color === "gold" ? "border-gold/10" : "border-main/10"
+      } z-50 p-4 ${
         dockSettings.position === "bottom" ? "bottom-18" : "top-18"
       }`}
     >
       {loading ? (
-        <div className="bg-main rounded-2xl shadow-2xl z-50 p-4">
+        <div
+          className={`${
+            dockSettings.color === "gold" ? "bg-gold" : "bg-main"
+          } rounded-2xl shadow-2xl z-50 p-4`}
+        >
           <div className="text-center text-gray-500">Loading...</div>
         </div>
       ) : (

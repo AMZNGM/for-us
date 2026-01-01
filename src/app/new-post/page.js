@@ -1,23 +1,24 @@
 "use client";
 
 import { useState } from "react";
-import { createPost } from "@/lib/firebase";
-import { auth } from "@/lib/firebase";
-import ProtectedRoute from "@/components/ProtectedRoute";
+import { auth, createPost } from "@/lib/firebase";
 import { useAlert } from "@/lib/AlertContext";
+import ProtectedRoute from "@/components/ProtectedRoute";
+import MainBtn from "@/components/ui/buttons/MainBtn";
 
 export default function NewPostPage() {
+  const alert = useAlert();
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
+  const [date, setDate] = useState("");
   const [image, setImage] = useState(null);
-  const alertHook = useAlert();
 
   const submit = async (e) => {
     e && e.preventDefault();
 
     if (!auth.currentUser) {
-      alertHook?.show &&
-        alertHook.show("You must be logged in to publish a post.", "info");
+      alert?.show &&
+        alert.show("You must be logged in to publish a post.", "info");
       return;
     }
 
@@ -25,31 +26,38 @@ export default function NewPostPage() {
       await createPost({
         title,
         text,
+        date,
         imageFile: image,
         authorId: auth.currentUser.uid,
+        authorEmail: auth.currentUser.email,
         authorName: auth.currentUser.displayName || auth.currentUser.email,
+        authorAvatar:
+          auth.currentUser.photoURL || "/images/abdelrahman-avatar.webp",
       });
 
       setTitle("");
       setText("");
+      setDate("");
       setImage(null);
-      alertHook?.show && alertHook.show("Post created ❤️", "success");
+      alert?.show && alert.show("Post created ❤️", "success");
     } catch (err) {
       console.error("createPost error", err);
-      alertHook?.show &&
-        alertHook.show(`Failed to create post: ${err.message || err}`, "error");
+      alert?.show &&
+        alert.show(`Failed to create post: ${err.message || err}`, "error");
     }
   };
 
   return (
     <ProtectedRoute>
-      <div className="min-h-screen bg-gray-50">
-        <div className="max-w-2xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-8">
+      <div className="relative w-screen min-h-screen overflow-hidden bg-text text-bg">
+        <div className="absolute inset-0 w-full h-full border-8 border-gold max-md:border-4 pointer-events-none z-10" />
+
+        <div className="max-w-4xl mx-auto py-24 px-4 max-md:py-22">
+          <h1 className="text-3xl font-bold text-bg text-shadow-lg mb-8">
             Create New Post
           </h1>
 
-          <div className="bg-white shadow rounded-lg p-6">
+          <div className="bg-white shadow-xl rounded-2xl mt-8 p-8 max-md:p-4">
             <form className="space-y-6" onSubmit={submit}>
               <div>
                 <label
@@ -62,9 +70,25 @@ export default function NewPostPage() {
                   type="text"
                   id="title"
                   name="title"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                  className="w-full bg-gold/15 border border-bg/50 rounded-lg focus:outline-none focus:border-gold focus:ring-2 focus:ring-gold transition-colors px-3 py-2"
                   placeholder="Enter your post title"
                   onChange={(e) => setTitle(e.target.value)}
+                />
+              </div>
+
+              <div>
+                <label
+                  htmlFor="date"
+                  className="block text-sm font-medium text-gray-700 mb-2"
+                >
+                  Date
+                </label>
+                <input
+                  type="date"
+                  id="date"
+                  name="date"
+                  className="w-full bg-gold/15 border border-bg/50 rounded-lg focus:outline-none focus:border-gold focus:ring-2 focus:ring-gold transition-colors px-3 py-2"
+                  onChange={(e) => setDate(e.target.value)}
                 />
               </div>
 
@@ -79,7 +103,7 @@ export default function NewPostPage() {
                   id="content"
                   name="content"
                   rows={8}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                  className="w-full bg-gold/15 border border-bg/50 rounded-lg focus:outline-none focus:border-gold focus:ring-2 focus:ring-gold transition-colors px-3 py-2"
                   placeholder="Write your post content here..."
                   onChange={(e) => setText(e.target.value)}
                 />
@@ -97,7 +121,7 @@ export default function NewPostPage() {
                   id="image"
                   name="image"
                   accept="image/*"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                  className="w-full bg-gold/15 border border-bg/50 rounded-lg focus:outline-none focus:border-gold focus:ring-2 focus:ring-gold hover:bg-gold/50 transition-colors px-3 py-2 cursor-pointer"
                   onChange={(e) =>
                     setImage(e.target.files && e.target.files[0])
                   }
@@ -105,23 +129,21 @@ export default function NewPostPage() {
               </div>
 
               <div className="flex justify-end space-x-4">
-                <button
-                  type="button"
-                  className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                <MainBtn
                   onClick={() => {
                     setTitle("");
                     setText("");
+                    setDate("");
                     setImage(null);
                   }}
+                  className="font-main"
                 >
                   Cancel
-                </button>
-                <button
-                  type="submit"
-                  className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                >
+                </MainBtn>
+
+                <MainBtn type="submit" className="font-main">
                   Publish Post
-                </button>
+                </MainBtn>
               </div>
             </form>
           </div>

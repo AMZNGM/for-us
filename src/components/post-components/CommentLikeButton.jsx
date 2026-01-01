@@ -1,20 +1,13 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { onSnapshot, collection, query, orderBy } from "firebase/firestore";
 import {
   auth,
   db,
   addCommentLikeDoc,
   removeCommentLikeDoc,
 } from "@/lib/firebase";
-import {
-  onSnapshot,
-  collection,
-  query,
-  orderBy,
-  doc,
-  getDoc,
-} from "firebase/firestore";
 import { createCommentLikeNotification } from "@/lib/notifications";
 import { useAlert } from "@/lib/AlertContext";
 
@@ -23,10 +16,10 @@ export default function CommentLikeButton({
   commentId,
   commentAuthorId,
 }) {
+  const alert = useAlert();
+  const [loading, setLoading] = useState(false);
   const [liked, setLiked] = useState(false);
   const [likes, setLikes] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const alertHook = useAlert();
 
   useEffect(() => {
     let mounted = true;
@@ -59,7 +52,7 @@ export default function CommentLikeButton({
 
   async function toggle() {
     if (!auth.currentUser) {
-      const { show } = alertHook;
+      const { show } = alert;
       show && show("Please login to like", "info");
       return;
     }
@@ -67,10 +60,11 @@ export default function CommentLikeButton({
     try {
       if (liked) {
         await removeCommentLikeDoc(postId, commentId, auth.currentUser.uid);
+        alert?.show && alert.show("Comment like removed! 💔", "info");
       } else {
         await addCommentLikeDoc(postId, commentId, auth.currentUser);
+        alert?.show && alert.show("Comment liked! ❤️", "success");
 
-        // Create notification for comment author (if not liking own comment)
         if (commentAuthorId && commentAuthorId !== auth.currentUser.uid) {
           try {
             await createCommentLikeNotification(
@@ -83,13 +77,12 @@ export default function CommentLikeButton({
               "Failed to create comment like notification:",
               notifError
             );
-            // Don't fail the like operation if notification fails
           }
         }
       }
     } catch (err) {
       console.error("toggle comment like failed", err);
-      const { show } = alertHook;
+      const { show } = alert;
       show && show("Failed to update like", "error");
     } finally {
       setLoading(false);
@@ -111,11 +104,10 @@ export default function CommentLikeButton({
   return (
     <button
       onClick={toggle}
-      disabled={loading}
-      className="text-sm text-gray-600 hover:text-gray-900"
+      className="flex justify-center items-center bg-gold/25 rounded-2xl cursor-pointer hover:bg-gold/50 transition-colors p-2"
     >
-      <span style={{ marginRight: 6 }}>{liked ? "♥" : "♡"}</span>
-      <span>{label}</span>
+      <span className="me-2 text-red-400">{liked ? "♥" : "♡"}</span>
+      <span className="text-sm text-bg">{label}</span>
     </button>
   );
 }

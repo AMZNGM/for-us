@@ -25,7 +25,7 @@ export function ParallaxImageGrid() {
 
   return (
     <div className="relative w-full min-h-screen overflow-hidden py-24 px-4">
-      <h2 className="md:w-fit md:mx-auto font-ter text-7xl max-md:text-4xl text-main text-center bg-text/15 rounded-2xl shadow-2xl z-20 p-4">
+      <h2 className="md:w-fit md:mx-auto font-ter text-7xl max-md:text-4xl text-center bg-text/15 rounded-2xl shadow-2xl z-20 p-4">
         Pequeña Yassirita
       </h2>
 
@@ -46,7 +46,7 @@ export function ParallaxImageGrid() {
                 sizes="(max-width: 640px) 50vw,
                          (max-width: 1024px) 33vw,
                          20vw"
-                className="object-cover select-none"
+                className="object-cover select-none hover:scale-106 duration-700 ease-in-out"
                 draggable={false}
               />
             </motion.div>
@@ -64,7 +64,7 @@ export function ParallaxChampImageGrid() {
 
   return (
     <div className="relative w-full min-h-screen overflow-hidden pb-24 px-4">
-      <h2 className="md:w-fit md:mx-auto font-ter text-7xl max-md:text-4xl text-main text-center bg-text/15 rounded-2xl shadow-2xl z-20 p-4">
+      <h2 className="md:w-fit md:mx-auto font-ter text-7xl max-md:text-4xl text-center bg-text/15 rounded-2xl shadow-2xl z-20 p-4">
         Campeona Yassirita
       </h2>
 
@@ -85,7 +85,7 @@ export function ParallaxChampImageGrid() {
                 sizes="(max-width: 640px) 50vw,
                          (max-width: 1024px) 33vw,
                          20vw"
-                className="object-cover select-none"
+                className="object-cover select-none hover:scale-106 duration-700 ease-in-out"
                 draggable={false}
               />
             </motion.div>
@@ -103,6 +103,8 @@ export function ArtistaImageGrid() {
 
   return (
     <div className="relative w-full min-h-screen overflow-hidden bg-text text-bg py-24 px-4">
+      <div className="absolute inset-0 w-full h-full border-8 border-gold max-md:border-4 pointer-events-none z-10" />
+
       <div className="relative md:w-fit md:mx-auto">
         <h2 className="relative font-sec text-8xl max-md:text-7xl text-center rounded-2xl border border-gold bg-gold z-20 py-8 px-4">
           Artista Yassirita
@@ -133,7 +135,7 @@ export function ArtistaImageGrid() {
                 sizes="(max-width: 640px) 50vw,
                          (max-width: 1024px) 33vw,
                          20vw"
-                className="object-cover select-none shadow-2xl"
+                className="object-cover select-none shadow-2xl hover:scale-106 duration-700 ease-in-out"
                 draggable={false}
               />
             </motion.div>

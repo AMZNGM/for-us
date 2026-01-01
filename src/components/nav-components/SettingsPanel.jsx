@@ -29,9 +29,9 @@ export default function SettingsPanel({
       }}
       exit={{ opacity: 0, scale: 0.9, y: 20 }}
       transition={{ type: "spring", stiffness: 300, damping: 30 }}
-      className={`absolute right-1/2 w-80 bg-bg/95 rounded-2xl shadow-2xl border border-main/10 z-50 p-4 ${
-        dockSettings.position === "bottom" ? "bottom-18" : "top-18"
-      }`}
+      className={`absolute right-1/2 w-80 bg-bg/95 rounded-2xl shadow-2xl border z-50 p-4
+        ${dockSettings.color === "gold" ? "border-gold/10" : "border-main/10"}
+        ${dockSettings.position === "bottom" ? "bottom-18" : "top-18"}`}
     >
       <div className="flex justify-between items-center mb-6">
         <h3 className="text-xl font-bold text-text">Dock Settings</h3>
@@ -55,7 +55,9 @@ export default function SettingsPanel({
                 scale: parseInt(e.target.value) / 100,
               }))
             }
-            className="w-full h-2 bg-main/20 accent-main rounded-lg appearance-none cursor-grab active:cursor-grabbing"
+            className={`w-full h-2 bg-main/20 rounded-lg appearance-none cursor-grab active:cursor-grabbing
+              ${dockSettings.color === "gold" ? "accent-gold" : "accent-main"}
+              `}
           />
         </div>
 
@@ -70,11 +72,14 @@ export default function SettingsPanel({
                 onClick={() =>
                   setDockSettings((s) => ({ ...s, position: pos }))
                 }
-                className={`flex-1 rounded-xl transition-all cursor-pointer py-2 px-4 ${
-                  dockSettings.position === pos
-                    ? "bg-main text-bg"
-                    : "bg-text/10 text-text/70 hover:bg-text/20"
-                }`}
+                className={`flex-1 rounded-xl transition-all cursor-pointer py-2 px-4
+                  ${
+                    dockSettings.position === pos
+                      ? "text-bg"
+                      : "bg-text/10 text-text/70 hover:bg-text/20"
+                  }
+                  ${dockSettings.color === "gold" ? "bg-gold" : "bg-main"}
+                `}
               >
                 {pos.charAt(0).toUpperCase() + pos.slice(1)}
               </button>
@@ -89,13 +94,38 @@ export default function SettingsPanel({
               <button
                 key={theme}
                 onClick={() => setDockSettings((s) => ({ ...s, theme }))}
-                className={`flex-1 text-sm rounded-xl transition-all cursor-pointer py-2 px-4 ${
-                  dockSettings.theme === theme
-                    ? "bg-main text-bg"
-                    : "bg-text/10 text-text/70 hover:bg-text/20"
-                }`}
+                className={`flex-1 text-sm rounded-xl transition-all cursor-pointer py-2 px-4
+                   ${
+                     dockSettings.theme === theme
+                       ? "text-bg"
+                       : "bg-text/10 text-text/70 hover:bg-text/20"
+                   }
+                     ${dockSettings.color === "gold" ? "bg-gold" : "bg-main"}
+
+                `}
               >
                 {theme.charAt(0).toUpperCase() + theme.slice(1)}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div>
+          <label className="block text-sm text-text/75 mb-2">Color</label>
+          <div className="flex gap-2">
+            {["yellow", "gold"].map((color) => (
+              <button
+                key={color}
+                onClick={() => setDockSettings((s) => ({ ...s, color }))}
+                className={`flex-1 text-sm rounded-xl transition-all cursor-pointer py-2 px-4 ${
+                  dockSettings.color === color
+                    ? "text-bg"
+                    : "bg-text/10 text-text/70 hover:bg-text/20"
+                }
+                ${dockSettings.color === "gold" ? "bg-gold" : "bg-main"}
+                `}
+              >
+                {color.charAt(0).toUpperCase() + color.slice(1)}
               </button>
             ))}
           </div>
@@ -108,8 +138,10 @@ export default function SettingsPanel({
               setDockSettings((s) => ({ ...s, autoHide: !s.autoHide }))
             }
             className={`w-12 h-6 rounded-full transition-colors relative ${
-              dockSettings.autoHide ? "bg-main" : "bg-text/20"
-            }`}
+              dockSettings.autoHide ? "" : "bg-text/20"
+            }
+            ${dockSettings.color === "gold" ? "bg-gold" : "bg-main"}
+            `}
           >
             <motion.div
               animate={{ x: dockSettings.autoHide ? 24 : 0 }}

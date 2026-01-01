@@ -6,7 +6,7 @@ import { collection, query, where, onSnapshot } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { Bell } from "lucide-react";
 
-export default function NotificationIcon({ getThemeClasses }) {
+export default function NotificationIcon({ dockSettings }) {
   const [unreadCount, setUnreadCount] = useState(0);
 
   useEffect(() => {
@@ -39,11 +39,7 @@ export default function NotificationIcon({ getThemeClasses }) {
       >
         <Bell
           className={`w-5 h-5 ${
-            getThemeClasses("name") === "dark"
-              ? "text-main"
-              : getThemeClasses("name") === "colorful"
-              ? "text-main"
-              : "text-text"
+            dockSettings.color === "gold" ? "text-gold" : "text-main"
           }`}
           strokeWidth={1.5}
         />

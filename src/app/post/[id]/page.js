@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, use } from "react";
+import { useEffect, useState, use, useRef } from "react";
 import {
   doc,
   getDoc,
@@ -13,27 +13,31 @@ import {
   updateDoc,
   serverTimestamp,
 } from "firebase/firestore";
-import { db } from "@/lib/firebase";
-import { auth } from "@/lib/firebase";
-import ProtectedRoute from "@/components/ProtectedRoute";
-import PostLikeButton from "@/components/PostLikeButton";
-import CommentItem from "@/components/CommentItem";
+import { auth, db } from "@/lib/firebase";
 import { deletePost } from "@/lib/deletePost";
 import { useAlert } from "@/lib/AlertContext";
+import ProtectedRoute from "@/components/ProtectedRoute";
+import LoadingSkeleton from "@/components/LoadingSkeleton";
+import PostSection from "@/components/post-components/PostSection";
+import CommentsSection from "@/components/post-components/CommentsSection";
+import GlobalModal from "@/components/ui/GlobalModal";
 
 export default function PostPage({ params }) {
-  const [post, setPost] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [post, setPost] = useState(null);
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
+  const [editing, setEditing] = useState(false);
+  const [draftText, setDraftText] = useState("");
+  const [draftTitle, setDraftTitle] = useState("");
+  const [draftDate, setDraftDate] = useState("");
+  const [activeImage, setActiveImage] = useState(null);
+  const commentInputRef = useRef(null);
+  const alert = useAlert();
+  const user = auth.currentUser;
   const resolvedParams = use(params);
   const postId = resolvedParams.id;
-  const user = auth.currentUser;
-  const [editing, setEditing] = useState(false);
-  const [draftTitle, setDraftTitle] = useState("");
-  const [draftText, setDraftText] = useState("");
-  const alertHook = useAlert();
   const canEdit = !!(user && post && user.uid === post.authorId);
 
   useEffect(() => {
@@ -78,6 +82,12 @@ export default function PostPage({ params }) {
     return unsubscribe;
   }, [postId]);
 
+  const handleCommentClick = () => {
+    if (commentInputRef.current) {
+      commentInputRef.current.focus();
+    }
+  };
+
   const handleAddComment = async (e) => {
     e.preventDefault();
 
@@ -89,10 +99,10 @@ export default function PostPage({ params }) {
         authorId: auth.currentUser.uid,
         authorEmail: auth.currentUser.email,
         authorName: auth.currentUser.displayName || auth.currentUser.email,
+        authorAvatar: auth.currentUser.photoURL,
         createdAt: Timestamp.now(),
       });
 
-      // Create notification for post author (if not commenting on own post)
       if (post && post.authorId && post.authorId !== auth.currentUser.uid) {
         try {
           const { createCommentNotification } = await import(
@@ -105,21 +115,21 @@ export default function PostPage({ params }) {
           );
         } catch (notifError) {
           console.error("Failed to create comment notification:", notifError);
-          // Don't fail the comment operation if notification fails
         }
       }
 
       setNewComment("");
+      alert?.show && alert.show("Comment added successfully! 🚨", "success");
     } catch (err) {
       console.error("Error adding comment:", err);
-      const { show } = alertHook;
+      const { show } = alert;
       show && show("Failed to add comment", "error");
     }
   };
 
   const handleSave = async () => {
     if (!canEdit) {
-      const { show } = alertHook;
+      const { show } = alert;
       show && show("Not authorized to edit this post", "error");
       return;
     }
@@ -129,14 +139,20 @@ export default function PostPage({ params }) {
       await updateDoc(postDoc, {
         title: draftTitle,
         text: draftText,
+        date: draftDate,
         updatedAt: serverTimestamp(),
       });
 
-      setPost((prev) => ({ ...prev, title: draftTitle, text: draftText }));
+      setPost((prev) => ({
+        ...prev,
+        title: draftTitle,
+        text: draftText,
+        date: draftDate,
+      }));
       setEditing(false);
     } catch (err) {
       console.error("Edit failed", err);
-      const { show } = alertHook;
+      const { show } = alert;
       show && show(`Edit failed: ${err.message || err}`, "error");
     }
   };
@@ -148,15 +164,12 @@ export default function PostPage({ params }) {
     await deletePost(post.id);
   };
 
+  const handleReplyAdded = () => {};
+
   if (loading) {
     return (
       <ProtectedRoute>
-        <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-          <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600 mx-auto mb-4"></div>
-            <p className="text-gray-600">Loading post...</p>
-          </div>
-        </div>
+        <LoadingSkeleton />
       </ProtectedRoute>
     );
   }
@@ -164,174 +177,53 @@ export default function PostPage({ params }) {
   if (error || !post) {
     return (
       <ProtectedRoute>
-        <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-          <div className="text-center">
-            <p className="text-red-600 text-lg mb-4">
-              {error || "Post not found"}
-            </p>
-            <a
-              href="/feed"
-              className="text-indigo-600 hover:text-indigo-800 underline"
-            >
-              Back to Feed
-            </a>
-          </div>
+        <div className="relative w-screen h-screen overflow-hidden bg-text flex justify-center items-center">
+          <div className="absolute inset-0 w-full h-full border-8 border-gold max-md:border-4 pointer-events-none z-10" />
+
+          <p className="text-red-600 text-2xl bg-gold rounded-2xl p-4 animate-bounce">
+            {error || "Post not found"}
+          </p>
         </div>
       </ProtectedRoute>
     );
   }
 
-  const handleReplyAdded = () => {
-    // Comments will automatically refresh due to the onSnapshot listener
-    // console.log("Reply added");
-  };
-
   return (
     <ProtectedRoute>
-      <div className="min-h-screen bg-gray-50">
-        <div className="max-w-4xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
-          <article className="bg-white shadow rounded-lg overflow-hidden">
-            <div className="p-6 sm:p-8">
-              <div className="flex items-center space-x-4 mb-6">
-                <div className="w-12 h-12 bg-gray-300 rounded-full"></div>
-                <div>
-                  <h2 className="text-lg font-medium text-gray-900">
-                    {post.authorName || post.authorEmail || "Anonymous"}
-                  </h2>
-                  <p className="text-sm text-gray-500">
-                    Published on{" "}
-                    {post.createdAt?.toDate
-                      ? post.createdAt.toDate().toLocaleDateString()
-                      : "Recently"}
-                  </p>
-                </div>
-              </div>
+      <div className="relative w-screen min-h-screen overflow-hidden bg-text text-bg">
+        <div className="absolute inset-0 w-full h-full border-8 border-gold max-md:border-4 pointer-events-none z-10" />
 
-              {editing ? (
-                <input
-                  value={draftTitle}
-                  onChange={(e) => setDraftTitle(e.target.value)}
-                  className="text-3xl font-bold text-gray-900 mb-4 w-full border-b-2 border-gray-300 focus:border-indigo-500 outline-none"
-                  placeholder="Post title"
-                />
-              ) : (
-                <h1 className="text-3xl font-bold text-gray-900 mb-4">
-                  {post.title || "Untitled Post"}
-                </h1>
-              )}
+        <div className="max-w-4xl mx-auto py-8 px-4 max-md:py-22">
+          <PostSection
+            post={post}
+            editing={editing}
+            setEditing={setEditing}
+            draftTitle={draftTitle}
+            setDraftTitle={setDraftTitle}
+            draftText={draftText}
+            setDraftText={setDraftText}
+            draftDate={draftDate}
+            setDraftDate={setDraftDate}
+            canEdit={canEdit}
+            handleSave={handleSave}
+            handleDelete={handleDelete}
+            handleCommentClick={handleCommentClick}
+            setActiveImage={setActiveImage}
+          />
 
-              {post.imageUrl && (
-                <div className="mb-6">
-                  <img
-                    src={post.imageUrl}
-                    alt="Post image"
-                    className="w-full h-96 object-cover rounded-lg"
-                  />
-                </div>
-              )}
-
-              <div className="prose prose-lg max-w-none">
-                {editing ? (
-                  <textarea
-                    value={draftText}
-                    onChange={(e) => setDraftText(e.target.value)}
-                    className="w-full text-gray-800 leading-relaxed border-2 border-gray-300 rounded-lg p-3 focus:border-indigo-500 outline-none resize-none"
-                    rows={6}
-                    placeholder="Post content"
-                  />
-                ) : (
-                  <p className="text-gray-800 leading-relaxed">{post.text}</p>
-                )}
-              </div>
-
-              <div className="mt-8 pt-6 border-t border-gray-200">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-4">
-                    <PostLikeButton
-                      postId={post.id}
-                      postAuthorId={post.authorId}
-                    />
-                    <button className="flex items-center space-x-2 text-gray-600 hover:text-gray-900">
-                      <span>💬</span>
-                      <span>Comment</span>
-                    </button>
-
-                    {canEdit && (
-                      <>
-                        {editing && (
-                          <button
-                            onClick={handleSave}
-                            className="text-sm text-green-500"
-                          >
-                            Save
-                          </button>
-                        )}
-                        <button
-                          onClick={() => setEditing(!editing)}
-                          className="text-sm text-blue-500"
-                        >
-                          {editing ? "Cancel" : "Edit"}
-                        </button>
-                        <button
-                          onClick={handleDelete}
-                          className=" text-sm text-red-500"
-                        >
-                          Delete
-                        </button>
-                      </>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </article>
-
-          {/* Comments Section */}
-          <div className="mt-8 bg-white shadow rounded-lg p-6">
-            <h3 className="text-xl font-semibold text-gray-900 mb-4">
-              Comments
-            </h3>
-
-            <div className="space-y-4 mb-6">
-              {comments.length === 0 ? (
-                <p className="text-gray-500 text-center py-4">
-                  No comments yet. Be the first to comment!
-                </p>
-              ) : (
-                comments.map((comment) => (
-                  <div key={comment.id} className="space-y-3">
-                    <CommentItem
-                      postId={postId}
-                      comment={comment}
-                      onReplyAdded={handleReplyAdded}
-                    />
-                  </div>
-                ))
-              )}
-            </div>
-
-            <div className="border-t pt-4">
-              <form onSubmit={handleAddComment} className="space-y-3">
-                <textarea
-                  value={newComment}
-                  onChange={(e) => setNewComment(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                  rows={3}
-                  placeholder="Add a comment..."
-                  required
-                />
-                <button
-                  type="submit"
-                  disabled={!newComment.trim()}
-                  className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:bg-gray-400 disabled:cursor-not-allowed"
-                >
-                  Post Comment
-                </button>
-              </form>
-            </div>
-          </div>
+          <CommentsSection
+            postId={postId}
+            comments={comments}
+            newComment={newComment}
+            setNewComment={setNewComment}
+            handleAddComment={handleAddComment}
+            handleReplyAdded={handleReplyAdded}
+            commentInputRef={commentInputRef}
+          />
         </div>
       </div>
+
+      <GlobalModal activeImage={activeImage} setActiveImage={setActiveImage} />
     </ProtectedRoute>
   );
 }

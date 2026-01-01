@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/lib/AuthContext";
-import LoadingSkeleton from "@/components/ui/LoadingSkeleton";
+import LoadingSkeleton from "@/components/LoadingSkeleton";
 
 export default function ProtectedRoute({ children, redirectTo = "/login" }) {
   const { user, loading } = useAuth();

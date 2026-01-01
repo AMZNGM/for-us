@@ -36,6 +36,7 @@ export default function Navbar() {
     position: "bottom",
     theme: "glass",
     autoHide: false,
+    color: "yellow",
   });
 
   useEffect(() => {
@@ -50,7 +51,7 @@ export default function Navbar() {
     const theme = dockSettings.theme;
     const themeClasses = {
       glass: "bg-bg/30 border-text/10 backdrop-blur-2xl",
-      dark: "bg-bg/90 border-main/50 backdrop-blur-xl",
+      dark: "bg-bg/90 border-main/10 backdrop-blur-xl",
       colorful:
         "bg-gradient-to-r from-purple-500/20 via-pink-500/20 to-blue-500/20 backdrop-blur-2xl border-white/20",
     };
@@ -63,8 +64,8 @@ export default function Navbar() {
 
   const navLinks = [
     { href: "/", icon: Home, label: "Home" },
-    { href: "/feed", icon: Rss, label: "Feed" },
-    { href: "/new-post", icon: Plus, label: "Create New Post" },
+    { href: "/feed", icon: Rss, label: "Fact of the day" },
+    { href: "/new-post", icon: Plus, label: "Add New fact" },
     { href: "/yassirasart", icon: Palette, label: "Yassira's Art" },
     { href: "/yassirita", icon: Sparkles, label: "Yassirita" },
   ];
@@ -102,7 +103,12 @@ export default function Navbar() {
         setIsVisible(true);
       } else {
         clearTimeout(timeout);
-        timeout = setTimeout(() => setIsVisible(false), 2000);
+        timeout = setTimeout(() => {
+          setIsVisible(false);
+          setShowNotificationPopup(false);
+          setshowProfilePopup(false);
+          setshowSettings(false);
+        }, 2000);
       }
     };
 
@@ -170,11 +176,7 @@ export default function Navbar() {
                 <Icon
                   strokeWidth={1.5}
                   className={`w-5 h-5 ${
-                    getThemeClasses("name") === "dark"
-                      ? "text-main"
-                      : getThemeClasses("name") === "colorful"
-                      ? "text-main"
-                      : "text-text"
+                    dockSettings.color === "gold" ? "text-gold" : "text-main"
                   }`}
                 />
 
@@ -194,7 +196,7 @@ export default function Navbar() {
 
         <div
           className={`w-px h-8 mx-1 ${
-            getThemeClasses("name") === "dark" ? "bg-main/25" : "bg-text/25"
+            dockSettings.color === "gold" ? "bg-gold/25" : "bg-text/25"
           }`}
         />
 
@@ -206,7 +208,7 @@ export default function Navbar() {
                 scale={dockSettings.scale}
                 onClick={() => setShowNotificationPopup(!showNotificationPopup)}
               >
-                <NotificationIcon getThemeClasses={getThemeClasses} />
+                <NotificationIcon dockSettings={dockSettings} />
               </DockIcon>
 
               <div
@@ -280,11 +282,7 @@ export default function Navbar() {
             <Settings
               strokeWidth={1.5}
               className={`w-5 h-5 ${
-                getThemeClasses("name") === "dark"
-                  ? "text-main"
-                  : getThemeClasses("name") === "colorful"
-                  ? "text-main"
-                  : "text-text"
+                dockSettings.color === "gold" ? "text-gold" : "text-main"
               }`}
             />
           </DockIcon>

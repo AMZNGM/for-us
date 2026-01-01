@@ -7,7 +7,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "@/lib/firebase";
 import { motion } from "motion/react";
 import { useAlert } from "@/lib/AlertContext";
-import LoadingScreen from "@/components/ui/LoadingScreen";
+import LoadingScreen from "@/components/LoadingScreen";
 import GradientCursor from "@/components/ui/cursors/GradientCursor";
 import TextAnimation from "@/components/ui/text/TextAnimation";
 import RippleEffect from "@/components/ui/effects/RippleEffect";

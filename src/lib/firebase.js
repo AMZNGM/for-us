@@ -77,6 +77,7 @@ export async function uploadImage(file, path) {
 export async function createPost({
   title,
   text,
+  date,
   imageFile,
   authorId,
   authorName,
@@ -90,6 +91,7 @@ export async function createPost({
   const docRef = await addDoc(postsCollection, {
     title: title || "",
     text: text || "",
+    date: date || null,
     imageUrl: imageUrl || "",
     authorId: authorId || null,
     authorName: authorName || null,

@@ -1,25 +1,16 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { onSnapshot, collection, query, orderBy } from "firebase/firestore";
 import { auth, db, addLikeDoc, removeLikeDoc } from "@/lib/firebase";
-import {
-  onSnapshot,
-  collection,
-  query,
-  orderBy,
-  getDoc,
-  doc,
-} from "firebase/firestore";
 import { createLikeNotification } from "@/lib/notifications";
 import { useAlert } from "@/lib/AlertContext";
 
-// PostLikeButton stores likes as documents in posts/{postId}/likes/{userId}
-// and shows liker names (e.g. "Liked by NGM" or "You and 2 others").
 export default function PostLikeButton({ postId, postAuthorId }) {
+  const alert = useAlert();
+  const [loading, setLoading] = useState(false);
   const [liked, setLiked] = useState(false);
   const [likes, setLikes] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const alertHook = useAlert();
 
   useEffect(() => {
     let mounted = true;
@@ -47,18 +38,18 @@ export default function PostLikeButton({ postId, postAuthorId }) {
 
   async function toggle() {
     if (!auth.currentUser) {
-      const { show } = alertHook;
-      show && show("Please login to like", "info");
+      alert?.show && alert.show("Please login to like", "info");
       return;
     }
     setLoading(true);
     try {
       if (liked) {
         await removeLikeDoc(postId, auth.currentUser.uid);
+        alert?.show && alert.show("love removed 💔", "info");
       } else {
         await addLikeDoc(postId, auth.currentUser);
+        alert?.show && alert.show("love added! ❣️", "success");
 
-        // Create notification for post author (if not liking own post)
         if (postAuthorId && postAuthorId !== auth.currentUser.uid) {
           try {
             await createLikeNotification(
@@ -68,14 +59,12 @@ export default function PostLikeButton({ postId, postAuthorId }) {
             );
           } catch (notifError) {
             console.error("Failed to create like notification:", notifError);
-            // Don't fail the like operation if notification fails
           }
         }
       }
     } catch (err) {
       console.error("toggle like failed", err);
-      const { show } = alertHook;
-      show && show("Failed to update like", "error");
+      alert?.show && alert.show("Failed to update like", "error");
     } finally {
       setLoading(false);
     }
@@ -97,11 +86,10 @@ export default function PostLikeButton({ postId, postAuthorId }) {
     <button
       onClick={toggle}
       disabled={loading}
-      className="like-button"
-      style={{ border: "none", background: "transparent", cursor: "pointer" }}
+      className="bg-gold/15 rounded-2xl text-red-500 cursor-pointer py-2 px-3 hover:bg-gold/50 transition-colors"
     >
-      <span style={{ marginRight: 8 }}>{liked ? "♥" : "♡"}</span>
-      <span className="text-sm text-gray-700">{label}</span>
+      <span className="me-2">{liked ? "♥" : "♡"}</span>
+      <span className="text-sm text-bg">{label}</span>
     </button>
   );
 }

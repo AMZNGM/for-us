@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { Suspense } from "react";
 import ProtectedRoute from "@/components/ProtectedRoute";
-import LoadingSkeleton from "@/components/ui/LoadingSkeleton";
+import LoadingSkeleton from "@/components/LoadingSkeleton";
 import GradientCursor from "@/components/ui/cursors/GradientCursor";
 import TextAnimation from "@/components/ui/text/TextAnimation";
 import Logo from "@/components/ui/Logo";

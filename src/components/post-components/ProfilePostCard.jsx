@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { auth } from "@/lib/firebase";
 import { useAlert } from "@/lib/AlertContext";
@@ -7,7 +8,8 @@ import usePost from "@/lib/usePost";
 import MainBtn from "@/components/ui/buttons/MainBtn";
 import RippleEffect from "@/components/ui/effects/RippleEffect";
 
-export default function PostCard({ post: initialPost, index }) {
+export default function ProfilePostCard({ post: initialPost, index }) {
+  const router = useRouter();
   const alert = useAlert();
   const { post, edit, remove, notifyOwner } = usePost(initialPost);
   const [editing, setEditing] = useState(false);
@@ -98,6 +100,13 @@ export default function PostCard({ post: initialPost, index }) {
           </RippleEffect>
 
           <div className="flex justify-end items-center gap-4">
+            <MainBtn
+              onClick={() => router.push(`/post/${post.id}`)}
+              className="font-main! mt-2"
+            >
+              View
+            </MainBtn>
+
             <MainBtn onClick={handleNotify} className="font-main! mt-2">
               Notify
             </MainBtn>

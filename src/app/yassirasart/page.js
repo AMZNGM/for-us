@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import ProtectedRoute from "@/components/ProtectedRoute";
-import LoadingSkeleton from "@/components/ui/LoadingSkeleton";
-import LoadingScreen from "@/components/ui/LoadingScreen";
+import LoadingSkeleton from "@/components/LoadingSkeleton";
+import LoadingScreen from "@/components/LoadingScreen";
 import GradientCursor from "@/components/ui/cursors/GradientCursor";
 import { ArtistaImageGrid } from "@/components/ParallaxImageGrid";
 import ScrollIndicator from "@/components/ui/ScrollIndicator";

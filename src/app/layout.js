@@ -21,7 +21,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`relative w-screen min-h-screen overflow-x-hidden! bg-bg text-text font-main selection:bg-main/50 selection:text-text scroll-smooth antialiased`}
+        className={`relative w-screen min-h-screen overflow-x-hidden! bg-bg text-text font-main selection:bg-main/50 selection:text-bg scroll-smooth antialiased`}
       >
         <AppWrapper>{children}</AppWrapper>
       </body>

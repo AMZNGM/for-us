@@ -41,7 +41,7 @@ export default memo(function MainBtn({
     ${fullWidth ? "w-full" : "w-fit"}
     ${
       disabled
-        ? "opacity-50 cursor-not-allowed pointer-events-none"
+        ? "opacity-50! cursor-not-allowed pointer-events-none"
         : "cursor-pointer"
     }
     ${className}

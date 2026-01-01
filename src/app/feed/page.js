@@ -4,7 +4,8 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { getPosts } from "@/lib/getPosts";
 import ProtectedRoute from "@/components/ProtectedRoute";
-import PostLikeButton from "@/components/PostLikeButton";
+import PostLikeButton from "@/components/post-components/PostLikeButton";
+import PostSection from "@/components/post-components/PostSection";
 
 export default function FeedPage() {
   const [posts, setPosts] = useState([]);

@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { Suspense } from "react";
 import ProtectedRoute from "@/components/ProtectedRoute";
-import LoadingSkeleton from "@/components/ui/LoadingSkeleton";
+import LoadingSkeleton from "@/components/LoadingSkeleton";
 import GradientCursor from "@/components/ui/cursors/GradientCursor";
 import TextAnimation from "@/components/ui/text/TextAnimation";
 import RandomImages from "@/components/RandomImages";
@@ -19,7 +19,7 @@ export default function YassiritaPage() {
   return (
     <ProtectedRoute>
       <Suspense fallback={<LoadingSkeleton />}>
-        <main className="relative w-screen min-h-screen overflow-hidden bg-bg text-main">
+        <main className="relative w-screen min-h-screen overflow-hidden bg-bg text-gold">
           <Image
             src="/images/yassirita/yassirita-12.webp"
             alt="background"
