@@ -81,7 +81,7 @@ export default function SettingsPanel({
                 onClick={() =>
                   setDockSettings((s) => ({ ...s, position: pos }))
                 }
-                className={`flex-1 bg rounded-xl transition-all cursor-pointer py-2 px-4
+                className={`flex-1 bg-main rounded-xl transition-all cursor-pointer py-2 px-4
                   ${
                     dockSettings.position === pos
                       ? "text-bg"

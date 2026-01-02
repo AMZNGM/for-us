@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import Image from "next/image";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import {
   collection,
@@ -13,6 +14,7 @@ import { db, onAuthChange } from "@/lib/firebase";
 import { markNotificationRead } from "@/lib/notifications";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import GradientCursor from "@/components/ui/cursors/GradientCursor";
+import ScrollIndicator from "@/components/ui/ScrollIndicator";
 import LoadingSkeleton from "@/components/LoadingSkeleton";
 import MainBtn from "@/components/ui/buttons/MainBtn";
 
@@ -97,16 +99,25 @@ export default function NotificationsPage() {
   return (
     <ProtectedRoute>
       <GradientCursor />
+      <ScrollIndicator />
 
       <div className="relative w-screen min-h-screen overflow-hidden bg-text text-bg">
+        <Image
+          src="/images/yassirita/yassirita-12.webp"
+          alt="background"
+          fill
+          className="absolute inset-0 w-full h-full object-cover pointer-events-none opacity-55 blur-xl z-0"
+        />
+
         <div className="absolute inset-0 w-full h-full border-8 border-main max-md:border-4 pointer-events-none z-10" />
 
-        <div className="max-w-4xl mx-auto py-8 px-4 max-md:py-22">
+        <div className="relative max-w-4xl mx-auto py-8 px-4 max-md:py-22">
           <div className="flex justify-between items-center mb-4">
             <h1 className="text-2xl font-bold text-shadow-lg">Notifications</h1>
             <MainBtn
               onClick={markAllRead}
-              className="bg-main/15 text-blue-500 font-main rounded-2xl"
+              variant={"ghost"}
+              className="text-blue-500! hover:text-text! font-main text-shadow-lg transition-colors"
             >
               Mark All Read
             </MainBtn>
@@ -121,7 +132,7 @@ export default function NotificationsPage() {
               <div
                 key={it.id}
                 onClick={() => handleNotificationClick(it)}
-                className={`flex justify-between items-center shadow rounded hover:bg-gray-50 transition-colors cursor-pointer p-3 ${
+                className={`flex justify-between items-center shadow rounded hover:bg-main transition-colors cursor-pointer p-3 ${
                   it.read ? "bg-white" : "bg-blue-50 border border-blue-200"
                 }`}
               >

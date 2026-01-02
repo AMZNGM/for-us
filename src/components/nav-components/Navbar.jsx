@@ -35,6 +35,7 @@ export default function Navbar() {
     scale: 1,
     position: "bottom",
     theme: "glass",
+    color: "yellow",
     autoHide: false,
   });
 
@@ -49,10 +50,10 @@ export default function Navbar() {
   const getThemeClasses = (returnType = "classes") => {
     const theme = dockSettings.theme;
     const themeClasses = {
-      glass: "bg-bg/30 border-text/10 backdrop-blur-2xl",
-      dark: "bg-bg/90 border-main/10 backdrop-blur-xl",
+      glass: "bg-bg/30 border-text/10 backdrop-blur-2xl text-main",
+      dark: "bg-bg/90 border-main/10 backdrop-blur-xl text-main",
       colorful:
-        "bg-gradient-to-r from-purple-500/20 via-pink-500/20 to-blue-500/20 backdrop-blur-2xl border-white/20",
+        "bg-gradient-to-r from-purple-500/20 via-pink-500/20 to-blue-500/20 backdrop-blur-2xl border-white/20 text-red-400",
     };
 
     if (returnType === "name") {
@@ -151,8 +152,8 @@ export default function Navbar() {
         scale: dockSettings.scale,
       }}
       transition={{ type: "spring", stiffness: 300, damping: 30 }}
-      // onMouseMove={(e) => mouseX.set(e.clientX)}
-      // onMouseLeave={() => mouseX.set(null)}
+      onMouseMove={(e) => mouseX.set(e.clientX)}
+      onMouseLeave={() => mouseX.set(null)}
       className={`fixed left-1/2 -translate-x-1/2 z-50 max-md:scale-80 ${
         dockSettings.position === "bottom" ? "bottom-4" : "top-4"
       }`}
@@ -172,7 +173,7 @@ export default function Navbar() {
                 isActive={isActive}
                 scale={dockSettings.scale}
               >
-                <Icon strokeWidth={1.5} className="w-5 h-5 text-main" />
+                <Icon strokeWidth={1.5} className="w-5 h-5" />
 
                 <div
                   className={`absolute left-1/2 -translate-x-1/2 bg-bg text-xs rounded-lg whitespace-nowrap pointer-events-none opacity-0 group-hover:opacity-100 px-3 py-1 ${
@@ -233,7 +234,7 @@ export default function Navbar() {
                     className="w-full h-full object-cover rounded-full pointer-events-none"
                   />
                 ) : (
-                  <UserCircle strokeWidth={1.5} className="w-5 h-5 text-text" />
+                  <UserCircle strokeWidth={1.5} className="w-5 h-5" />
                 )}
               </DockIcon>
 
@@ -269,7 +270,7 @@ export default function Navbar() {
             scale={dockSettings.scale}
             onClick={() => setshowSettings(!showSettings)}
           >
-            <Settings strokeWidth={1.5} className="w-5 h-5 text-main" />
+            <Settings strokeWidth={1.5} className="w-5 h-5" />
           </DockIcon>
 
           <div

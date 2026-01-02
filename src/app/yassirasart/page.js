@@ -1,10 +1,10 @@
 import { Suspense } from "react";
 import ProtectedRoute from "@/components/ProtectedRoute";
+import ScrollIndicator from "@/components/ui/ScrollIndicator";
 import LoadingSkeleton from "@/components/LoadingSkeleton";
 import LoadingScreen from "@/components/LoadingScreen";
 import GradientCursor from "@/components/ui/cursors/GradientCursor";
 import { ArtistaImageGrid } from "@/components/ParallaxImageGrid";
-import ScrollIndicator from "@/components/ui/ScrollIndicator";
 
 export const metadata = {
   title: "For Us <3 | Yassirita",
@@ -16,7 +16,7 @@ export default function YassirasArtPage() {
     <ProtectedRoute>
       <Suspense fallback={<LoadingSkeleton />}>
         <ScrollIndicator />
-        <LoadingScreen />
+        {/* <LoadingScreen /> */}
         <GradientCursor />
         <ArtistaImageGrid />
       </Suspense>

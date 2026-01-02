@@ -9,6 +9,7 @@ import {
   ParallaxImageGrid,
   ParallaxChampImageGrid,
 } from "@/components/ParallaxImageGrid";
+import ScrollIndicator from "@/components/ui/ScrollIndicator";
 
 export const metadata = {
   title: "For Us <3 | Yassirita",
@@ -20,6 +21,9 @@ export default function YassiritaPage() {
     <ProtectedRoute>
       <Suspense fallback={<LoadingSkeleton />}>
         <main className="relative w-screen min-h-screen overflow-hidden bg-bg text-main">
+          <div className="absolute inset-0 w-full h-full border-8 border-main max-md:border-4 pointer-events-none z-10" />
+          <ScrollIndicator />
+
           <Image
             src="/images/yassirita/yassirita-12.webp"
             alt="background"

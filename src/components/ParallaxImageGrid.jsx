@@ -54,7 +54,11 @@ export function ParallaxImageGrid() {
         })}
       </section>
 
-      <GlobalModal activeImage={activeImage} setActiveImage={setActiveImage} />
+      <GlobalModal
+        activeImage={activeImage}
+        setActiveImage={setActiveImage}
+        images={images}
+      />
     </div>
   );
 }
@@ -93,7 +97,11 @@ export function ParallaxChampImageGrid() {
         })}
       </section>
 
-      <GlobalModal activeImage={activeImage} setActiveImage={setActiveImage} />
+      <GlobalModal
+        activeImage={activeImage}
+        setActiveImage={setActiveImage}
+        images={champImages}
+      />
     </div>
   );
 }
@@ -102,11 +110,18 @@ export function ArtistaImageGrid() {
   const [activeImage, setActiveImage] = useState(null);
 
   return (
-    <div className="relative w-full min-h-screen overflow-hidden bg-text text-bg py-24 px-4">
+    <div className="relative w-screen min-h-screen overflow-hidden bg-bg py-24 px-4">
+      <Image
+        src="/images/yassirita/yassirita-12.webp"
+        alt="background"
+        fill
+        className="absolute inset-0 w-full h-full object-cover pointer-events-none opacity-55 blur-xl z-0"
+      />
+
       <div className="absolute inset-0 w-full h-full border-8 border-main max-md:border-4 pointer-events-none z-10" />
 
       <div className="relative md:w-fit md:mx-auto">
-        <h2 className="relative font-sec text-8xl max-md:text-7xl text-center rounded-2xl border border-main bg-main z-20 py-8 px-4">
+        <h2 className="relative text-bg font-sec text-8xl max-md:text-7xl text-center rounded-2xl border border-main bg-main z-20 py-8 px-4">
           Artista Yassirita
         </h2>
 
@@ -142,7 +157,11 @@ export function ArtistaImageGrid() {
           );
         })}
       </section>
-      <GlobalModal activeImage={activeImage} setActiveImage={setActiveImage} />
+      <GlobalModal
+        activeImage={activeImage}
+        setActiveImage={setActiveImage}
+        images={artImages}
+      />
     </div>
   );
 }

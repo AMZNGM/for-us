@@ -9,6 +9,7 @@ export default function GradientCursor() {
   const mouseState = useMouseMotion(ref);
   const particlesRef = useRef([]);
   const lastUpdateRef = useRef(0);
+  const particleIdRef = useRef(0);
   const [hue, setHue] = useState(0);
   const [, forceUpdate] = useState({});
 
@@ -19,8 +20,8 @@ export default function GradientCursor() {
     const newHue = x % 360;
     setHue(newHue);
 
-    const newParticles = Array.from({ length: 2 }, () => ({
-      id: Date.now() + Math.random(),
+    const newParticles = Array.from({ length: 2 }, (_, index) => ({
+      id: `${Date.now()}-${particleIdRef.current++}-${index}`,
       x: x + (Math.random() - 0.5) * 15,
       y: y + (Math.random() - 0.5) * 15,
       size: Math.random() * 2 + 5,

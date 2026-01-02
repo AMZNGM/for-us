@@ -5,15 +5,14 @@ import { useEffect } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { ChevronLeft, ChevronRight, XIcon } from "lucide-react";
 
-const images = Array.from(
-  { length: 55 },
-  (_, i) => `/images/yassirita/yassirita-${i + 1}.webp`
-);
-
-export default function GlobalModal({ activeImage, setActiveImage }) {
+export default function GlobalModal({
+  activeImage,
+  setActiveImage,
+  images = [],
+}) {
   useEffect(() => {
     const handleKeyDown = (e) => {
-      if (!activeImage) return;
+      if (!activeImage || images.length === 0) return;
 
       switch (e.key) {
         case "Escape":
@@ -39,7 +38,7 @@ export default function GlobalModal({ activeImage, setActiveImage }) {
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [activeImage, setActiveImage]);
+  }, [activeImage, setActiveImage, images]);
 
   return (
     <AnimatePresence>

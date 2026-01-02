@@ -39,18 +39,18 @@ export default function FactOfTheDayPage() {
       <GradientCursor />
       <ScrollIndicator />
 
-      <div className="relative w-screen min-h-screen overflow-hidden bg-bg text-text">
+      <div className="relative w-screen min-h-screen overflow-hidden bg-bg">
         <Image
           src="/images/yassirita/yassirita-12.webp"
           alt="background"
           fill
-          className="absolute inset-0 w-full h-full object-cover pointer-events-none opacity-15 blur-xl z-0"
+          className="absolute inset-0 w-full h-full object-cover pointer-events-none opacity-55 blur-xl z-0"
         />
 
         <div className="absolute inset-0 w-full h-full border-8 border-main max-md:border-4 pointer-events-none z-10" />
 
         <div
-          className={`mx-auto py-24 px-4
+          className={`mx-auto py-24 px-4  relative
             ${isGridView ? "max-w-7xl" : "max-w-4xl"}
             `}
         >
@@ -60,7 +60,7 @@ export default function FactOfTheDayPage() {
             <div className="flex items-center gap-4">
               <button
                 onClick={() => setIsGridView(!isGridView)}
-                className="text-main bg-main/15 rounded-full px-4 py-2 hover:bg-main/25 transition-colors flex items-center gap-2 cursor-pointer"
+                className="text-main bg-main/15 rounded-full px-4 py-2 hover:bg-main/25 transition-colors flex items-center gap-2 cursor-pointer max-md:hidden"
               >
                 {isGridView ? (
                   <>
@@ -74,6 +74,7 @@ export default function FactOfTheDayPage() {
                   </>
                 )}
               </button>
+
               <div className="text-main bg-main/15 rounded-full px-4 py-2">
                 {posts.length} {posts.length === 1 ? "Post" : "Posts"}
               </div>
@@ -88,8 +89,10 @@ export default function FactOfTheDayPage() {
             }
           >
             {posts.length === 0 ? (
-              <div className="col-span-full bg-text text-center shadow rounded-2xl p-8">
-                <p className="text-bg">No posts yet. Create your first post!</p>
+              <div className="col-span-full h-170 flex items-center justify-center bg-text text-center shadow rounded-2xl p-8">
+                <p className="text-bg bg-main/50 p-12 rounded-2xl">
+                  No posts yet. Or Loading i donnoooo!
+                </p>
               </div>
             ) : (
               posts.map((post) => (
@@ -102,13 +105,31 @@ export default function FactOfTheDayPage() {
                     <div className="border-b border-main p-4">
                       <div className="flex justify-between items-center space-x-3">
                         <div className="flex justify-center items-center gap-2">
-                          <img
-                            src={post.authorAvatar}
-                            alt="Author avatar"
-                            className="w-10 h-10 bg-main object-cover rounded-full"
-                          />
+                          {post.authorAvatar ? (
+                            <img
+                              src={post.authorAvatar}
+                              alt="Author avatar"
+                              className="w-10 h-10 object-cover rounded-full"
+                              onError={(e) => {
+                                e.target.style.display = "none";
+                                e.target.nextSibling.style.display = "flex";
+                              }}
+                            />
+                          ) : null}
+                          <div
+                            className="w-10 h-10 bg-main rounded-full flex items-center justify-center"
+                            style={{
+                              display: post.authorAvatar ? "none" : "flex",
+                            }}
+                          >
+                            <span className="text-bg text-sm font-bold">
+                              {(post.authorName || post.authorEmail || "A")
+                                .charAt(0)
+                                .toUpperCase()}
+                            </span>
+                          </div>
 
-                          <p className="text-bg font-medium">
+                          <p className="text-bg font-medium capitalize">
                             {post.authorName ||
                               post.authorEmail ||
                               "No Name Yet"}
@@ -116,7 +137,7 @@ export default function FactOfTheDayPage() {
                         </div>
 
                         {post.date ? (
-                          <div className="inline-block text-bg bg-main/10 text-sm rounded-full px-2 py-1">
+                          <div className="inline-block text-bg bg-main/10 text-sm rounded-full px-2 py-1 capitalize">
                             {new Date(post.date).toLocaleDateString("en-US", {
                               year: "numeric",
                               month: "short",
@@ -153,12 +174,12 @@ export default function FactOfTheDayPage() {
 
                     <div className="flex flex-col justify-between text-bg p-4">
                       {post.title && (
-                        <h3 className="text-lg font-semibold mb-2">
+                        <h3 className="text-lg font-semibold mb-2 capitalize">
                           {post.title}
                         </h3>
                       )}
 
-                      <div className="text-bg/85 mb-4">
+                      <div className="text-bg/85 p-4 bg-main/50">
                         {expandedPosts.has(post.id) ? (
                           <p className="text-sm leading-relaxed">{post.text}</p>
                         ) : (
