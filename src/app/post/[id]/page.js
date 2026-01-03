@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { useEffect, useState, use, useRef } from "react";
 import {
   doc,
@@ -17,13 +16,12 @@ import {
 import { auth, db } from "@/lib/firebase";
 import { deletePost } from "@/lib/deletePost";
 import { useAlert } from "@/lib/AlertContext";
-import ProtectedRoute from "@/components/ProtectedRoute";
-import GradientCursor from "@/components/ui/cursors/GradientCursor";
-import ScrollIndicator from "@/components/ui/ScrollIndicator";
+import ProtectedRoute from "@/components/page-components/ProtectedRoute";
 import LoadingSkeleton from "@/components/LoadingSkeleton";
 import PostSection from "@/components/post-components/PostSection";
 import CommentsSection from "@/components/post-components/CommentsSection";
 import GlobalModal from "@/components/ui/GlobalModal";
+import PageWrapper from "@/components/page-components/PageWrapper";
 
 export default function PostPage({ params }) {
   const [loading, setLoading] = useState(true);
@@ -193,18 +191,7 @@ export default function PostPage({ params }) {
 
   return (
     <ProtectedRoute>
-      <GradientCursor />
-      <ScrollIndicator />
-
-      <div className="relative w-screen min-h-screen overflow-hidden bg-text text-bg">
-        <div className="absolute inset-0 w-full h-full border-8 border-main max-md:border-4 pointer-events-none z-10" />
-        <Image
-          src="/images/yassirita/yassirita-12.webp"
-          alt="background"
-          fill
-          className="absolute inset-0 w-full h-full object-cover pointer-events-none opacity-55 blur-xl z-0"
-        />
-
+      <PageWrapper>
         <div className="relative max-w-4xl mx-auto py-8 px-4 max-md:py-22">
           <PostSection
             post={post}
@@ -233,9 +220,12 @@ export default function PostPage({ params }) {
             commentInputRef={commentInputRef}
           />
         </div>
-      </div>
 
-      <GlobalModal activeImage={activeImage} setActiveImage={setActiveImage} />
+        <GlobalModal
+          activeImage={activeImage}
+          setActiveImage={setActiveImage}
+        />
+      </PageWrapper>
     </ProtectedRoute>
   );
 }

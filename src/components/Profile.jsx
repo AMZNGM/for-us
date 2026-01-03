@@ -12,7 +12,7 @@ import {
   orderBy,
 } from "firebase/firestore";
 import { useAlert } from "@/lib/AlertContext";
-import ProtectedRoute from "@/components/ProtectedRoute";
+import ProtectedRoute from "@/components/page-components/ProtectedRoute";
 import LoadingScreen from "@/components/LoadingScreen";
 import LoadingSkeleton from "@/components/LoadingSkeleton";
 import ProfilePostCard from "@/components/post-components/ProfilePostCard";

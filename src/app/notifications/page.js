@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import {
@@ -12,11 +11,10 @@ import {
 } from "firebase/firestore";
 import { db, onAuthChange } from "@/lib/firebase";
 import { markNotificationRead } from "@/lib/notifications";
-import ProtectedRoute from "@/components/ProtectedRoute";
-import GradientCursor from "@/components/ui/cursors/GradientCursor";
-import ScrollIndicator from "@/components/ui/ScrollIndicator";
+import ProtectedRoute from "@/components/page-components/ProtectedRoute";
 import LoadingSkeleton from "@/components/LoadingSkeleton";
 import MainBtn from "@/components/ui/buttons/MainBtn";
+import PageWrapper from "@/components/page-components/PageWrapper";
 
 export default function NotificationsPage() {
   const router = useRouter();
@@ -98,19 +96,7 @@ export default function NotificationsPage() {
 
   return (
     <ProtectedRoute>
-      <GradientCursor />
-      <ScrollIndicator />
-
-      <div className="relative w-screen min-h-screen overflow-hidden bg-text text-bg">
-        <Image
-          src="/images/yassirita/yassirita-12.webp"
-          alt="background"
-          fill
-          className="absolute inset-0 w-full h-full object-cover pointer-events-none opacity-55 blur-xl z-0"
-        />
-
-        <div className="absolute inset-0 w-full h-full border-8 border-main max-md:border-4 pointer-events-none z-10" />
-
+      <PageWrapper look="bright">
         <div className="relative max-w-4xl mx-auto py-8 px-4 max-md:py-22">
           <div className="flex justify-between items-center mb-4">
             <h1 className="text-2xl font-bold text-shadow-lg">Notifications</h1>
@@ -159,7 +145,7 @@ export default function NotificationsPage() {
             ))}
           </div>
         </div>
-      </div>
+      </PageWrapper>
     </ProtectedRoute>
   );
 }

@@ -5,8 +5,9 @@ import { useState } from "react";
 import { auth } from "@/lib/firebase";
 import { createPost } from "@/lib/firebase";
 import { useAlert } from "@/lib/AlertContext";
-import ProtectedRoute from "@/components/ProtectedRoute";
+import ProtectedRoute from "@/components/page-components/ProtectedRoute";
 import MainBtn from "@/components/ui/buttons/MainBtn";
+import PageWrapper from "@/components/page-components/PageWrapper";
 
 export default function NewPostPage() {
   const alert = useAlert();
@@ -57,12 +58,10 @@ export default function NewPostPage() {
 
   return (
     <ProtectedRoute>
-      <div className="relative w-screen min-h-screen overflow-hidden bg-text text-bg">
-        <div className="absolute inset-0 w-full h-full border-8 border-main max-md:border-4 pointer-events-none z-10" />
-
-        <div className="max-w-4xl mx-auto py-24 px-4 max-md:py-22">
+      <PageWrapper look="bright" imageCLassName="opacity-15!">
+        <div className="relative max-w-4xl mx-auto py-24 px-4 max-md:py-22">
           <h1 className="text-3xl font-bold text-bg text-shadow-lg mb-8">
-            Create New Post
+            Create New Fact
           </h1>
 
           <div className="bg-white shadow-xl rounded-2xl mt-8 p-8 max-md:p-4">
@@ -95,8 +94,8 @@ export default function NewPostPage() {
                   type="date"
                   id="date"
                   name="date"
+                  defaultValue={new Date().toISOString().split("T")[0]}
                   className="w-full bg-main/15 border border-bg/50 rounded-lg focus:outline-none focus:border-main focus:ring-2 focus:ring-main transition-colors px-3 py-2"
-                  onChange={(e) => setDate(e.target.value)}
                 />
               </div>
 
@@ -167,7 +166,7 @@ export default function NewPostPage() {
             </form>
           </div>
         </div>
-      </div>
+      </PageWrapper>
     </ProtectedRoute>
   );
 }

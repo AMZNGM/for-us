@@ -1,9 +1,5 @@
-import { Suspense } from "react";
-import ProtectedRoute from "@/components/ProtectedRoute";
-import ScrollIndicator from "@/components/ui/ScrollIndicator";
-import LoadingSkeleton from "@/components/LoadingSkeleton";
-import LoadingScreen from "@/components/LoadingScreen";
-import GradientCursor from "@/components/ui/cursors/GradientCursor";
+import ProtectedRoute from "@/components/page-components/ProtectedRoute";
+import PageWrapper from "@/components/page-components/PageWrapper";
 import { ArtistaImageGrid } from "@/components/ParallaxImageGrid";
 
 export const metadata = {
@@ -14,12 +10,9 @@ export const metadata = {
 export default function YassirasArtPage() {
   return (
     <ProtectedRoute>
-      <Suspense fallback={<LoadingSkeleton />}>
-        <ScrollIndicator />
-        {/* <LoadingScreen /> */}
-        <GradientCursor />
+      <PageWrapper>
         <ArtistaImageGrid />
-      </Suspense>
+      </PageWrapper>
     </ProtectedRoute>
   );
 }

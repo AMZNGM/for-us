@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useScroll } from "framer-motion";
+import { useScroll } from "motion/react";
 
 export function useScrollPosition(thresholdVh = 1) {
   const { scrollY } = useScroll();

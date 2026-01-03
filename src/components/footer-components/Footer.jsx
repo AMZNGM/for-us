@@ -6,7 +6,7 @@ import TextAnimation from "@/components/ui/text/TextAnimation";
 export default function Footer() {
   const pathname = usePathname();
 
-  if (pathname === "/" || pathname === "/login") {
+  if (pathname === "/" || pathname === "/login" || pathname === "/new-post") {
     return null;
   }
 

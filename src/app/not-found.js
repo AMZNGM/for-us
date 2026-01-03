@@ -1,5 +1,5 @@
 import Link from "next/link";
-import ProtectedRoute from "@/components/ProtectedRoute";
+import ProtectedRoute from "@/components/page-components/ProtectedRoute";
 
 export const metadata = {
   title: "Page Not Found",

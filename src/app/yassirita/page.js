@@ -1,15 +1,11 @@
-import Image from "next/image";
-import { Suspense } from "react";
-import ProtectedRoute from "@/components/ProtectedRoute";
-import LoadingSkeleton from "@/components/LoadingSkeleton";
-import GradientCursor from "@/components/ui/cursors/GradientCursor";
+import ProtectedRoute from "@/components/page-components/ProtectedRoute";
+import PageWrapper from "@/components/page-components/PageWrapper";
 import TextAnimation from "@/components/ui/text/TextAnimation";
 import RandomImages from "@/components/RandomImages";
 import {
   ParallaxImageGrid,
   ParallaxChampImageGrid,
 } from "@/components/ParallaxImageGrid";
-import ScrollIndicator from "@/components/ui/ScrollIndicator";
 
 export const metadata = {
   title: "For Us <3 | Yassirita",
@@ -19,31 +15,21 @@ export const metadata = {
 export default function YassiritaPage() {
   return (
     <ProtectedRoute>
-      <Suspense fallback={<LoadingSkeleton />}>
-        <main className="relative w-screen min-h-screen overflow-hidden bg-bg text-main">
-          <div className="absolute inset-0 w-full h-full border-8 border-main max-md:border-4 pointer-events-none z-10" />
-          <ScrollIndicator />
-
-          <Image
-            src="/images/yassirita/yassirita-12.webp"
-            alt="background"
-            fill
-            className="absolute inset-0 w-full h-full object-cover pointer-events-none opacity-15 blur-xl z-0"
-          />
-
-          <TextAnimation
-            text="Yassirita"
-            duration={1}
-            delay={0.2}
-            className="absolute text-4xl max-md:text-2xl font-sec mt-1.5 p-4"
-          />
-
-          <GradientCursor />
-          <RandomImages />
-          <ParallaxImageGrid />
-          <ParallaxChampImageGrid />
-        </main>
-      </Suspense>
+      <PageWrapper
+        look="dark"
+        imageCLassName="opacity-15!"
+        className="text-main"
+      >
+        <TextAnimation
+          text="Yassirita"
+          duration={1}
+          delay={0.2}
+          className="absolute top-25 text-8xl max-md:text-5xl font-sec mt-1.5 p-4"
+        />
+        <RandomImages />
+        <ParallaxImageGrid />
+        <ParallaxChampImageGrid />
+      </PageWrapper>
     </ProtectedRoute>
   );
 }

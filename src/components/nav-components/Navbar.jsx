@@ -2,7 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
-import { motion, useMotionValue } from "framer-motion";
+import { motion, useMotionValue } from "motion/react";
 import { doc, getDoc } from "firebase/firestore";
 import { db, onAuthChange } from "@/lib/firebase";
 import {

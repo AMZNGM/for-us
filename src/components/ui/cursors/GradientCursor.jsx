@@ -3,8 +3,10 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { useMouseMotion } from "@/hooks/useMouseMotion";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 export default function GradientCursor() {
+  const isMobile = useIsMobile();
   const ref = useRef(null);
   const mouseState = useMouseMotion(ref);
   const particlesRef = useRef([]);
@@ -42,6 +44,8 @@ export default function GradientCursor() {
 
     return () => unsubscribeX();
   }, [mouseState, updateParticles]);
+
+  if (isMobile) return;
 
   return (
     <>

@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import GlobalModal from "@/components/ui/GlobalModal";
 
 const images = Array.from(
@@ -110,14 +110,7 @@ export function ArtistaImageGrid() {
   const [activeImage, setActiveImage] = useState(null);
 
   return (
-    <div className="relative w-screen min-h-screen overflow-hidden bg-bg py-24 px-4">
-      <Image
-        src="/images/yassirita/yassirita-12.webp"
-        alt="background"
-        fill
-        className="absolute inset-0 w-full h-full object-cover pointer-events-none opacity-55 blur-xl z-0"
-      />
-
+    <div className="relative w-screen min-h-screen overflow-hidden py-24 px-4">
       <div className="absolute inset-0 w-full h-full border-8 border-main max-md:border-4 pointer-events-none z-10" />
 
       <div className="relative md:w-fit md:mx-auto">

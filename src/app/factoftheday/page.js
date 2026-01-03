@@ -1,12 +1,10 @@
 "use client";
 
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { getPosts } from "@/lib/getPosts";
-import ProtectedRoute from "@/components/ProtectedRoute";
-import GradientCursor from "@/components/ui/cursors/GradientCursor";
-import ScrollIndicator from "@/components/ui/ScrollIndicator";
+import ProtectedRoute from "@/components/page-components/ProtectedRoute";
+import PageWrapper from "@/components/page-components/PageWrapper";
 import PostLikeButton from "@/components/post-components/PostLikeButton";
 import PostCommentButton from "@/components/post-components/PostCommentButton";
 
@@ -36,19 +34,7 @@ export default function FactOfTheDayPage() {
 
   return (
     <ProtectedRoute>
-      <GradientCursor />
-      <ScrollIndicator />
-
-      <div className="relative w-screen min-h-screen overflow-hidden bg-bg">
-        <Image
-          src="/images/yassirita/yassirita-12.webp"
-          alt="background"
-          fill
-          className="absolute inset-0 w-full h-full object-cover pointer-events-none opacity-55 blur-xl z-0"
-        />
-
-        <div className="absolute inset-0 w-full h-full border-8 border-main max-md:border-4 pointer-events-none z-10" />
-
+      <PageWrapper>
         <div
           className={`mx-auto py-24 px-4  relative
             ${isGridView ? "max-w-7xl" : "max-w-4xl"}
@@ -215,7 +201,7 @@ export default function FactOfTheDayPage() {
             )}
           </div>
         </div>
-      </div>
+      </PageWrapper>
     </ProtectedRoute>
   );
 }
