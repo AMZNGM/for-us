@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/lib/AuthContext";
+import LoadingFlower from "../loading-components/LoadingFlower";
 
 export default function ProtectedRoute({ children }) {
   const { user, loading } = useAuth();
@@ -13,6 +14,10 @@ export default function ProtectedRoute({ children }) {
       router.push("/login");
     }
   }, [user, loading]);
+
+  if (loading) {
+    return <LoadingFlower />;
+  }
 
   return children;
 }

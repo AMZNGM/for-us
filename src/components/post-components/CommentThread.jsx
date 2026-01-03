@@ -36,9 +36,9 @@ export default function CommentThread({
             <textarea
               onChange={(e) => setReplyText(e.target.value)}
               required
-              rows={3}
+              rows={9}
               value={replyText}
-              placeholder="bebbeeebe, add a reply..."
+              placeholder="bebbeeebe, Escribe una respuesta..."
               className="w-full bg-main/15 border-3 border-bg/10 rounded-md focus:outline-none focus:border-main transition-colors px-3 py-2"
             />
 

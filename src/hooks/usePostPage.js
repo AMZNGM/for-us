@@ -11,9 +11,10 @@ import {
   updateDoc,
   serverTimestamp,
 } from "firebase/firestore";
-import { auth, db } from "@/lib/firebase";
+import { db } from "@/lib/firebase";
 import { deletePost } from "@/lib/deletePost";
 import { useAlert } from "@/lib/AlertContext";
+import { useAuth } from "@/lib/AuthContext";
 
 export function usePostPage(postId) {
   const [loading, setLoading] = useState(true);
@@ -28,12 +29,21 @@ export function usePostPage(postId) {
   const [activeImage, setActiveImage] = useState(null);
   const commentInputRef = useRef(null);
   const alert = useAlert();
-  const user = auth.currentUser;
+  const { user, loading: authLoading } = useAuth();
   const canEdit = !!(user && post && user.uid === post.authorId);
 
-  // Fetch post data
   useEffect(() => {
     const fetchPost = async () => {
+      if (authLoading) {
+        return;
+      }
+
+      if (!user) {
+        setError("Authentication required");
+        setLoading(false);
+        return;
+      }
+
       try {
         const postDoc = doc(db, "posts", postId);
         const postSnapshot = await getDoc(postDoc);
@@ -55,25 +65,36 @@ export function usePostPage(postId) {
     };
 
     fetchPost();
-  }, [postId]);
+  }, [postId, authLoading, user]);
 
-  // Real-time comments subscription
   useEffect(() => {
+    if (authLoading || !user) {
+      setComments([]);
+      return;
+    }
+
     const commentsQuery = query(
       collection(db, "posts", postId, "comments"),
       orderBy("createdAt", "asc")
     );
 
-    const unsubscribe = onSnapshot(commentsQuery, (snapshot) => {
-      const commentsData = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-      setComments(commentsData);
-    });
+    const unsubscribe = onSnapshot(
+      commentsQuery,
+      (snapshot) => {
+        const commentsData = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setComments(commentsData);
+      },
+      (error) => {
+        console.error("Error fetching comments:", error);
+        setError("Failed to load comments");
+      }
+    );
 
     return unsubscribe;
-  }, [postId]);
+  }, [postId, authLoading, user]);
 
   const handleCommentClick = () => {
     if (commentInputRef.current) {
@@ -84,28 +105,24 @@ export function usePostPage(postId) {
   const handleAddComment = async (e) => {
     e.preventDefault();
 
-    if (!newComment.trim() || !auth.currentUser) return;
+    if (!newComment.trim() || !user) return;
 
     try {
       await addDoc(collection(db, "posts", postId, "comments"), {
         text: newComment.trim(),
-        authorId: auth.currentUser.uid,
-        authorEmail: auth.currentUser.email,
-        authorName: auth.currentUser.displayName || auth.currentUser.email,
-        authorAvatar: auth.currentUser.photoURL,
+        authorId: user.uid,
+        authorEmail: user.email,
+        authorName: user.displayName || user.email,
+        authorAvatar: user.photoURL,
         createdAt: Timestamp.now(),
       });
 
-      if (post && post.authorId && post.authorId !== auth.currentUser.uid) {
+      if (post && post.authorId && post.authorId !== user.uid) {
         try {
           const { createCommentNotification } = await import(
             "@/lib/notifications"
           );
-          await createCommentNotification(
-            postId,
-            post.authorId,
-            auth.currentUser
-          );
+          await createCommentNotification(postId, post.authorId, user);
         } catch (notifError) {
           console.error("Failed to create comment notification:", notifError);
         }

@@ -73,8 +73,10 @@ export default function CommentItem({ postId, comment, onReplyClick }) {
             <textarea
               value={text}
               onChange={(e) => setText(e.target.value)}
-              rows={2}
-              placeholder="bebbeeebe, add a comment..."
+              rows={12}
+              onWheel={(e) => e.stopPropagation()}
+              onTouchMove={(e) => e.stopPropagation()}
+              placeholder="bebbeeebe, Añadir un comentario..."
               className="w-full bg-main/15 border-3 border-bg/10 rounded-md focus:outline-none focus:border-main transition-colors px-3 py-2"
             />
           ) : (

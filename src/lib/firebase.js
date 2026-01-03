@@ -6,6 +6,8 @@ import {
   signOut as firebaseSignOut,
   onAuthStateChanged,
   updateProfile,
+  setPersistence,
+  browserLocalPersistence,
 } from "firebase/auth";
 import {
   getFirestore,
@@ -44,17 +46,46 @@ export const auth = app ? getAuth(app) : null;
 export const db = app ? getFirestore(app) : null;
 export const storage = app ? getStorage(app) : null;
 
+// Initialize auth persistence
+if (auth) {
+  setPersistence(auth, browserLocalPersistence)
+    .then(() => {
+      console.log("Auth persistence enabled");
+    })
+    .catch((error) => {
+      console.error("Failed to enable auth persistence:", error);
+    });
+}
+
 const postsCollection = collection(db, "posts");
 
 // Auth helpers
 export async function signUpWithEmail(email, password) {
-  const userCred = await createUserWithEmailAndPassword(auth, email, password);
-  return userCred.user;
+  try {
+    // Ensure persistence is set before signing up
+    await setPersistence(auth, browserLocalPersistence);
+    const userCred = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+    return userCred.user;
+  } catch (error) {
+    console.error("Sign up error:", error);
+    throw error;
+  }
 }
 
 export async function signInWithEmail(email, password) {
-  const userCred = await signInWithEmailAndPassword(auth, email, password);
-  return userCred.user;
+  try {
+    // Ensure persistence is set before signing in
+    await setPersistence(auth, browserLocalPersistence);
+    const userCred = await signInWithEmailAndPassword(auth, email, password);
+    return userCred.user;
+  } catch (error) {
+    console.error("Sign in error:", error);
+    throw error;
+  }
 }
 
 export async function signOut() {
@@ -81,6 +112,7 @@ export async function createPost({
   imageFile,
   authorId,
   authorName,
+  authorAvatar,
 }) {
   let imageUrl = "";
   if (imageFile) {
@@ -95,6 +127,7 @@ export async function createPost({
     imageUrl: imageUrl || "",
     authorId: authorId || null,
     authorName: authorName || null,
+    authorAvatar: authorAvatar || null,
     likes: 0,
     createdAt: serverTimestamp(),
   });

@@ -74,7 +74,7 @@ export default function CommentsSection({
   };
 
   return (
-    <div className="bg-white shadow rounded-2xl mt-8 p-8 max-md:p-4">
+    <div className="bg-text shadow rounded-2xl mt-8 p-8 max-md:p-4">
       <div className="flex justify-between items-center mb-4">
         <h3 className="text-xl font-semibold text-bg">
           Comments ({comments.length})
@@ -83,9 +83,7 @@ export default function CommentsSection({
 
       <div className="space-y-4 mb-6">
         {mainComments.length === 0 ? (
-          <p className="text-bg text-center py-4">
-            No comments yet. Be the first to comment!
-          </p>
+          <p className="text-bg text-center py-4"></p>
         ) : (
           mainComments.map((comment) => (
             <CommentThread
@@ -111,7 +109,9 @@ export default function CommentsSection({
           <textarea
             ref={commentInputRef}
             onChange={(e) => setNewComment(e.target.value)}
-            rows={3}
+            onWheel={(e) => e.stopPropagation()}
+            onTouchMove={(e) => e.stopPropagation()}
+            rows={9}
             required
             value={newComment}
             placeholder="bebbeeebe, Añadir un comentario..."

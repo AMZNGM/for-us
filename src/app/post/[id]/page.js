@@ -3,6 +3,7 @@
 import { use } from "react";
 import { usePostPage } from "@/hooks/usePostPage";
 import ProtectedRoute from "@/components/page-components/ProtectedRoute";
+import LoadingFlower from "@/components/loading-components/LoadingFlower";
 import PostSection from "@/components/post-components/PostSection";
 import CommentsSection from "@/components/post-components/CommentsSection";
 import GlobalModal from "@/components/ui/GlobalModal";
@@ -39,7 +40,11 @@ export default function PostPage({ params }) {
   } = usePostPage(postId);
 
   if (loading) {
-    return <ProtectedRoute></ProtectedRoute>;
+    return (
+      <ProtectedRoute>
+        <LoadingFlower />
+      </ProtectedRoute>
+    );
   }
 
   if (error || !post) {

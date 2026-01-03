@@ -4,6 +4,7 @@ import { db } from "@/lib/firebase";
 interface User {
   uid: string;
   email: string;
+  photoURL?: string;
 }
 
 interface CreatePostData {
@@ -25,6 +26,7 @@ export const createPost = async ({
     imageUrl: imageUrl || "",
     authorId: user.uid,
     authorEmail: user.email,
+    authorAvatar: user.photoURL || null,
     createdAt: Timestamp.now(),
     likes: 0,
   });

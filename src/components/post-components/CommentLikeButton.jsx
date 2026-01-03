@@ -104,9 +104,17 @@ export default function CommentLikeButton({
   return (
     <button
       onClick={toggle}
-      className="flex justify-center items-center bg-main/25 rounded-2xl cursor-pointer hover:bg-main/50 transition-colors p-2"
+      className={`flex justify-center items-center rounded-2xl cursor-pointer transition-colors p-2 ${
+        likes.length > 0
+          ? "bg-red-500/20 hover:bg-red-500/30 border border-red-500/30"
+          : "bg-main/25 hover:bg-main/50"
+      }`}
     >
-      <span className="me-2 text-red-400">{liked ? "♥" : "♡"}</span>
+      <span
+        className={`me-2 ${likes.length > 0 ? "text-red-500" : "text-red-400"}`}
+      >
+        {liked ? "♥" : "♡"}
+      </span>
       <span className="text-sm text-bg">{label}</span>
     </button>
   );

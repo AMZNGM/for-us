@@ -1,9 +1,9 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "@/lib/firebase";
+import { useState, useEffect } from "react";
+import { signInWithEmail } from "@/lib/firebase";
+import { checkAuthState } from "@/lib/authUtils";
 import { motion } from "motion/react";
 import { useAlert } from "@/lib/AlertContext";
 import { HomePageWrapper } from "@/components/page-components/PageWrapper";
@@ -17,18 +17,36 @@ export default function LoginPage() {
   const alert = useAlert();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [checkingAuth, setCheckingAuth] = useState(true);
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      const isAuthenticated = await checkAuthState();
+      if (isAuthenticated) {
+        router.replace("/");
+      } else {
+        setCheckingAuth(false);
+      }
+    };
+    checkAuth();
+  }, [router]);
+
+  if (checkingAuth) {
+    return (
+      <HomePageWrapper>
+        <LoadingFlower />
+      </HomePageWrapper>
+    );
+  }
 
   const login = async () => {
     try {
-      const userCredential = await signInWithEmailAndPassword(
-        auth,
-        email.trim(),
-        password
-      );
+      await signInWithEmail(email.trim(), password);
       router.replace("/");
       alert.show("Logged in ✅", "success");
     } catch (err) {
-      alert.show(`Login failed ❌`, "error");
+      console.error("Login error:", err);
+      alert.show(`Login failed ❌ ${err.message || ""}`, "error");
     }
   };
 

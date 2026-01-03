@@ -86,9 +86,15 @@ export default function PostLikeButton({ postId, postAuthorId }) {
     <button
       onClick={toggle}
       disabled={loading}
-      className="bg-main/50 rounded-2xl text-red-500 cursor-pointer py-2 px-3 hover:bg-main/50 transition-colors"
+      className={`rounded-2xl cursor-pointer py-2 px-3 transition-colors ${
+        likes.length > 0
+          ? "bg-red-500/20 text-red-500 hover:bg-red-500/30 border border-red-500/30"
+          : "bg-main/50 text-red-500 hover:bg-main/50"
+      }`}
     >
-      <span className="me-2">{liked ? "♥" : "♡"}</span>
+      <span className={`me-2 ${likes.length > 0 ? "text-red-500" : ""}`}>
+        {likes.length > 0 ? "♥" : "♡"}
+      </span>
       <span className="text-sm text-bg">{label}</span>
     </button>
   );

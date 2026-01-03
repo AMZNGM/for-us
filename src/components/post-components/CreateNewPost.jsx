@@ -12,7 +12,7 @@ export default function CreateNewPost() {
   const router = useRouter();
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
-  const [date, setDate] = useState("");
+  const [date, setDate] = useState(new Date().toISOString().split("T")[0]);
   const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(false);
 
@@ -32,10 +32,8 @@ export default function CreateNewPost() {
         date,
         imageFile: image,
         authorId: auth.currentUser.uid,
-        authorEmail: auth.currentUser.email,
         authorName: auth.currentUser.displayName || auth.currentUser.email,
-        authorAvatar:
-          auth.currentUser.photoURL || "/images/abdelrahman-avatar.webp",
+        authorAvatar: auth.currentUser.photoURL || null,
       });
 
       setTitle("");
@@ -90,7 +88,8 @@ export default function CreateNewPost() {
               type="date"
               id="date"
               name="date"
-              defaultValue={new Date().toISOString().split("T")[0]}
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
               className="w-full bg-main/15 border border-bg/50 rounded-lg focus:outline-none focus:border-main focus:ring-2 focus:ring-main transition-colors px-3 py-2"
             />
           </div>
@@ -105,10 +104,12 @@ export default function CreateNewPost() {
             <textarea
               id="content"
               name="content"
-              rows={8}
+              rows={13}
+              onWheel={(e) => e.stopPropagation()}
+              onTouchMove={(e) => e.stopPropagation()}
+              onChange={(e) => setText(e.target.value)}
               className="w-full bg-main/15 border border-bg/50 rounded-lg focus:outline-none focus:border-main focus:ring-2 focus:ring-main transition-colors px-3 py-2"
               placeholder="Write your post content here..."
-              onChange={(e) => setText(e.target.value)}
             />
           </div>
 

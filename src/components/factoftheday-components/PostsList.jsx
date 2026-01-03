@@ -1,5 +1,5 @@
-import PostCard from "./PostCard";
-import EmptyState from "./EmptyState";
+import PostCard from "@/components/factoftheday-components/PostCard";
+import EmptyState from "@/components/ui/EmptyState";
 
 export default function PostsList({
   posts,

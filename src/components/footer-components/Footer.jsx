@@ -16,7 +16,7 @@ export default function Footer() {
   }
 
   return (
-    <footer className="sticky bottom-0 w-screen h-200 overflow-hidden bg-bg text-main flex justify-center items-center px-14 -z-10">
+    <footer className="relative bottom-0 w-screen h-200 overflow-hidden bg-bg text-main flex justify-center items-center px-14 -z-10">
       <TextAnimation
         text={
           "- Every time you Smile when you Remember me, a Flower blooms in Jannah -"

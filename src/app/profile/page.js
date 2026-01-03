@@ -20,10 +20,19 @@ export default function ProfilePage() {
     saveProfile,
   } = useProfile();
 
-  if (loading) return <ProtectedRoute></ProtectedRoute>;
+  if (loading)
+    return (
+      <ProtectedRoute>
+        <LoadingFlower />
+      </ProtectedRoute>
+    );
 
   if (!userState) {
-    return <ProtectedRoute></ProtectedRoute>;
+    return (
+      <ProtectedRoute>
+        <LoadingFlower />
+      </ProtectedRoute>
+    );
   }
 
   return (

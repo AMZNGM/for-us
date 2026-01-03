@@ -3,8 +3,10 @@
 import { useNotifications } from "@/hooks/useNotifications";
 import { useLoading } from "@/components/loading-components/LoadingContext";
 import ProtectedRoute from "@/components/page-components/ProtectedRoute";
-import MainBtn from "@/components/ui/buttons/MainBtn";
+import LoadingFlower from "@/components/loading-components/LoadingFlower";
 import PageWrapper from "@/components/page-components/PageWrapper";
+import EmptyState from "@/components/ui/EmptyState";
+import MainBtn from "@/components/ui/buttons/MainBtn";
 
 export default function NotificationsPage() {
   const { isLoading } = useLoading();
@@ -12,7 +14,11 @@ export default function NotificationsPage() {
     useNotifications();
 
   if (isLoading || user === null) {
-    return <ProtectedRoute></ProtectedRoute>;
+    return (
+      <ProtectedRoute>
+        <LoadingFlower />
+      </ProtectedRoute>
+    );
   }
 
   if (!user) {
@@ -39,16 +45,14 @@ export default function NotificationsPage() {
           </div>
 
           <div className="space-y-3 mt-4">
-            {items.length === 0 && (
-              <h2 className="text-sm text-bg">No notifications</h2>
-            )}
+            {items.length === 0 && <EmptyState />}
 
             {items.map((it) => (
               <div
                 key={it.id}
                 onClick={() => handleNotificationClick(it)}
                 className={`flex justify-between items-center shadow rounded hover:bg-main transition-colors cursor-pointer p-3 ${
-                  it.read ? "bg-white" : "bg-blue-50 border border-blue-200"
+                  it.read ? "bg-text" : "bg-blue-50 border border-blue-200"
                 }`}
               >
                 <div className="flex-1">
