@@ -10,6 +10,7 @@ import { HomePageWrapper } from "@/components/page-components/PageWrapper";
 import TextAnimation from "@/components/ui/text/TextAnimation";
 import RippleEffect from "@/components/ui/effects/RippleEffect";
 import MainBtn from "@/components/ui/buttons/MainBtn";
+import LoadingFlower from "@/components/loading-components/LoadingFlower";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -33,6 +34,8 @@ export default function LoginPage() {
 
   return (
     <HomePageWrapper>
+      <LoadingFlower />
+
       <TextAnimation
         delay={4.5}
         text="Sign in Bea <3"
