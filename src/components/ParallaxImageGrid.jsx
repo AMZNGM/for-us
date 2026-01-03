@@ -43,9 +43,7 @@ export function ParallaxImageGrid() {
                 src={src}
                 alt={`yassirita-${index + 1}`}
                 fill
-                sizes="(max-width: 640px) 50vw,
-                         (max-width: 1024px) 33vw,
-                         20vw"
+                sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
                 className="object-cover select-none hover:scale-106 duration-700 ease-in-out"
                 draggable={false}
               />
@@ -86,9 +84,7 @@ export function ParallaxChampImageGrid() {
                 src={src}
                 alt={`champ-yassirita-${index + 1}`}
                 fill
-                sizes="(max-width: 640px) 50vw,
-                         (max-width: 1024px) 33vw,
-                         20vw"
+                sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
                 className="object-cover select-none hover:scale-106 duration-700 ease-in-out"
                 draggable={false}
               />
@@ -143,9 +139,7 @@ export function ArtImageGrid() {
                 src={src}
                 alt={`champ-yassirita-${index + 1}`}
                 fill
-                sizes="(max-width: 640px) 50vw,
-                         (max-width: 1024px) 33vw,
-                         20vw"
+                sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
                 className="object-cover select-none shadow-2xl hover:scale-106 duration-700 ease-in-out"
                 draggable={false}
               />

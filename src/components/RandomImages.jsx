@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { motion } from "motion/react";
 
 const images = Array.from(
@@ -9,22 +9,61 @@ const images = Array.from(
   (_, i) => `/images/yassirita/yassirita-${i + 1}.webp`
 );
 
-const randomPos = () => {
-  const r = Math.random();
+const seededRandom = (seed) => {
+  const x = Math.sin(seed) * 10000;
+  return x - Math.floor(x);
+};
+
+const randomPos = (seed) => {
+  const r = seededRandom(seed);
   return 37 + (r - 0.5) * 60;
 };
 
 export default function RandomImages() {
   const [topZ, setTopZ] = useState(1);
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   const positions = useMemo(() => {
-    return images.map(() => ({
-      x: randomPos(),
-      y: randomPos(),
-      rotate: Math.random() * 40 - 10,
+    return images.map((_, index) => ({
+      x: randomPos(index * 2),
+      y: randomPos(index * 2 + 1),
+      rotate: seededRandom(index * 3) * 40 - 10,
       z: 1,
     }));
   }, []);
+
+  if (!isClient) {
+    return (
+      <section className="relative w-screen h-screen max-md:translate-y-12 md:translate-x-24">
+        {images.map((image, index) => (
+          <div
+            key={index}
+            className="w-1/7 max-md:w-32 opacity-0"
+            style={{
+              position: "absolute",
+              left: "50%",
+              top: "50%",
+              transform: "translate(-50%, -50%)",
+            }}
+          >
+            <Image
+              src={image}
+              alt={`yassirita-${index + 1}`}
+              draggable={false}
+              width={100}
+              height={100}
+              sizes="(max-width: 640px) 40vw, (max-width: 1024px) 25vw, 20vw"
+              className="w-full h-full object-cover rounded-2xl select-none pointer-events-none"
+            />
+          </div>
+        ))}
+      </section>
+    );
+  }
 
   return (
     <section className="relative w-screen h-screen max-md:translate-y-12 md:translate-x-24">
