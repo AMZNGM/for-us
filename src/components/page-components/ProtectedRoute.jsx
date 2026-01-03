@@ -3,9 +3,8 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/lib/AuthContext";
-import LoadingSkeleton from "@/components/LoadingSkeleton";
 
-export default function ProtectedRoute({ children, redirectTo = "/login" }) {
+export default function ProtectedRoute({ children }) {
   const { user, loading } = useAuth();
   const router = useRouter();
 
@@ -14,8 +13,6 @@ export default function ProtectedRoute({ children, redirectTo = "/login" }) {
       router.push("/login");
     }
   }, [user, loading]);
-
-  if (loading) return <LoadingSkeleton />;
 
   return children;
 }

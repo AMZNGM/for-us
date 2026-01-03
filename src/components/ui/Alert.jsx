@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { motion, AnimatePresence } from "motion/react";
 
-export default function Alert({ open, message, type = "info", onClose }) {
+export default function Alert({ open, message, type = "info" }) {
   const color =
     type === "success"
       ? "bg-main"
@@ -27,16 +27,10 @@ export default function Alert({ open, message, type = "info", onClose }) {
         >
           <div
             role="alert"
-            className={`${color} flex justify-center items-center text-bg rounded-md shadow-lg gap-2 py-2 px-4 -translate-x-8`}
+            aria-label="Alert"
+            className={`relative flex justify-center items-center text-bg rounded-md shadow-lg gap-2 py-2 px-4 -translate-x-8 ${color}`}
           >
             <div className="flex-1 text-sm">{message}</div>
-            <button
-              aria-label="Close alert"
-              onClick={onClose}
-              className="w-6 h-6 flex justify-center items-center cursor-pointer"
-            >
-              ✕
-            </button>
 
             <Image
               src="/images/yassirita-drink-mate-no-bg.webp"

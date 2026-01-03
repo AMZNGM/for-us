@@ -106,7 +106,7 @@ export function ParallaxChampImageGrid() {
   );
 }
 
-export function ArtistaImageGrid() {
+export function ArtImageGrid() {
   const [activeImage, setActiveImage] = useState(null);
 
   return (
@@ -122,6 +122,9 @@ export function ArtistaImageGrid() {
           src="/images/gallery/gallery-2.webp"
           alt="Pretty Yassira"
           fill
+          priority
+          loading="eager"
+          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
           className="w-40! h-40! bg-main object-contain translate-x-130 translate-y-8 rounded-2xl -rotate-65 relative z-0 max-md:z-20 max-md:w-30! max-md:h-30! max-md:translate-x-0 max-sm:translate-y-40"
         />
       </div>

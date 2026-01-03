@@ -1,6 +1,6 @@
 import ProtectedRoute from "@/components/page-components/ProtectedRoute";
 import PageWrapper from "@/components/page-components/PageWrapper";
-import { ArtistaImageGrid } from "@/components/ParallaxImageGrid";
+import { ArtImageGrid } from "@/components/ParallaxImageGrid";
 
 export const metadata = {
   title: "For Us <3 | Yassirita",
@@ -11,7 +11,7 @@ export default function YassirasArtPage() {
   return (
     <ProtectedRoute>
       <PageWrapper>
-        <ArtistaImageGrid />
+        <ArtImageGrid />
       </PageWrapper>
     </ProtectedRoute>
   );

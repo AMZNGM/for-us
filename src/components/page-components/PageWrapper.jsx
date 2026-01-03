@@ -1,5 +1,5 @@
 import Image from "next/image";
-import GradientCursor from "@/components/ui/cursors/GradientCursor";
+import GradientCursor from "@/components/page-components/CustomCursor";
 import ScrollIndicator from "@/components/ui/ScrollIndicator";
 
 export default function PageWrapper({

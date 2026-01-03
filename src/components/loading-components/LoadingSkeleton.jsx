@@ -1,7 +1,11 @@
 export default function LoadingSkeleton({ className = "" }) {
   return (
     <div
-      className={`fixed top-0 w-screen h-screen overflow-hidden bg-main flex justify-center items-center pointer-events-none z-9999 ${className}`}
+      initial={{ opacity: 1 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.5 }}
+      className={`fixed inset-0 w-screen h-screen overflow-hidden bg-main flex justify-center items-center pointer-events-none z-9999 ${className}`}
     >
       <svg
         viewBox="0 0 400 400"

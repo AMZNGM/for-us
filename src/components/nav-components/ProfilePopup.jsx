@@ -109,6 +109,7 @@ export default function ProfilePopup({ onClose, dockSettings, isVisible }) {
                   <Link
                     href="/profile"
                     className="flex justify-center items-center"
+                    onClick={onClose}
                   >
                     <img
                       src={avatarUrl}
@@ -138,6 +139,14 @@ export default function ProfilePopup({ onClose, dockSettings, isVisible }) {
                 </p>
               </div>
             )}
+
+            <Link
+              href="/profile"
+              onClick={onClose}
+              className="block w-full text-center px-4 py-2 bg-main/10 hover:bg-main/20 text-main rounded-lg transition-colors"
+            >
+              Edit Profile
+            </Link>
           </div>
         </>
       )}

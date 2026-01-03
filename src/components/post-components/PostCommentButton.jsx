@@ -1,10 +1,4 @@
-"use client";
-
-import { useAlert } from "@/lib/AlertContext";
-
 export default function PostCommentButton({ onCommentClick }) {
-  const alert = useAlert();
-
   const handleClick = () => {
     if (!onCommentClick) return;
     onCommentClick();

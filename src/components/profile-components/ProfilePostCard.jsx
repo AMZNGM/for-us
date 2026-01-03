@@ -99,15 +99,15 @@ export default function ProfilePostCard({ post: initialPost, index }) {
             </span>
           </RippleEffect>
 
-          <div className="flex justify-end items-center gap-4">
+          <div className="flex justify-end items-center gap-4 mt-4">
             <MainBtn
               onClick={() => router.push(`/post/${post.id}`)}
-              className="font-main! mt-2"
+              className="font-main!"
             >
               View
             </MainBtn>
 
-            <MainBtn onClick={handleNotify} className="font-main! mt-2">
+            <MainBtn onClick={handleNotify} className="font-main!">
               Notify
             </MainBtn>
 
@@ -117,7 +117,7 @@ export default function ProfilePostCard({ post: initialPost, index }) {
                   await remove();
                 }
               }}
-              className="font-main! text-red-600 mt-2"
+              className="font-main! text-red-600"
             >
               Delete
             </MainBtn>

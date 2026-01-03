@@ -19,13 +19,13 @@ export default function PostSection({
   setActiveImage,
 }) {
   return (
-    <article className="bg-white shadow rounded-2xl p-8 max-md:p-4">
+    <article className="bg-text shadow rounded-2xl p-8 max-md:p-4">
       <div className="flex items-center space-x-4 mb-6">
         {post.authorId && (
           <img
             src={post.authorAvatar || "/images/abdelrahman-avatar.webp"}
             alt="Author avatar"
-            className="w-12 h-12 bg-gray-300 rounded-full object-cover"
+            className="w-12 h-12 bg-main rounded-full object-cover"
           />
         )}
         <div className="w-full flex justify-between items-center">
@@ -113,14 +113,14 @@ export default function PostSection({
                 }
                 setEditing(!editing);
               }}
-              className="bg-main/15 text-blue-500 rounded-2xl cursor-pointer py-2 px-3 hover:bg-main/50 transition-colors"
+              className="bg-main/25 text-blue-500 rounded-2xl cursor-pointer py-2 px-3 hover:bg-main/50 transition-colors"
             >
               {editing ? "Cancel" : "Edit"}
             </button>
 
             <button
               onClick={handleDelete}
-              className="bg-main/15 text-red-500 rounded-2xl cursor-pointer py-2 px-3 hover:bg-main/50 transition-colors"
+              className="bg-main/25 text-red-500 rounded-2xl cursor-pointer py-2 px-3 hover:bg-main/50 transition-colors"
             >
               Delete
             </button>

@@ -3,7 +3,8 @@
 import Image from "next/image";
 import { useEffect } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { ChevronLeft, ChevronRight, XIcon } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import CloseBtn from "@/components/ui/buttons/CloseBtn";
 
 export default function GlobalModal({
   activeImage,
@@ -51,7 +52,7 @@ export default function GlobalModal({
           className="fixed inset-0 flex justify-center items-center bg-bg/80 backdrop-blur-md z-50"
         >
           <motion.div
-            initial={{ scale: 0.85, y: 30 }}
+            initial={{ scale: 0, y: 30 }}
             animate={{ scale: 1, y: 0 }}
             exit={{ scale: 0.9, opacity: 0 }}
             transition={{ type: "spring", stiffness: 260, damping: 25 }}
@@ -64,6 +65,7 @@ export default function GlobalModal({
               width={1600}
               height={2000}
               priority
+              loading="eager"
               className="rounded-3xl object-contain max-h-[90vh]"
             />
 
@@ -96,12 +98,7 @@ export default function GlobalModal({
             </div>
           </motion.div>
 
-          <button
-            onClick={() => setActiveImage(null)}
-            className="absolute top-4 right-4 w-10 h-10 bg-main text-bg rounded-full flex justify-center items-center shadow-xl hover:bg-text transition-colors cursor-pointer"
-          >
-            <XIcon />
-          </button>
+          <CloseBtn onClick={() => setActiveImage(null)} />
         </motion.div>
       )}
     </AnimatePresence>

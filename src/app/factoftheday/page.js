@@ -1,36 +1,20 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import { getPosts } from "@/lib/getPosts";
+import { useFactOfTheDay } from "@/hooks/useFactOfTheDay";
 import ProtectedRoute from "@/components/page-components/ProtectedRoute";
 import PageWrapper from "@/components/page-components/PageWrapper";
-import PostLikeButton from "@/components/post-components/PostLikeButton";
-import PostCommentButton from "@/components/post-components/PostCommentButton";
+import ViewToggle from "@/components/factoftheday-components/ViewToggle";
+import PostsList from "@/components/factoftheday-components/PostsList";
 
 export default function FactOfTheDayPage() {
-  const router = useRouter();
-  const [posts, setPosts] = useState([]);
-  const [expandedPosts, setExpandedPosts] = useState(new Set());
-  const [isGridView, setIsGridView] = useState(true);
-
-  useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const fetchedPosts = await getPosts();
-        setPosts(fetchedPosts);
-      } catch (err) {
-        console.error("Error fetching posts:", err);
-      }
-    };
-
-    fetchPosts();
-  }, []);
-
-  const truncateText = (text, maxLength = 150) => {
-    if (text.length <= maxLength) return text;
-    return text.slice(0, maxLength) + "...";
-  };
+  const {
+    posts,
+    expandedPosts,
+    isGridView,
+    truncateText,
+    togglePostExpansion,
+    toggleView,
+  } = useFactOfTheDay();
 
   return (
     <ProtectedRoute>
@@ -43,163 +27,20 @@ export default function FactOfTheDayPage() {
           <div className="flex justify-between items-center mb-8">
             <h1 className="text-5xl text-main font-sec">Fact of the day</h1>
 
-            <div className="flex items-center gap-4">
-              <button
-                onClick={() => setIsGridView(!isGridView)}
-                className="text-main bg-main/15 rounded-full px-4 py-2 hover:bg-main/25 transition-colors flex items-center gap-2 cursor-pointer max-md:hidden"
-              >
-                {isGridView ? (
-                  <>
-                    <span>☰</span>
-                    <span>List</span>
-                  </>
-                ) : (
-                  <>
-                    <span>⊞</span>
-                    <span>Grid</span>
-                  </>
-                )}
-              </button>
-
-              <div className="text-main bg-main/15 rounded-full px-4 py-2">
-                {posts.length} {posts.length === 1 ? "Post" : "Posts"}
-              </div>
-            </div>
+            <ViewToggle
+              isGridView={isGridView}
+              onToggle={toggleView}
+              postCount={posts.length}
+            />
           </div>
 
-          <div
-            className={
-              isGridView
-                ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-                : "space-y-4"
-            }
-          >
-            {posts.length === 0 ? (
-              <div className="col-span-full h-170 flex items-center justify-center bg-text text-center shadow rounded-2xl p-8">
-                <p className="text-bg bg-main/50 p-12 rounded-2xl">
-                  No posts yet. Or Loading i donnoooo!
-                </p>
-              </div>
-            ) : (
-              posts.map((post) => (
-                <div
-                  key={post.id}
-                  onClick={() => router.push(`/post/${post.id}`)}
-                  className="bg-text flex flex-col justify-between shadow rounded-2xl hover:shadow-xl transition-shadow overflow-hidden cursor-pointer"
-                >
-                  <div>
-                    <div className="border-b border-main p-4">
-                      <div className="flex justify-between items-center space-x-3">
-                        <div className="flex justify-center items-center gap-2">
-                          {post.authorAvatar ? (
-                            <img
-                              src={post.authorAvatar}
-                              alt="Author avatar"
-                              className="w-10 h-10 object-cover rounded-full"
-                              onError={(e) => {
-                                e.target.style.display = "none";
-                                e.target.nextSibling.style.display = "flex";
-                              }}
-                            />
-                          ) : null}
-                          <div
-                            className="w-10 h-10 bg-main rounded-full flex items-center justify-center"
-                            style={{
-                              display: post.authorAvatar ? "none" : "flex",
-                            }}
-                          >
-                            <span className="text-bg text-sm font-bold">
-                              {(post.authorName || post.authorEmail || "A")
-                                .charAt(0)
-                                .toUpperCase()}
-                            </span>
-                          </div>
-
-                          <p className="text-bg font-medium capitalize">
-                            {post.authorName ||
-                              post.authorEmail ||
-                              "No Name Yet"}
-                          </p>
-                        </div>
-
-                        {post.date ? (
-                          <div className="inline-block text-bg bg-main/10 text-sm rounded-full px-2 py-1 capitalize">
-                            {new Date(post.date).toLocaleDateString("en-US", {
-                              year: "numeric",
-                              month: "short",
-                              day: "numeric",
-                            })}
-                          </div>
-                        ) : (
-                          <div className="text-xs text-bg/75">No Date</div>
-                        )}
-                      </div>
-                    </div>
-
-                    {post.imageUrl ? (
-                      <div
-                        className={`overflow-hidden
-                      ${isGridView ? "h-72" : "h-120"}
-                    `}
-                      >
-                        <img
-                          src={post.imageUrl}
-                          alt="Post image"
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                    ) : (
-                      <div
-                        className={`bg-main text-bg flex justify-center items-center
-                      ${isGridView ? "h-72" : "h-120"}
-                    `}
-                      >
-                        <span className="animate-pulse">No Image Here</span>
-                      </div>
-                    )}
-
-                    <div className="flex flex-col justify-between text-bg p-4">
-                      {post.title && (
-                        <h3 className="text-lg font-semibold mb-2 capitalize">
-                          {post.title}
-                        </h3>
-                      )}
-
-                      <div className="text-bg/85 p-4 bg-main/50">
-                        {expandedPosts.has(post.id) ? (
-                          <p className="text-sm leading-relaxed">{post.text}</p>
-                        ) : (
-                          <p className="text-sm leading-relaxed wrap-break-word">
-                            {truncateText(post.text)}
-                          </p>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="flex justify-between items-center p-4 border-t border-main">
-                    <div className="flex items-center space-x-3">
-                      <div onClick={(e) => e.stopPropagation()}>
-                        <PostLikeButton
-                          postId={post.id}
-                          postAuthorId={post.authorId}
-                        />
-                      </div>
-
-                      <div
-                        onClick={(e) => e.stopPropagation()}
-                        className="text-bg"
-                      >
-                        <PostCommentButton
-                          onCommentClick={() => router.push(`/post/${post.id}`)}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))
-            )}
-          </div>
+          <PostsList
+            posts={posts}
+            isGridView={isGridView}
+            expandedPosts={expandedPosts}
+            truncateText={truncateText}
+            onToggleExpand={togglePostExpansion}
+          />
         </div>
       </PageWrapper>
     </ProtectedRoute>

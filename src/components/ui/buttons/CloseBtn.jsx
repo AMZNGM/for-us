@@ -1,4 +1,4 @@
-import { X } from "lucide-react";
+import { XIcon } from "lucide-react";
 import RippleEffect from "@/components/ui/effects/RippleEffect";
 
 export default function CloseBtn({ onClick, className = "" }) {
@@ -11,7 +11,7 @@ export default function CloseBtn({ onClick, className = "" }) {
       <RippleEffect className="group relative text-text bg-text/10 hover:bg-text/20 rounded-full shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden cursor-pointer p-2.5">
         <div className="absolute inset-0 bg-main/0 group-hover:bg-main/10 rounded-full transition-all duration-300" />
 
-        <X
+        <XIcon
           size={20}
           className="transition-all duration-300 ease-out group-hover:rotate-90"
         />

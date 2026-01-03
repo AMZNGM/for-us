@@ -6,7 +6,6 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "@/lib/firebase";
 import { motion } from "motion/react";
 import { useAlert } from "@/lib/AlertContext";
-import LoadingScreen from "@/components/LoadingScreen";
 import { HomePageWrapper } from "@/components/page-components/PageWrapper";
 import TextAnimation from "@/components/ui/text/TextAnimation";
 import RippleEffect from "@/components/ui/effects/RippleEffect";
@@ -34,8 +33,6 @@ export default function LoginPage() {
 
   return (
     <HomePageWrapper>
-      <LoadingScreen />
-
       <TextAnimation
         delay={4.5}
         text="Sign in Bea <3"
