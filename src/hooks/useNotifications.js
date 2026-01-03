@@ -9,26 +9,32 @@ import {
 } from "firebase/firestore";
 import { db, onAuthChange } from "@/lib/firebase";
 import { markNotificationRead } from "@/lib/notifications";
+import { useLoading } from "@/components/loading-components/LoadingContext";
 
 export function useNotifications() {
   const router = useRouter();
+  const { addLoadingTask, removeLoadingTask } = useLoading();
   const [items, setItems] = useState([]);
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
 
   // Auth state management and notifications setup
   useEffect(() => {
+    const taskId = "notifications-auth";
+    addLoadingTask(taskId);
+
     const unsubscribe = onAuthChange((currentUser) => {
       setUser(currentUser);
-      setLoading(false);
 
       if (currentUser) {
         setupNotificationsListener(currentUser.uid);
       }
+
+      // Remove the auth task after user state is determined
+      removeLoadingTask(taskId);
     });
 
     return () => unsubscribe();
-  }, []);
+  }, [addLoadingTask, removeLoadingTask]);
 
   const setupNotificationsListener = (userId) => {
     const notificationsQuery = query(
@@ -55,14 +61,28 @@ export function useNotifications() {
   };
 
   const markNotification = async (id) => {
-    await markNotificationRead(id);
+    const taskId = `mark-read-${id}`;
+    addLoadingTask(taskId);
+
+    try {
+      await markNotificationRead(id);
+    } finally {
+      removeLoadingTask(taskId);
+    }
   };
 
   const markAllRead = async () => {
-    const unreadNotifications = items.filter((item) => !item.read);
-    await Promise.all(
-      unreadNotifications.map((item) => markNotificationRead(item.id))
-    );
+    const taskId = "mark-all-read";
+    addLoadingTask(taskId);
+
+    try {
+      const unreadNotifications = items.filter((item) => !item.read);
+      await Promise.all(
+        unreadNotifications.map((item) => markNotificationRead(item.id))
+      );
+    } finally {
+      removeLoadingTask(taskId);
+    }
   };
 
   const handleNotificationClick = async (notification) => {
@@ -77,7 +97,6 @@ export function useNotifications() {
     // State
     items,
     user,
-    loading,
 
     // Actions
     markNotification,

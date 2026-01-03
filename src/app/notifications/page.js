@@ -1,15 +1,17 @@
 "use client";
 
 import { useNotifications } from "@/hooks/useNotifications";
+import { useLoading } from "@/components/loading-components/LoadingContext";
 import ProtectedRoute from "@/components/page-components/ProtectedRoute";
 import MainBtn from "@/components/ui/buttons/MainBtn";
 import PageWrapper from "@/components/page-components/PageWrapper";
 
 export default function NotificationsPage() {
-  const { items, user, loading, markAllRead, handleNotificationClick } =
+  const { isLoading } = useLoading();
+  const { items, user, markAllRead, handleNotificationClick } =
     useNotifications();
 
-  if (loading) {
+  if (isLoading || user === null) {
     return <ProtectedRoute></ProtectedRoute>;
   }
 
