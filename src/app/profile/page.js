@@ -2,6 +2,7 @@
 
 import { useProfile } from "@/hooks/useProfile";
 import ProtectedRoute from "@/components/page-components/ProtectedRoute";
+import LoadingFlower from "@/components/loading-components/LoadingFlower";
 import ProfileHeader from "@/components/profile-components/ProfileHeader";
 import ProfileAvatar from "@/components/profile-components/ProfileAvatar";
 import ProfileForm from "@/components/profile-components/ProfileForm";
@@ -27,6 +28,7 @@ export default function ProfilePage() {
 
   return (
     <ProtectedRoute>
+      <LoadingFlower />
       <div className="relative w-full h-full min-h-screen bg-bg text-main py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-2xl mx-auto">
           <ProfileHeader name={profile?.displayName} />

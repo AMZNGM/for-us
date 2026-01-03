@@ -7,10 +7,10 @@ import { auth } from "@/lib/firebase";
 import { motion } from "motion/react";
 import { useAlert } from "@/lib/AlertContext";
 import { HomePageWrapper } from "@/components/page-components/PageWrapper";
+import LoadingFlower from "@/components/loading-components/LoadingFlower";
 import TextAnimation from "@/components/ui/text/TextAnimation";
 import RippleEffect from "@/components/ui/effects/RippleEffect";
 import MainBtn from "@/components/ui/buttons/MainBtn";
-import LoadingFlower from "@/components/loading-components/LoadingFlower";
 
 export default function LoginPage() {
   const router = useRouter();
