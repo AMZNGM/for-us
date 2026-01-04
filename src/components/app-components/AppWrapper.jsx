@@ -26,7 +26,7 @@ function AppContent({ children }) {
       <LocomotiveScrollSetup />
       <Navbar />
       <WelcomeMessage />
-      {/* <ToggleableLoveElements /> */}
+      <ToggleableLoveElements />
       <LoveCounter />
       <InstaMessages />
       <RomanticTodoList />
