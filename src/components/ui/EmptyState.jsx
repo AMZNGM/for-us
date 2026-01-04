@@ -1,6 +1,7 @@
 export default function EmptyState() {
   return (
     <div className="col-span-full h-170 flex flex-col items-center justify-center bg-text text-center shadow rounded-2xl p-8">
+      <div className="text-6xl mb-4">🌸</div>
       <div
         className="relative w-[45px] h-[45px] animate-spin"
         style={{
@@ -31,9 +32,10 @@ export default function EmptyState() {
         </div>
       </div>
 
-      {/* <p className="text-bg bg-main/50 p-12 rounded-2xl mt-8">
-        No posts yet. Or Loading i donnoooo!
-      </p> */}
+      <p className="text-bg bg-main/50 p-12 rounded-2xl mt-8">
+        🌸 Nothing here yet! 🌸
+        <br />
+      </p>
     </div>
   );
 }

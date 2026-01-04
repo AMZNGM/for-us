@@ -54,7 +54,7 @@ export default function PostPage({ params }) {
           <div className="absolute inset-0 w-full h-full border-8 border-main max-md:border-4 pointer-events-none z-10" />
 
           <p className="text-red-600 text-2xl bg-main rounded-2xl p-4 animate-bounce">
-            {error || "Post not found"}
+            💔 {error || "Post not found"} 💔
           </p>
         </div>
       </ProtectedRoute>

@@ -13,6 +13,13 @@ export default function NotificationsPage() {
   const { items, user, markAllRead, handleNotificationClick } =
     useNotifications();
 
+  const getNotificationEmoji = (message) => {
+    if (message.includes("liked")) return "💖";
+    if (message.includes("commented")) return "💬";
+    if (message.includes("replied")) return "↩️";
+    return "📢";
+  };
+
   if (isLoading || user === null) {
     return (
       <ProtectedRoute>
@@ -34,13 +41,15 @@ export default function NotificationsPage() {
       <PageWrapper look="bright">
         <div className="relative max-w-4xl mx-auto py-8 px-4 max-md:py-22">
           <div className="flex justify-between items-center mb-4">
-            <h1 className="text-2xl font-bold text-shadow-lg">Notifications</h1>
+            <h1 className="text-2xl font-bold text-shadow-lg">
+              🔔 Notifications
+            </h1>
             <MainBtn
               onClick={markAllRead}
               variant={"ghost"}
-              className="text-blue-500! hover:text-text! font-main text-shadow-lg transition-colors"
+              className="text-blue-500! hover:text-text! font-main transition-colors"
             >
-              Mark All Read
+              ✅ Mark All Read
             </MainBtn>
           </div>
 
@@ -59,9 +68,10 @@ export default function NotificationsPage() {
                   <div
                     className={`font-medium ${!it.read ? "text-blue-900" : ""}`}
                   >
-                    {it.message}
+                    {getNotificationEmoji(it.message)} {it.message}
                   </div>
                   <div className="text-xs text-gray-500">
+                    🕒{" "}
                     {it.createdAt?.toDate
                       ? it.createdAt.toDate().toLocaleString()
                       : ""}
@@ -69,9 +79,9 @@ export default function NotificationsPage() {
                 </div>
                 <div className="ml-4">
                   {!it.read ? (
-                    <span className="w-2 h-2 bg-blue-500 rounded-full inline-block"></span>
+                    <span className="text-lg">🔵</span>
                   ) : (
-                    <span className="text-sm text-gray-400">Read</span>
+                    <span className="text-sm text-gray-400">✅ Read</span>
                   )}
                 </div>
               </div>

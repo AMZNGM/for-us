@@ -53,9 +53,9 @@ export default function CreateNewPost() {
   };
 
   return (
-    <div className="relative max-w-4xl mx-auto py-24 px-4 max-md:py-22">
+    <div className="relative h-screen max-w-4xl mx-auto py-24 px-4 max-md:py-22">
       <h1 className="text-3xl font-bold text-bg text-shadow-lg mb-8">
-        Create New Fact
+        🌸 Create New Fact 🌸
       </h1>
 
       <div className="bg-white shadow-xl rounded-2xl mt-8 p-8 max-md:p-4">
@@ -65,7 +65,7 @@ export default function CreateNewPost() {
               htmlFor="title"
               className="block text-sm font-medium text-gray-700 mb-2"
             >
-              Title
+              📝 Title
             </label>
             <input
               type="text"
@@ -82,7 +82,7 @@ export default function CreateNewPost() {
               htmlFor="date"
               className="block text-sm font-medium text-gray-700 mb-2"
             >
-              Date
+              📅 Date
             </label>
             <input
               type="date"
@@ -99,7 +99,7 @@ export default function CreateNewPost() {
               htmlFor="content"
               className="block text-sm font-medium text-gray-700 mb-2"
             >
-              Content
+              📄 Content
             </label>
             <textarea
               id="content"
@@ -138,9 +138,10 @@ export default function CreateNewPost() {
                 setDate("");
                 setImage(null);
               }}
+              variant={"ghost"}
               className="font-main shadow"
             >
-              Cancel
+              ❌ Cancel
             </MainBtn>
 
             <button
@@ -154,7 +155,7 @@ export default function CreateNewPost() {
                   Publishing...
                 </span>
               ) : (
-                "Publish"
+                "🚀 Publish"
               )}
             </button>
           </div>

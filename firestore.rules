@@ -46,5 +46,14 @@ service cloud.firestore {
       allow update: if request.auth != null && (request.auth.uid == resource.data.toUserId || request.auth.uid == resource.data.fromUserId);
       allow delete: if request.auth != null && request.auth.uid == resource.data.toUserId;
     }
+    match /sharedTodos/{todoId} {
+      allow read: if request.auth != null; // Any authenticated user can read all todos
+      allow create: if request.auth != null &&
+        request.auth.uid in request.resource.data.assignedTo &&
+        request.resource.data.assignedTo.size() >= 2 &&
+        request.resource.data.createdBy == request.auth.uid;
+      allow update: if request.auth != null; // Any authenticated user can update todos
+      allow delete: if request.auth != null && request.auth.uid == resource.data.createdBy; // Only creator can delete
+    }
   }
 }

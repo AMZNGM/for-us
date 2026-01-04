@@ -7,7 +7,7 @@ interface Post {
 }
 
 export async function getPosts(): Promise<Post[]> {
-  const q = query(collection(db, "posts"), orderBy("createdAt", "desc"));
+  const q = query(collection(db, "posts"), orderBy("date", "desc"));
 
   const snapshot = await getDocs(q);
   return snapshot.docs.map((doc) => ({

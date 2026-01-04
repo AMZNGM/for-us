@@ -60,6 +60,8 @@ export default function ProfilePostCard({ post: initialPost, index }) {
           <RippleEffect className="w-full">
             <textarea
               value={draftText}
+              onWheel={(e) => e.stopPropagation()}
+              onTouchMove={(e) => e.stopPropagation()}
               onChange={(e) => setDraftText(e.target.value)}
               rows={4}
               className="w-full px-3 py-2 bg-text/10 border border-text/20 rounded-lg text-text placeholder-text/50 outline-0"

@@ -43,7 +43,7 @@ export default function LoginPage() {
     try {
       await signInWithEmail(email.trim(), password);
       router.replace("/");
-      alert.show("Logged in ✅", "success");
+      alert.show("Logged in 💕", "success");
     } catch (err) {
       console.error("Login error:", err);
       alert.show(`Login failed ❌ ${err.message || ""}`, "error");
@@ -56,7 +56,7 @@ export default function LoginPage() {
 
       <TextAnimation
         delay={4.5}
-        text="Sign in Bea <3"
+        text="💕 Sign in Bea <3 💕"
         className="text-5xl text-center font-semibold font-sec tracking-widest p-4 mb-8"
       />
 
@@ -92,7 +92,7 @@ export default function LoginPage() {
                 autoComplete="email"
                 required
                 className="appearance-none rounded-none relative block w-full px-3 py-2 border-2 border-main placeholder-main text-main rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm duration-300"
-                placeholder="Email address"
+                placeholder="💕 Email address"
                 onChange={(e) => setEmail(e.target.value)}
               />
             </RippleEffect>
@@ -119,7 +119,7 @@ export default function LoginPage() {
                 autoComplete="current-password"
                 required
                 className="appearance-none rounded-none relative block w-full px-3 py-2 border-2 border-main placeholder-main text-main rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm duration-300"
-                placeholder="Password"
+                placeholder="💝 Password"
                 onChange={(e) => setPassword(e.target.value)}
               />
             </RippleEffect>
@@ -127,7 +127,7 @@ export default function LoginPage() {
         </div>
 
         <MainBtn onClick={login} className="w-full bg-main! rounded-md">
-          Sign in
+          💕 Sign in 💕
         </MainBtn>
       </motion.form>
     </HomePageWrapper>

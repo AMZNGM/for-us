@@ -5,6 +5,7 @@ import { onSnapshot, collection, query, orderBy } from "firebase/firestore";
 import { auth, db, addLikeDoc, removeLikeDoc } from "@/lib/firebase";
 import { createLikeNotification } from "@/lib/notifications";
 import { useAlert } from "@/lib/AlertContext";
+import HeartParticles from "@/components/ui/HeartParticles";
 
 export default function PostLikeButton({ postId, postAuthorId }) {
   const alert = useAlert();
@@ -83,19 +84,22 @@ export default function PostLikeButton({ postId, postAuthorId }) {
     } others`;
 
   return (
-    <button
-      onClick={toggle}
-      disabled={loading}
-      className={`rounded-2xl cursor-pointer py-2 px-3 transition-colors ${
-        likes.length > 0
-          ? "bg-red-500/20 text-red-500 hover:bg-red-500/30 border border-red-500/30"
-          : "bg-main/50 text-red-500 hover:bg-main/50"
-      }`}
-    >
-      <span className={`me-2 ${likes.length > 0 ? "text-red-500" : ""}`}>
-        {likes.length > 0 ? "♥" : "♡"}
-      </span>
-      <span className="text-sm text-bg">{label}</span>
-    </button>
+    <div className="relative">
+      <button
+        onClick={toggle}
+        disabled={loading}
+        className={`rounded-2xl cursor-pointer py-2 px-3 transition-colors ${
+          likes.length > 0
+            ? "bg-red-500/20 text-red-500 hover:bg-red-500/30 border border-red-500/30"
+            : "bg-main/50 text-red-500 hover:bg-main/50"
+        }`}
+      >
+        <span className={`me-2 ${likes.length > 0 ? "text-red-500" : ""}`}>
+          {likes.length > 0 ? "❣️" : "💛"}
+        </span>
+        <span className="text-sm text-bg">{label}</span>
+      </button>
+      <HeartParticles active={likes.length > 0} />
+    </div>
   );
 }

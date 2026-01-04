@@ -10,6 +10,7 @@ import {
 } from "@/lib/firebase";
 import { createCommentLikeNotification } from "@/lib/notifications";
 import { useAlert } from "@/lib/AlertContext";
+import HeartParticles from "@/components/ui/HeartParticles";
 
 export default function CommentLikeButton({
   postId,
@@ -60,7 +61,7 @@ export default function CommentLikeButton({
     try {
       if (liked) {
         await removeCommentLikeDoc(postId, commentId, auth.currentUser.uid);
-        alert?.show && alert.show("Comment like removed! 💔", "info");
+        alert?.show && alert.show(`Comment like removed! 💔`, "info");
       } else {
         await addCommentLikeDoc(postId, commentId, auth.currentUser);
         alert?.show && alert.show("Comment liked! ❤️", "success");
@@ -102,20 +103,25 @@ export default function CommentLikeButton({
     } others`;
 
   return (
-    <button
-      onClick={toggle}
-      className={`flex justify-center items-center rounded-2xl cursor-pointer transition-colors p-2 ${
-        likes.length > 0
-          ? "bg-red-500/20 hover:bg-red-500/30 border border-red-500/30"
-          : "bg-main/25 hover:bg-main/50"
-      }`}
-    >
-      <span
-        className={`me-2 ${likes.length > 0 ? "text-red-500" : "text-red-400"}`}
+    <div className="relative">
+      <button
+        onClick={toggle}
+        className={`flex justify-center items-center rounded-2xl cursor-pointer transition-colors p-2 ${
+          likes.length > 0
+            ? "bg-red-500/20 hover:bg-red-500/30 border border-red-500/30"
+            : "bg-main/25 hover:bg-main/50"
+        }`}
       >
-        {liked ? "♥" : "♡"}
-      </span>
-      <span className="text-sm text-bg">{label}</span>
-    </button>
+        <span
+          className={`me-2 ${
+            likes.length > 0 ? "text-red-500" : "text-red-400"
+          }`}
+        >
+          {likes.length > 0 ? "♥️" : "🫰"}
+        </span>
+        <span className="text-sm text-bg">{label}</span>
+      </button>
+      <HeartParticles active={likes.length > 0} />
+    </div>
   );
 }

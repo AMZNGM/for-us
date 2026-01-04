@@ -50,7 +50,6 @@ export default function CommentItem({ postId, comment, onReplyClick }) {
             alt="Author avatar"
             className="w-8 h-8 bg-gray-300 rounded-full object-cover"
             onError={(e) => {
-              console.log("Avatar failed to load:", comment.authorAvatar);
               e.target.src = "/images/abdelrahman-avatar.webp";
             }}
           />
@@ -95,7 +94,7 @@ export default function CommentItem({ postId, comment, onReplyClick }) {
                 onClick={() => onReplyClick && onReplyClick(comment.id)}
                 className="flex justify-center items-center bg-main/25 text-blue-500 hover:text-blue-700 rounded-2xl cursor-pointer hover:bg-main/50 transition-colors p-2"
               >
-                Reply
+                💬 Reply
               </button>
             </div>
 
@@ -110,9 +109,9 @@ export default function CommentItem({ postId, comment, onReplyClick }) {
                     }`}
                   >
                     {loading ? (
-                      <span className="animate-spin">⏳</span>
+                      <span className="animate-spin">💖</span>
                     ) : (
-                      "Save"
+                      "💕 Save"
                     )}
                   </button>
                 ) : (
@@ -120,7 +119,7 @@ export default function CommentItem({ postId, comment, onReplyClick }) {
                     onClick={() => setEditing(true)}
                     className="flex justify-center items-center bg-main/25 text-blue-500 text-sm hover:text-blue-700 rounded-2xl cursor-pointer hover:bg-main/50 transition-colors p-2"
                   >
-                    Edit
+                    ✏️ Edit
                   </button>
                 )}
 
@@ -128,7 +127,7 @@ export default function CommentItem({ postId, comment, onReplyClick }) {
                   onClick={handleDelete}
                   className="flex justify-center items-center bg-main/25 text-red-500 text-sm hover:text-blue-700 rounded-2xl cursor-pointer hover:bg-main/50 transition-colors p-2"
                 >
-                  Delete
+                  💔 Delete
                 </button>
               </div>
             )}
@@ -136,11 +135,11 @@ export default function CommentItem({ postId, comment, onReplyClick }) {
         </div>
       </div>
 
-      <p className="text-xs text-bg mt-4">
+      {/* <p className="text-xs text-bg mt-4">
         {comment.createdAt?.toDate
           ? comment.createdAt.toDate().toLocaleString()
           : ""}
-      </p>
+      </p> */}
     </div>
   );
 }

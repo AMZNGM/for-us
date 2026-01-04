@@ -1,5 +1,6 @@
 import PostLikeButton from "@/components/post-components/PostLikeButton";
 import PostCommentButton from "@/components/post-components/PostCommentButton";
+import CommentsCounter from "@/components/post-components/CommentsCounter";
 import MainBtn from "@/components/ui/buttons/MainBtn";
 
 export default function PostSection({
@@ -28,7 +29,7 @@ export default function PostSection({
             className="w-12 h-12 bg-main rounded-full object-cover"
             onError={(e) => {
               e.target.style.display = "none";
-              e.target.nextSibling.style.display = "block";
+              e.target.nextElementSibling.style.display = "block";
             }}
           />
         ) : null}
@@ -96,18 +97,20 @@ export default function PostSection({
       )}
 
       {post.imageUrl && (
-        <div className="mb-6">
+        <div className="mb-6 rounded-lg overflow-hidden">
           <img
             onClick={() => setActiveImage(post.imageUrl)}
             src={post.imageUrl}
             alt="Post image"
-            className="w-full h-96 object-cover rounded-lg cursor-pointer"
+            className="w-full h-96 object-cover rounded-lg cursor-pointer hover:scale-105 hover:opacity-90 transition-all duration-500"
           />
         </div>
       )}
 
       {editing ? (
         <textarea
+          onWheel={(e) => e.stopPropagation()}
+          onTouchMove={(e) => e.stopPropagation()}
           onChange={(e) => setDraftText(e.target.value)}
           value={draftText}
           rows={13}
@@ -124,6 +127,7 @@ export default function PostSection({
         <div className="flex items-center space-x-4">
           <PostLikeButton postId={post.id} postAuthorId={post.authorId} />
           <PostCommentButton onCommentClick={handleCommentClick} />
+          <CommentsCounter postId={post.id} />
         </div>
 
         {canEdit && (

@@ -76,14 +76,19 @@ export default function CommentsSection({
   return (
     <div className="bg-text shadow rounded-2xl mt-8 p-8 max-md:p-4">
       <div className="flex justify-between items-center mb-4">
-        <h3 className="text-xl font-semibold text-bg">
-          Comments ({comments.length})
+        <h3 className="text-2xl font-bold text-bg mb-4">
+          💕 Comments ({comments.length}) 💕
         </h3>
+        <p className="text-sm text-bg/70 italic mb-4">
+          🌅 Good afternoon to youu 🌅 Good morning to mee 🏞️
+        </p>
       </div>
 
       <div className="space-y-4 mb-6">
         {mainComments.length === 0 ? (
-          <p className="text-bg text-center py-4"></p>
+          <p className="text-bg text-center py-4">
+            💭 No comments yet, be the first to share your thoughts! 💭
+          </p>
         ) : (
           mainComments.map((comment) => (
             <CommentThread
@@ -114,7 +119,7 @@ export default function CommentsSection({
             rows={9}
             required
             value={newComment}
-            placeholder="bebbeeebe, Añadir un comentario..."
+            placeholder="💕 Hermosa, Share your wondrous ideas here... 💕"
             className="w-full bg-main/15 border-3 border-bg/10 rounded-2xl focus:outline-none focus:border-main transition-colors px-3 py-2"
           />
 
@@ -124,8 +129,8 @@ export default function CommentsSection({
             className="font-main rounded-2xl"
           >
             {!newComment.trim()
-              ? "Write comment first Hermosa 🫶"
-              : "lesgooooooo 🚀 add this comment"}
+              ? "💝 Write your repl first my 💝"
+              : "💕 Send this lovely message 💕"}
           </MainBtn>
         </form>
       </div>

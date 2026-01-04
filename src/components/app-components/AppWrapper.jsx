@@ -10,6 +10,10 @@ import LocomotiveScrollSetup from "@/components/app-components/LocomotiveScrollS
 import Navbar from "@/components/nav-components/Navbar";
 import ScrollToTopBtn from "@/components/app-components/ScrollToTopBtn";
 import Footer from "@/components/footer-components/Footer";
+import WelcomeMessage from "@/components/app-components/WelcomeMessage";
+import ToggleableLoveElements from "@/components/app-components/ToggleableLoveElements";
+import LoveCounter from "@/components/app-components/LoveCounter";
+import RomanticTodoList from "@/components/ui/RomanticTodoList";
 
 function AppContent({ children }) {
   useAppLoading();
@@ -20,6 +24,10 @@ function AppContent({ children }) {
       <Banner />
       <LocomotiveScrollSetup />
       <Navbar />
+      <WelcomeMessage />
+      <ToggleableLoveElements />
+      <LoveCounter />
+      <RomanticTodoList />
       {children}
       <ScrollToTopBtn />
       <Footer />

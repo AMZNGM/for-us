@@ -1,7 +1,8 @@
 import { useRouter } from "next/navigation";
 import PostLikeButton from "@/components/post-components/PostLikeButton";
 import PostCommentButton from "@/components/post-components/PostCommentButton";
-import AuthorInfo from "./AuthorInfo";
+import CommentsCounter from "@/components/post-components/CommentsCounter";
+import AuthorInfo from "@/components/factoftheday-components/AuthorInfo";
 
 export default function PostCard({
   post,
@@ -85,6 +86,10 @@ export default function PostCard({
             <PostCommentButton
               onCommentClick={() => router.push(`/post/${post.id}`)}
             />
+          </div>
+
+          <div onClick={(e) => e.stopPropagation()}>
+            <CommentsCounter postId={post.id} />
           </div>
         </div>
       </div>
