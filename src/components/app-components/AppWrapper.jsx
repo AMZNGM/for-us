@@ -13,6 +13,7 @@ import Footer from "@/components/footer-components/Footer";
 import WelcomeMessage from "@/components/app-components/WelcomeMessage";
 import ToggleableLoveElements from "@/components/app-components/ToggleableLoveElements";
 import LoveCounter from "@/components/app-components/LoveCounter";
+import InstaMessages from "@/components/app-components/InstaMessages";
 import RomanticTodoList from "@/components/ui/RomanticTodoList";
 
 function AppContent({ children }) {
@@ -27,6 +28,7 @@ function AppContent({ children }) {
       <WelcomeMessage />
       {/* <ToggleableLoveElements /> */}
       <LoveCounter />
+      <InstaMessages />
       <RomanticTodoList />
       {children}
       <ScrollToTopBtn />

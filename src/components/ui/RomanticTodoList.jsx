@@ -89,7 +89,7 @@ export default function RomanticTodoList() {
       {/* Floating Button */}
       <button
         onClick={() => setIsOpen(true)}
-        className="group fixed top-4 -right-8 bg-main rounded-lg py-4 px-2 shadow-lg hover:scale-110 hover:right-0 transition-all duration-300 cursor-pointer z-10"
+        className="group fixed md:top-4 md:-right-8 max-md:-right-9 max-md:bottom-18 bg-main rounded-lg py-4 px-2 shadow-lg hover:scale-110 hover:right-0 transition-all duration-300 cursor-pointer z-10 max-md:scale-70"
       >
         <span className="text-2xl">💝</span>
         <span className="block text-bg text-sm pe-2">ToDo List</span>
